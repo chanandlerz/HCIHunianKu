@@ -341,7 +341,14 @@ class _LoginPageState extends State<LoginPage> {
                         print('Login Failed');
                         //@moris nanti disini bikin buat reload page kalau login failed
                       }
-                    } else {
+                    }else if (response.statusCode == 400){
+                        final snackBar = SnackBar(
+                          content: Text('Wrong Username and Password combination.'),
+                          backgroundColor: Colors.red,
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        print('Wrong Username and Password combination.');
+                      }else {
                       print('Error: ${response.statusCode}');
                     }
                   },

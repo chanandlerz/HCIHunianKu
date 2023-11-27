@@ -339,19 +339,33 @@ class _RegisterPageState extends State<RegisterPage> {
                       );
 
                       if (response.statusCode == 200) {
-                        print('User registered successfuly');
-                      } else {
-                        print(
-                            'Failed to register the user. Status Code: ${response.statusCode}');
-                        print('Error Response: ${response.body}');
-                      }
-
-                      Navigator.pushReplacement(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) => LoginPage(
                                     udid: udid,
                                   )));
+                        print('User registered successfuly');
+                      } else if (response.statusCode == 400){
+                        final snackBar = SnackBar(
+                          content: Text('Username has already been registered.'),
+                          backgroundColor: Colors.red,
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        print('Username has already been registered');
+                      }
+                      else {
+                        print(
+                            'Failed to register the user. Status Code: ${response.statusCode}');
+                        print('Error Response: ${response.body}');
+                      }
+
+                      // Navigator.pushReplacement(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => LoginPage(
+                      //               udid: udid,
+                      //             )));
                       // Navigator.push(
                       //     context,
                       //     MaterialPageRoute(
