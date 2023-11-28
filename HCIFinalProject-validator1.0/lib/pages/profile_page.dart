@@ -49,10 +49,7 @@ class ProfilePage extends StatelessWidget {
                 onPressed: () async {
                   String udid = await FlutterUdid.udid;
 
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => LoginPage(udid: udid)));
+                  Navigator.pushReplacementNamed(context, '/login', arguments: {'udid': ''});
                 },
               )
               // ElevatedButton(

@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         bool isLoggedIn = snapshot.data as bool;
-                        return isLoggedIn ? BottomNavBar() : RegisterPage();
+                        return isLoggedIn ? LoginPage(udid: '',) : RegisterPage();
                       } else {
                         return Scaffold(body: CircularProgressIndicator());
                       }
@@ -58,6 +58,18 @@ class MyApp extends StatelessWidget {
           }
         },
       ),
+      initialRoute: '/',
+      routes: {
+        '/register': (context) => RegisterPage(),
+        '/login': (context) {
+          Map<String, dynamic>? args = ModalRoute.of(context)
+              ?.settings
+              .arguments as Map<String, dynamic>;
+          String udid = args?['udid'] ?? '';
+          return LoginPage(udid: udid);
+        },
+        '/dashboard' : (context) => BottomNavBar(),
+      },
     );
   }
 

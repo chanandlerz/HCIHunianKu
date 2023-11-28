@@ -216,12 +216,11 @@ class _LoginPageState extends State<LoginPage> {
                           if (value == null || value.isEmpty) {
                             return "Please enter password";
                           }
-
                           bool emailValid =
-                              RegExp(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{1,}$")
+                              RegExp(r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[A-Z])[A-Za-z\d]{1,}$")
                                   .hasMatch(value);
                           if (emailValid == false) {
-                            return "Password must have combination of number and letter";
+                            return "Combination of uppercase letter, number, and letter";
                           }
                           return null;
                         },
@@ -333,13 +332,9 @@ class _LoginPageState extends State<LoginPage> {
 
                       if (responseBody['status'] == 'success') {
                         print('Login Successful');
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => BottomNavBar()),
-                        );
+                        Navigator.pushReplacementNamed(context, '/dashboard');
                       } else {
                         print('Login Failed');
-                        //@moris nanti disini bikin buat reload page kalau login failed
                       }
                     }else if (response.statusCode == 400){
                         final snackBar = SnackBar(
@@ -409,8 +404,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 new GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => RegisterPage()));
+                    Navigator.pushReplacementNamed(context, '/register');
                   },
                   child: new Text(
                     "Register now",

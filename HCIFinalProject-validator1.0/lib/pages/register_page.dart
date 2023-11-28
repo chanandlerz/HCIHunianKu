@@ -169,12 +169,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           if (value == null || value.isEmpty) {
                             return "Please enter password";
                           }
-
                           bool emailValid =
-                              RegExp(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{1,}$")
+                              RegExp(r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[A-Z])[A-Za-z\d]{1,}$")
                                   .hasMatch(value);
                           if (emailValid == false) {
-                            return "Password must have combination of number and letter";
+                            return "Combination of uppercase letter, number, and letter";
                           }
                           return null;
                         },
@@ -297,9 +296,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       String publicKeyString = await fetchPubKey(url2);
                       await savePubKey(publicKeyString);
                       print(publicKeyString);
-                      // String storedPublicKey = await getPublicKey();
-
-                      //@moris ini udah dapet publicKeyString nya, tinggal simpen ke local make shared preference, trs di login panggil pubkeynya
 
                       String udid = await FlutterUdid.udid;
                       await AuthUtils.login();
@@ -309,19 +305,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       );
 
                       await saveUser(user);
-
-//                       String publicKey =
-//                           """
-//                       -----BEGIN PUBLIC KEY-----
-// MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtwf65V5XpI9r9YUgooDV
-// cbfz13AyMm4tpljTpSRKzi4Llwz7LrzqgZQIFGW0E5I6szluzRUdAwM8EzxMOREq
-// bjF+DfNpjLeZAzVmucI95riKzzrnqctaU+GXTZ5gtbnnHCBFQgI+3GDdHjNkgQ8i
-// zXSJmvh5VU5r+t3ZyUv8w6dgqG5eal5DYArwX6bOkm/E9Wn0rIvzT2EHiPj0eZcf
-// FlZgruoX/GdcZxza7/A1zJngkWXz1cHA332NI0HveyAzuuE6NnYbxVLdLRpyO247
-// Iiem0UxPkyKPIYt2M+qyyAA78KsjyUkb8h3PgzbWp7hnGsIHCq7J9WW7tiD3pLTd
-// AwIDAQAB
-// -----END PUBLIC KEY-----
-//                       """;
 
                       final Uri url =
                           Uri.https('debug.lubisputri16.repl.co', 'users');
@@ -339,12 +322,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       );
 
                       if (response.statusCode == 200) {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginPage(
-                                    udid: udid,
-                                  )));
+                        Navigator.pushReplacementNamed(context, '/login', arguments: {'udid' : ''});
                         print('User registered successfuly');
                       } else if (response.statusCode == 400){
                         final snackBar = SnackBar(
@@ -360,16 +338,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         print('Error Response: ${response.body}');
                       }
 
-                      // Navigator.pushReplacement(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => LoginPage(
-                      //               udid: udid,
-                      //             )));
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => LoginPage(udid: udid)));
                     },
                     child: Text(
                       "Sign Up",
@@ -392,12 +360,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => LoginPage(
-                                    udid: '',
-                                  )));
+                      Navigator.pushReplacementNamed(context, '/login', arguments: {'udid' : ''});
                     },
                     child: new Text(
                       "Login now",
