@@ -9,6 +9,7 @@ class FeedsPage extends StatefulWidget {
 }
 
 class _FeedsPageState extends State<FeedsPage> {
+  // final formField = GlobalKey<FormState>();
   final searchbarController = TextEditingController();
 
   // void performSearch(String query) {
@@ -27,11 +28,39 @@ class _FeedsPageState extends State<FeedsPage> {
               SizedBox(
                 height: 20,
               ),
-              SearchTextFieldFeedsPage(
-                controller: searchbarController,
-                hintText: 'Find Property, Land, and more...',
-                obscureText: false,
+              // SearchTextFieldFeedsPage(
+              //   controller: searchbarController,
+              //   hintText: 'Find Property, Land, and more...',
+              //   obscureText: false,
+              // ),
+
+              // IconButton(
+              //   icon: Icon(Icons.filter_alt),
+              //   onPressed: showModalBottomSheet(
+              //     context: context,
+              //     builder: (context) => buildSheet()),
+              //   ),
+              // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  // buildButton(
+                  //   text: 'testing',
+                  //   onClicked: () => showModalBottomSheet(
+                  //     isScrollControlled: true,
+                  //     backgroundColor: Colors.transparent,
+                  //     context: context,
+                  //     builder: (context) => buildSheet(),
+                  //   ),
+                  // )
+
+                  IconButton(
+                    icon: Icon(Icons.filter_alt),
+                    onPressed: () {},
+                  )
+                ],
               ),
+
               SizedBox(
                 height: 10,
               ),
@@ -159,4 +188,488 @@ class _FeedsPageState extends State<FeedsPage> {
       ),
     );
   }
+}
+// Widget makeDismissible({
+//   required BuildContext context,
+//   required Widget child,
+// }) => GestureDetector(
+//       behavior: HitTestBehavior.opaque,
+//       onTap: () => Navigator.of(context).pop(),
+//       child: GestureDetector(onTap: () {}, child: child),
+//     );
+
+// Widget buildButton({
+//   required String text,
+//   required VoidCallback onClicked,
+// }) =>
+//     ElevatedButton(
+//       style: ElevatedButton.styleFrom(
+//         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+//       ),
+//       child: Text(
+//         text,
+//         style: TextStyle(fontSize: 15),
+//       ),
+//       onPressed: onClicked,
+//     );
+
+// Widget buildSheet() => DraggableScrollableSheet(
+//       initialChildSize: 0.7,
+//       minChildSize: 0.5,
+//       maxChildSize: 1,
+//       builder: (_, controller) => Container(
+//         decoration: BoxDecoration(
+//             color: Colors.white,
+//             borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+//         padding: EdgeInsets.all(16),
+//         child: ListView(
+//           controller: controller,
+//           children: [
+//             TextFormField(
+
+//           )
+//           ],
+//         ),
+//       ),
+//     );
+
+Future Sewakan_Rumah(BuildContext context) {
+  final formField = GlobalKey<FormState>();
+  return showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      isDismissible: true,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+      builder: (context) => Container(
+            height: 700,
+            child: ListView(
+              children: [
+                Form(
+                  key: formField,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 25.0),
+                    child: TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Masukkan lokasi properti";
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 15.0),
+                        hintText: 'Lokasi Properti',
+                        // suffixIcon: Icon(Icons.search_rounded),
+                      ),
+                    ),
+                  ),
+                ),
+                Divider(
+                  color: Color.fromARGB(255, 184, 184, 184),
+                  thickness: 1.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0, top: 10.0),
+                  child: Text(
+                    'Rentang Sewa',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 10.0, right: 10.0, bottom: 20.0),
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    children: <Widget>[
+                      ElevatedButton(
+                        child: Text('harian',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 121, 121, 121))),
+                        onPressed: () {},
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    side: BorderSide(
+                                        color: Color.fromARGB(
+                                            255, 205, 166, 122))))),
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      ElevatedButton(
+                        child: Text('mingguan',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 121, 121, 121))),
+                        onPressed: () {},
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    side: BorderSide(
+                                        color: Color.fromARGB(
+                                            255, 205, 166, 122))))),
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      ElevatedButton(
+                        child: Text('bulanan',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 121, 121, 121))),
+                        onPressed: () {},
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    side: BorderSide(
+                                        color: Color.fromARGB(
+                                            255, 205, 166, 122))))),
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      ElevatedButton(
+                        child: Text('3 bulan',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 121, 121, 121))),
+                        onPressed: () {},
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    side: BorderSide(
+                                        color: Color.fromARGB(
+                                            255, 205, 166, 122))))),
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      ElevatedButton(
+                        child: Text('6 bulan',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 121, 121, 121))),
+                        onPressed: () {},
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    side: BorderSide(
+                                        color: Color.fromARGB(
+                                            255, 205, 166, 122))))),
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      ElevatedButton(
+                        child: Text('tahunan',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 121, 121, 121))),
+                        onPressed: () {},
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    side: BorderSide(
+                                        color: Color.fromARGB(
+                                            255, 205, 166, 122))))),
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      ElevatedButton(
+                        child: Text('semua',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 121, 121, 121))),
+                        onPressed: () {},
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    side: BorderSide(
+                                        color: Color.fromARGB(
+                                            255, 205, 166, 122))))),
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(
+                  color: Color.fromARGB(255, 184, 184, 184),
+                  thickness: 1.0,
+                ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: Text(
+                        'Kisaran Harga (Rp)',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          bottom: 20.0, left: 10.0, top: 18.0),
+                      child: Wrap(
+                          alignment: WrapAlignment.start,
+                          children: <Widget>[
+                            SizedBox(
+                              width: 205.0,
+                              height: 35.0,
+                              child: TextFormField(
+                                // autovalidateMode:
+                                //     AutovalidateMode.onUserInteraction,
+                                // validator: (value) {
+                                //   if (value == null || value.isEmpty) {
+                                //     return "Masukkan harga properti";
+                                //   }
+                                //   return null;
+                                // },
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    borderSide: BorderSide(
+                                        color:
+                                            Color.fromARGB(255, 205, 166, 122)),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey.shade400),
+                                  ),
+                                  fillColor: Colors.grey.shade200,
+                                  filled: true,
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 20.0, horizontal: 10.0),
+                                  hintText: '',
+                                ),
+                              ),
+                            ),
+                          ]),
+                    ),
+                  ],
+                ),
+                Divider(
+                  color: Color.fromARGB(255, 184, 184, 184),
+                  thickness: 1.0,
+                ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: Text(
+                        'Rentang Area (meter persegi)',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          bottom: 20.0, left: 10.0, top: 18.0),
+                      child: Wrap(
+                          alignment: WrapAlignment.start,
+                          children: <Widget>[
+                            SizedBox(
+                              width: 120.0,
+                              height: 35.0,
+                              child: TextFormField(
+                                // autovalidateMode:
+                                //     AutovalidateMode.onUserInteraction,
+                                // validator: (value) {
+                                //   if (value == null || value.isEmpty) {
+                                //     return "Masukkan rentang area properti";
+                                //   }
+                                //   return null;
+                                // },
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    borderSide: BorderSide(
+                                        color:
+                                            Color.fromARGB(255, 205, 166, 122)),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey.shade400),
+                                  ),
+                                  fillColor: Colors.grey.shade200,
+                                  filled: true,
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 20.0, horizontal: 10.0),
+                                  hintText: '',
+                                ),
+                              ),
+                            ),
+                          ]),
+                    ),
+                  ],
+                ),
+                Divider(
+                  color: Color.fromARGB(255, 184, 184, 184),
+                  thickness: 1.0,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: Text(
+                        'Jumlah Kamar Tidur',
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: Text(
+                        'Jumlah Kamar Mandi',
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Form(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 25.0, top: 10.0),
+                        child: SizedBox(
+                          width: 100.0,
+                          height: 35.0,
+                          child: TextFormField(
+                            // autovalidateMode: AutovalidateMode.onUserInteraction,
+                            // validator: (value) {
+                            //   if (value == null || value.isEmpty) {
+                            //     return "Masukkan jumlah kamar tidur";
+                            //   }
+                            //   return null;
+                            // },
+                            decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(255, 205, 166, 122)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.grey.shade400),
+                              ),
+                              fillColor: Colors.grey.shade200,
+                              filled: true,
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 20.0, horizontal: 10.0),
+                              hintText: '',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Form(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 25.0, top: 10.0),
+                        child: SizedBox(
+                          width: 100.0,
+                          height: 35.0,
+                          child: TextFormField(
+                            // autovalidateMode: AutovalidateMode.onUserInteraction,
+                            // validator: (value) {
+                            //   if (value == null || value.isEmpty) {
+                            //     return "Masukkan jumlah kamar mandi";
+                            //   }
+                            //   return null;
+                            // },
+                            decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(255, 205, 166, 122)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.grey.shade400),
+                              ),
+                              fillColor: Colors.grey.shade200,
+                              filled: true,
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 20.0, horizontal: 10.0),
+                              hintText: '',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    child: Text('Pasang Iklan'),
+                    onPressed: () {},
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Color.fromARGB(255, 205, 166, 122)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    side: BorderSide(
+                                        color: Color.fromARGB(
+                                            255, 205, 166, 122))))),
+                  ),
+                )
+              ],
+            ),
+          ));
 }
