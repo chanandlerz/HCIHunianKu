@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:device_info/device_info.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: HomePage(),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Device ID Example'),
+        title: const Text('Device ID Example'),
       ),
       body: Center(
         child: ElevatedButton(
@@ -30,7 +34,7 @@ class HomePage extends StatelessWidget {
               ),
             );
           },
-          child: Text('Get Device ID and Navigate'),
+          child: const Text('Get Device ID and Navigate'),
         ),
       ),
     );
@@ -40,13 +44,13 @@ class HomePage extends StatelessWidget {
 class SecondPage extends StatelessWidget {
   final String deviceId;
 
-  SecondPage({required this.deviceId});
+  const SecondPage({super.key, required this.deviceId});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Second Page'),
+        title: const Text('Second Page'),
       ),
       body: Center(
         child: Text('Device ID: $deviceId'),

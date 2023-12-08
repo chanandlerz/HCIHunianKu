@@ -1,9 +1,6 @@
 import 'dart:convert';
 
-import 'package:app_development/components/text_field_register_username.dart';
-import 'package:app_development/components/text_field_register_password.dart';
 import 'package:app_development/main.dart';
-import 'package:app_development/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_udid/flutter_udid.dart';
 import 'package:http/http.dart' as http;
@@ -16,7 +13,7 @@ class User {
 }
 
 class RegisterPage extends StatefulWidget {
-  RegisterPage({super.key});
+  const RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -48,16 +45,16 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 58, 58, 58),
+      backgroundColor: const Color.fromARGB(255, 58, 58, 58),
       body: ListView(
         children: <Widget>[
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 200,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Form(
@@ -84,7 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           return null;
                         },
                         decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
+                          enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: Color.fromARGB(255, 205, 166, 122)),
                           ),
@@ -93,7 +90,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           fillColor: Colors.grey.shade200,
                           filled: true,
-                          contentPadding: EdgeInsets.symmetric(
+                          contentPadding: const EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 10.0),
                           hintText: 'Username',
                         ),
@@ -118,7 +115,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           return null;
                         },
                         decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
+                          enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: Color.fromARGB(255, 205, 166, 122)),
                           ),
@@ -127,7 +124,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           fillColor: Colors.grey.shade200,
                           filled: true,
-                          contentPadding: EdgeInsets.symmetric(
+                          contentPadding: const EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 10.0),
                           hintText: 'Email',
                         ),
@@ -159,7 +156,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           return null;
                         },
                         decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
+                          enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: Color.fromARGB(255, 205, 166, 122)),
                           ),
@@ -179,7 +176,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ? Icons.visibility
                                 : Icons.visibility_off),
                           ),
-                          contentPadding: EdgeInsets.symmetric(
+                          contentPadding: const EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 10.0),
                           hintText: 'Password',
                         ),
@@ -219,7 +216,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           return null;
                         },
                         decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
+                          enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: Color.fromARGB(255, 205, 166, 122)),
                           ),
@@ -228,7 +225,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           fillColor: Colors.grey.shade200,
                           filled: true,
-                          contentPadding: EdgeInsets.symmetric(
+                          contentPadding: const EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 10.0),
                           hintText: 'Phone Number',
                         ),
@@ -241,18 +238,18 @@ class _RegisterPageState extends State<RegisterPage> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
-              Container(
+              SizedBox(
                 height: 50,
                 width: 340,
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 205, 166, 122),
+                      backgroundColor: const Color.fromARGB(255, 205, 166, 122),
                     ),
                     onPressed: () async {
                       // if (formField.currentState!.validate()) {
@@ -332,22 +329,22 @@ class _RegisterPageState extends State<RegisterPage> {
                       //     MaterialPageRoute(
                       //         builder: (context) => LoginPage(udid: udid)));
                     },
-                    child: Text(
+                    child: const Text(
                       "Sign Up",
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     )),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Already have an account?",
                     style: TextStyle(color: Colors.white),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 4,
                   ),
 
@@ -363,7 +360,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       Navigator.pushReplacementNamed(context, '/login',
                           arguments: {'udid': ''});
                     },
-                    child: new Text(
+                    child: const Text(
                       "Login now",
                       style:
                           TextStyle(color: Color.fromARGB(255, 205, 166, 122)),

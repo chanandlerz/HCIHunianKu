@@ -15,7 +15,7 @@ class RegisterTextFieldUsername extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25.0),
+      padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: TextFormField(
         controller: controller,
         obscureText: obscureText,
@@ -28,9 +28,10 @@ class RegisterTextFieldUsername extends StatelessWidget {
           if (!emailValid) {
             return "Enter Valid Username";
           }
+          return null;
         },
         decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
+          enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Color.fromARGB(255, 205, 166, 122)),
           ),
           focusedBorder: OutlineInputBorder(
@@ -39,7 +40,7 @@ class RegisterTextFieldUsername extends StatelessWidget {
           fillColor: Colors.grey.shade200,
           filled: true,
           contentPadding:
-              EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+              const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
           hintText: hintText,
         ),
       ),

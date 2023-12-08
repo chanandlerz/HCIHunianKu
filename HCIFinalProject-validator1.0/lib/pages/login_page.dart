@@ -3,27 +3,16 @@ import 'package:flutter/material.dart';
 
 //backend
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:crypto/crypto.dart' as crypto;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:pointycastle/api.dart' as pointy;
-import 'package:http/http.dart' as http;
 import 'package:pointycastle/asymmetric/api.dart';
 import 'package:pointycastle/asymmetric/oaep.dart';
 import 'package:pointycastle/asymmetric/rsa.dart';
-import 'package:pointycastle/key_generators/rsa_key_generator.dart';
-import 'package:pointycastle/random/fortuna_random.dart';
 
 //page & components
-import 'package:app_development/components/bottom_nav_bar.dart';
-import 'package:app_development/components/text_field_login.dart';
-import 'package:app_development/main.dart';
-import 'package:app_development/pages/feeds_page.dart';
-import 'package:app_development/pages/register_page.dart';
 
 class logicLogin {
   String publicKeyString = '';
@@ -67,7 +56,7 @@ class LoginPage extends StatefulWidget {
   // final String deviceId;
   final String udid;
   // final String publicKeyString;
-  LoginPage({Key? key, required this.udid});
+  const LoginPage({super.key, required this.udid});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -130,13 +119,13 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 58, 58, 58),
+      backgroundColor: const Color.fromARGB(255, 58, 58, 58),
       body: ListView(children: <Widget>[
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // username text field
-            SizedBox(
+            const SizedBox(
               height: 150,
             ),
 
@@ -151,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
             // Text('Pubkey: $publicKeyString'),
 
             const Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              padding: EdgeInsets.symmetric(horizontal: 25.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -163,12 +152,12 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
 
             const Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              padding: EdgeInsets.symmetric(horizontal: 25.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -180,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
 
@@ -215,7 +204,7 @@ class _LoginPageState extends State<LoginPage> {
                         return null;
                       },
                       decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
+                        enabledBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
                               color: Color.fromARGB(255, 205, 166, 122)),
                         ),
@@ -224,7 +213,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         fillColor: Colors.grey.shade200,
                         filled: true,
-                        contentPadding: EdgeInsets.symmetric(
+                        contentPadding: const EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 10.0),
                         hintText: 'Username',
                       ),
@@ -253,7 +242,7 @@ class _LoginPageState extends State<LoginPage> {
                         return null;
                       },
                       decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
+                        enabledBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
                               color: Color.fromARGB(255, 205, 166, 122)),
                         ),
@@ -273,7 +262,7 @@ class _LoginPageState extends State<LoginPage> {
                         //       ? Icons.visibility
                         //       : Icons.visibility_off),
                         // ),
-                        contentPadding: EdgeInsets.symmetric(
+                        contentPadding: const EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 10.0),
                         hintText: 'Password',
                       ),
@@ -286,12 +275,12 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
 
             const Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              padding: EdgeInsets.symmetric(horizontal: 25.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -303,7 +292,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
 
@@ -315,12 +304,12 @@ class _LoginPageState extends State<LoginPage> {
             //   child: Text("Log In"),
             // ),
 
-            Container(
+            SizedBox(
               height: 50,
               width: 335,
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 205, 166, 122),
+                    backgroundColor: const Color.fromARGB(255, 205, 166, 122),
                   ),
                   onPressed: () async {
                     // final File publicKeyFile = File('./public_key.pem');
@@ -374,18 +363,18 @@ class _LoginPageState extends State<LoginPage> {
                       print('Error: ${response.statusCode}');
                     }
                   },
-                  child: Text(
+                  child: const Text(
                     "Log in",
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   )),
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
 
             const Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              padding: EdgeInsets.symmetric(horizontal: 25.0),
               child: Row(
                 children: [
                   Expanded(
@@ -395,7 +384,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
                       "Or continue with",
                       style: TextStyle(color: Colors.white),
@@ -411,11 +400,11 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
 
@@ -429,14 +418,14 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   width: 4,
                 ),
-                new GestureDetector(
+                GestureDetector(
                   onTap: () {
                     // Navigator.push(context,
                     //     MaterialPageRoute(builder: (_) => RegisterPage()));
 
                     Navigator.pushReplacementNamed(context, '/register');
                   },
-                  child: new Text(
+                  child: const Text(
                     "Register now",
                     style: TextStyle(color: Color.fromARGB(255, 205, 166, 122)),
                   ),
@@ -444,7 +433,7 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 50,
             )
           ],

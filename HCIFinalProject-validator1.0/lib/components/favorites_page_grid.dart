@@ -7,16 +7,16 @@ class FavoritesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.count(
       childAspectRatio: 0.68,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 2,
       shrinkWrap: true,
       children: [
         // for (int i = 1; i < 11; i++)
         Container(
-          padding: EdgeInsets.only(left: 15, right: 15, top: 10),
-          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+          padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
           decoration: BoxDecoration(
-            color: Colors.black,
+            color: Colors.white,
             borderRadius: BorderRadius.circular(20),
           ),
           child: Column(
@@ -36,7 +36,7 @@ class FavoritesWidget extends StatelessWidget {
               InkWell(
                 onTap: () {},
                 child: Container(
-                    margin: EdgeInsets.all(1),
+                    margin: const EdgeInsets.all(1),
                     child:
                         // Image.network(
                         //     'https://blog.psinv.net/wp-content/uploads/2023/06/1-e1686983943196.jpg',
@@ -50,51 +50,50 @@ class FavoritesWidget extends StatelessWidget {
               ),
 
               Container(
-                padding: EdgeInsets.only(bottom: 8),
+                padding: const EdgeInsets.only(bottom: 8),
                 alignment: Alignment.centerLeft,
-                child: Text(
+                child: const Text(
                   "3 hari yang lalu",
-                  style: TextStyle(
-                      fontSize: 8, color: Color.fromARGB(255, 184, 184, 184)),
+                  style: TextStyle(fontSize: 10, color: Colors.black),
                 ),
               ),
 
               Container(
                 alignment: Alignment.centerLeft,
-                child: Text(
+                child: const Text(
                   "RP. 1.8 Miliar",
                   style: TextStyle(
                       fontSize: 20,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
               ),
 
               Container(
                 alignment: Alignment.centerLeft,
-                child: Text(
+                child: const Text(
                   "Pasar Rebo, Jakarta Timur",
                   style: TextStyle(
                       fontSize: 12,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.w500),
                 ),
               ),
 
               Container(
                 alignment: Alignment.centerLeft,
-                child: Text(
+                child: const Text(
                   "Rumah Dijual",
-                  style: TextStyle(fontSize: 12, color: Colors.white),
+                  style: TextStyle(fontSize: 12, color: Colors.black),
                 ),
               ),
 
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(
                     Icons.bed,
-                    color: Colors.white,
+                    color: Colors.black,
                     size: 15,
                   ),
                   Icon(
@@ -104,19 +103,19 @@ class FavoritesWidget extends StatelessWidget {
                 ],
               ),
 
-              SizedBox(
-                height: 5,
+              const SizedBox(
+                height: 10,
               ),
 
-              Container(
+              SizedBox(
                 height: 30,
                 width: 150,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 205, 166, 122),
+                    backgroundColor: const Color.fromARGB(255, 205, 166, 122),
                   ),
                   onPressed: () {},
-                  child: Text(
+                  child: const Text(
                     "Hubungi Penjual",
                     style: TextStyle(color: Colors.white, fontSize: 10),
                   ),
@@ -125,12 +124,11 @@ class FavoritesWidget extends StatelessWidget {
             ],
           ),
         ),
-
         Container(
-          padding: EdgeInsets.only(left: 15, right: 15, top: 10),
-          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+          padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
           decoration: BoxDecoration(
-            color: Colors.black,
+            color: Colors.white,
             borderRadius: BorderRadius.circular(20),
           ),
           child: Column(
@@ -150,7 +148,7 @@ class FavoritesWidget extends StatelessWidget {
               InkWell(
                 onTap: () {},
                 child: Container(
-                    margin: EdgeInsets.all(1),
+                    margin: const EdgeInsets.all(1),
                     child:
                         // Image.network(
                         //     'https://blog.psinv.net/wp-content/uploads/2023/06/1-e1686983943196.jpg',
@@ -164,51 +162,50 @@ class FavoritesWidget extends StatelessWidget {
               ),
 
               Container(
-                padding: EdgeInsets.only(bottom: 8),
+                padding: const EdgeInsets.only(bottom: 8),
                 alignment: Alignment.centerLeft,
-                child: Text(
+                child: const Text(
                   "3 hari yang lalu",
-                  style: TextStyle(
-                      fontSize: 8, color: Color.fromARGB(255, 184, 184, 184)),
+                  style: TextStyle(fontSize: 10, color: Colors.black),
                 ),
               ),
 
               Container(
                 alignment: Alignment.centerLeft,
-                child: Text(
+                child: const Text(
                   "RP. 1.8 Miliar",
                   style: TextStyle(
                       fontSize: 20,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
               ),
 
               Container(
                 alignment: Alignment.centerLeft,
-                child: Text(
+                child: const Text(
                   "Pasar Rebo, Jakarta Timur",
                   style: TextStyle(
                       fontSize: 12,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.w500),
                 ),
               ),
 
               Container(
                 alignment: Alignment.centerLeft,
-                child: Text(
+                child: const Text(
                   "Rumah Dijual",
-                  style: TextStyle(fontSize: 12, color: Colors.white),
+                  style: TextStyle(fontSize: 12, color: Colors.black),
                 ),
               ),
 
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(
                     Icons.bed,
-                    color: Colors.white,
+                    color: Colors.black,
                     size: 15,
                   ),
                   Icon(
@@ -218,19 +215,19 @@ class FavoritesWidget extends StatelessWidget {
                 ],
               ),
 
-              SizedBox(
-                height: 5,
+              const SizedBox(
+                height: 10,
               ),
 
-              Container(
+              SizedBox(
                 height: 30,
                 width: 150,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 205, 166, 122),
+                    backgroundColor: const Color.fromARGB(255, 205, 166, 122),
                   ),
                   onPressed: () {},
-                  child: Text(
+                  child: const Text(
                     "Hubungi Penjual",
                     style: TextStyle(color: Colors.white, fontSize: 10),
                   ),
@@ -238,7 +235,7 @@ class FavoritesWidget extends StatelessWidget {
               )
             ],
           ),
-        )
+        ),
       ],
     );
   }

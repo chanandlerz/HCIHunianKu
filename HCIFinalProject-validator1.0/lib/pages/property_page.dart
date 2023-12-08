@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
       // appBar: AppBar(
       //   title: Text("Home Page"),
       // ),
-      backgroundColor: Color.fromARGB(255, 58, 58, 58),
+      backgroundColor: const Color.fromARGB(255, 58, 58, 58),
       body: ListView(
         children: <Widget>[
           // Row(
@@ -39,7 +39,7 @@ class HomePage extends StatelessWidget {
           Column(
             children: [
               Text('test: $query'),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
 
@@ -93,11 +93,11 @@ class HomePage extends StatelessWidget {
                 obscureText: false,
               ),
 
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
 
-              PropertyWidget(),
+              const PropertyWidget(),
             ],
           ),
         ],

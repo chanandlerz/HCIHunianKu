@@ -1,8 +1,9 @@
-import 'package:app_development/components/text_field_searchbar_feeds.dart';
+import 'package:app_development/pages/create_post_page.dart';
+import 'package:app_development/pages/favorites_page.dart';
 import 'package:flutter/material.dart';
 
 class FeedsPage extends StatefulWidget {
-  FeedsPage({super.key});
+  const FeedsPage({super.key});
 
   @override
   State<FeedsPage> createState() => _FeedsPageState();
@@ -11,6 +12,17 @@ class FeedsPage extends StatefulWidget {
 class _FeedsPageState extends State<FeedsPage> {
   // final formField = GlobalKey<FormState>();
   final searchbarController = TextEditingController();
+  bool favorite = false;
+
+  void activeFavorite() {
+    setState(() {
+      if (favorite) {
+        favorite = false;
+      } else {
+        favorite = true;
+      }
+    });
+  }
 
   // void performSearch(String query) {
   //   Navigator.pushNamed(context, '/result', arguments: query);
@@ -19,61 +31,110 @@ class _FeedsPageState extends State<FeedsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 58, 58, 58),
+      backgroundColor: const Color.fromARGB(255, 58, 58, 58),
       body: ListView(
-        physics: AlwaysScrollableScrollPhysics(),
+        physics: const AlwaysScrollableScrollPhysics(),
         children: <Widget>[
           Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              // SearchTextFieldFeedsPage(
-              //   controller: searchbarController,
-              //   hintText: 'Find Property, Land, and more...',
-              //   obscureText: false,
-              // ),
-
-              // IconButton(
-              //   icon: Icon(Icons.filter_alt),
-              //   onPressed: showModalBottomSheet(
-              //     context: context,
-              //     builder: (context) => buildSheet()),
-              //   ),
-              // ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  // buildButton(
-                  //   text: 'testing',
-                  //   onClicked: () => showModalBottomSheet(
-                  //     isScrollControlled: true,
-                  //     backgroundColor: Colors.transparent,
-                  //     context: context,
-                  //     builder: (context) => buildSheet(),
-                  //   ),
-                  // )
-
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child:
+                        Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                      SizedBox(
+                        width: 270.0,
+                        height: 50.0,
+                        child: TextField(
+                          // autovalidateMode:
+                          //     AutovalidateMode.onUserInteraction,
+                          // validator: (value) {
+                          //   if (value == null || value.isEmpty) {
+                          //     return "Masukkan harga properti";
+                          //   }
+                          //   return null;
+                          // },
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(
+                                  color: Color.fromARGB(255, 205, 166, 122)),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.grey.shade400),
+                            ),
+                            fillColor: Colors.grey.shade200,
+                            filled: true,
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 5.0, horizontal: 15.0),
+                            hintText: 'Find Property, Land, and more...',
+                            prefixIcon: const Icon(
+                              Icons.search,
+                              color: Color.fromARGB(255, 205, 166, 122),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ]),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
                   IconButton(
-                    icon: Icon(Icons.filter_alt),
+                    icon: const Icon(Icons.notifications),
                     onPressed: () {},
+                    color: const Color.fromARGB(255, 205, 166, 122),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.favorite),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => FavoritesPage()));
+                    },
+                    color: Colors.pink,
                   )
                 ],
               ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //     // buildButton(
+              //     //   text: 'testing',
+              //     //   onClicked: () => showModalBottomSheet(
+              //     //     isScrollControlled: true,
+              //     //     backgroundColor: Colors.transparent,
+              //     //     context: context,
+              //     //     builder: (context) => buildSheet(),
+              //     //   ),
+              //     // )
 
-              SizedBox(
+              //     IconButton(
+              //       icon: Icon(Icons.filter_alt),
+              //       onPressed: () {},
+              //     )
+              //   ],
+              // ),
+
+              const SizedBox(
                 height: 10,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               for (int i = 1; i < 5; i++)
                 Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0, vertical: 5.0),
                   child: Container(
                     width: double.infinity,
-                    height: 430.0,
+                    height: 420.0,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(25.0),
@@ -81,7 +142,7 @@ class _FeedsPageState extends State<FeedsPage> {
                     child: Column(
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                             vertical: 10.0,
                           ),
                           child: Column(
@@ -90,7 +151,7 @@ class _FeedsPageState extends State<FeedsPage> {
                                 leading: Container(
                                   width: 60.0,
                                   height: 60.0,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                     boxShadow: [
                                       BoxShadow(
@@ -110,39 +171,40 @@ class _FeedsPageState extends State<FeedsPage> {
                                     )),
                                   ),
                                 ),
-                                title: Text(
+                                title: const Text(
                                   'Bambang',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                subtitle: Text('10 jam yang lalu'),
+                                subtitle: const Text('10 jam yang lalu'),
                                 trailing: IconButton(
-                                  icon: Icon(Icons.more_horiz),
+                                  icon: const Icon(Icons.more_horiz),
                                   color: Colors.black,
                                   onPressed: () {},
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.symmetric(
+                                margin: const EdgeInsets.symmetric(
                                     horizontal: 10.0, vertical: 10.0),
-                                child: Text(
+                                child: const Text(
                                     'Dicari rumah seperti dibawah ini (ga terlalu mirip gapapa) wilayah JABODETABEK.'),
                               ),
                               Container(
-                                margin: EdgeInsets.all(10.0),
+                                margin: const EdgeInsets.all(10.0),
                                 width: double.infinity,
                                 height: 200.0,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(25.0),
-                                    image: DecorationImage(
+                                    image: const DecorationImage(
                                       image:
                                           AssetImage('assets/property 1.png'),
                                       fit: BoxFit.fitWidth,
                                     )),
                               ),
                               Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 55.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 55.0),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -152,19 +214,24 @@ class _FeedsPageState extends State<FeedsPage> {
                                         Row(
                                           children: <Widget>[
                                             IconButton(
-                                              icon: Icon(Icons.favorite_border),
+                                              icon: Icon(favorite
+                                                  ? Icons.favorite_border
+                                                  : Icons.favorite),
+                                              color: favorite
+                                                  ? Colors.black
+                                                  : Colors.pink,
                                               iconSize: 35.0,
-                                              onPressed: () {},
+                                              onPressed: activeFavorite,
                                             ),
                                           ],
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 150,
                                         ),
                                         Row(
                                           children: <Widget>[
                                             IconButton(
-                                              icon: Icon(Icons.chat),
+                                              icon: const Icon(Icons.chat),
                                               iconSize: 35.0,
                                               onPressed: () {},
                                             )
@@ -240,9 +307,9 @@ Future Sewakan_Rumah(BuildContext context) {
       backgroundColor: Colors.white,
       isDismissible: true,
       isScrollControlled: true,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-      builder: (context) => Container(
+      builder: (context) => SizedBox(
             height: 700,
             child: ListView(
               children: [
@@ -263,7 +330,7 @@ Future Sewakan_Rumah(BuildContext context) {
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                               color: Color.fromARGB(255, 205, 166, 122)),
                         ),
                         focusedBorder: OutlineInputBorder(
@@ -271,7 +338,7 @@ Future Sewakan_Rumah(BuildContext context) {
                         ),
                         fillColor: Colors.grey.shade200,
                         filled: true,
-                        contentPadding: EdgeInsets.symmetric(
+                        contentPadding: const EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 15.0),
                         hintText: 'Lokasi Properti',
                         // suffixIcon: Icon(Icons.search_rounded),
@@ -279,18 +346,18 @@ Future Sewakan_Rumah(BuildContext context) {
                     ),
                   ),
                 ),
-                Divider(
+                const Divider(
                   color: Color.fromARGB(255, 184, 184, 184),
                   thickness: 1.0,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10.0, top: 10.0),
+                const Padding(
+                  padding: EdgeInsets.only(left: 10.0, top: 10.0),
                   child: Text(
                     'Rentang Sewa',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Padding(
@@ -300,9 +367,6 @@ Future Sewakan_Rumah(BuildContext context) {
                     alignment: WrapAlignment.center,
                     children: <Widget>[
                       ElevatedButton(
-                        child: Text('harian',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 121, 121, 121))),
                         onPressed: () {},
                         style: ButtonStyle(
                             backgroundColor:
@@ -311,17 +375,17 @@ Future Sewakan_Rumah(BuildContext context) {
                                     RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20.0),
-                                    side: BorderSide(
+                                    side: const BorderSide(
                                         color: Color.fromARGB(
                                             255, 205, 166, 122))))),
+                        child: const Text('harian',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 121, 121, 121))),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 15,
                       ),
                       ElevatedButton(
-                        child: Text('mingguan',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 121, 121, 121))),
                         onPressed: () {},
                         style: ButtonStyle(
                             backgroundColor:
@@ -330,17 +394,17 @@ Future Sewakan_Rumah(BuildContext context) {
                                     RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20.0),
-                                    side: BorderSide(
+                                    side: const BorderSide(
                                         color: Color.fromARGB(
                                             255, 205, 166, 122))))),
+                        child: const Text('mingguan',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 121, 121, 121))),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 15,
                       ),
                       ElevatedButton(
-                        child: Text('bulanan',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 121, 121, 121))),
                         onPressed: () {},
                         style: ButtonStyle(
                             backgroundColor:
@@ -349,17 +413,17 @@ Future Sewakan_Rumah(BuildContext context) {
                                     RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20.0),
-                                    side: BorderSide(
+                                    side: const BorderSide(
                                         color: Color.fromARGB(
                                             255, 205, 166, 122))))),
+                        child: const Text('bulanan',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 121, 121, 121))),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 15,
                       ),
                       ElevatedButton(
-                        child: Text('3 bulan',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 121, 121, 121))),
                         onPressed: () {},
                         style: ButtonStyle(
                             backgroundColor:
@@ -368,17 +432,17 @@ Future Sewakan_Rumah(BuildContext context) {
                                     RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20.0),
-                                    side: BorderSide(
+                                    side: const BorderSide(
                                         color: Color.fromARGB(
                                             255, 205, 166, 122))))),
+                        child: const Text('3 bulan',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 121, 121, 121))),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 15,
                       ),
                       ElevatedButton(
-                        child: Text('6 bulan',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 121, 121, 121))),
                         onPressed: () {},
                         style: ButtonStyle(
                             backgroundColor:
@@ -387,17 +451,17 @@ Future Sewakan_Rumah(BuildContext context) {
                                     RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20.0),
-                                    side: BorderSide(
+                                    side: const BorderSide(
                                         color: Color.fromARGB(
                                             255, 205, 166, 122))))),
+                        child: const Text('6 bulan',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 121, 121, 121))),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 15,
                       ),
                       ElevatedButton(
-                        child: Text('tahunan',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 121, 121, 121))),
                         onPressed: () {},
                         style: ButtonStyle(
                             backgroundColor:
@@ -406,17 +470,17 @@ Future Sewakan_Rumah(BuildContext context) {
                                     RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20.0),
-                                    side: BorderSide(
+                                    side: const BorderSide(
                                         color: Color.fromARGB(
                                             255, 205, 166, 122))))),
+                        child: const Text('tahunan',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 121, 121, 121))),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 15,
                       ),
                       ElevatedButton(
-                        child: Text('semua',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 121, 121, 121))),
                         onPressed: () {},
                         style: ButtonStyle(
                             backgroundColor:
@@ -425,31 +489,34 @@ Future Sewakan_Rumah(BuildContext context) {
                                     RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20.0),
-                                    side: BorderSide(
+                                    side: const BorderSide(
                                         color: Color.fromARGB(
                                             255, 205, 166, 122))))),
+                        child: const Text('semua',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 121, 121, 121))),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 15,
                       ),
                     ],
                   ),
                 ),
-                Divider(
+                const Divider(
                   color: Color.fromARGB(255, 184, 184, 184),
                   thickness: 1.0,
                 ),
                 Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 10.0),
                       child: Text(
                         'Kisaran Harga (Rp)',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Padding(
@@ -473,7 +540,7 @@ Future Sewakan_Rumah(BuildContext context) {
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(5),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                         color:
                                             Color.fromARGB(255, 205, 166, 122)),
                                   ),
@@ -483,7 +550,7 @@ Future Sewakan_Rumah(BuildContext context) {
                                   ),
                                   fillColor: Colors.grey.shade200,
                                   filled: true,
-                                  contentPadding: EdgeInsets.symmetric(
+                                  contentPadding: const EdgeInsets.symmetric(
                                       vertical: 20.0, horizontal: 10.0),
                                   hintText: '',
                                 ),
@@ -493,21 +560,21 @@ Future Sewakan_Rumah(BuildContext context) {
                     ),
                   ],
                 ),
-                Divider(
+                const Divider(
                   color: Color.fromARGB(255, 184, 184, 184),
                   thickness: 1.0,
                 ),
                 Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 10.0),
                       child: Text(
                         'Rentang Area (meter persegi)',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Padding(
@@ -531,7 +598,7 @@ Future Sewakan_Rumah(BuildContext context) {
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(5),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                         color:
                                             Color.fromARGB(255, 205, 166, 122)),
                                   ),
@@ -541,7 +608,7 @@ Future Sewakan_Rumah(BuildContext context) {
                                   ),
                                   fillColor: Colors.grey.shade200,
                                   filled: true,
-                                  contentPadding: EdgeInsets.symmetric(
+                                  contentPadding: const EdgeInsets.symmetric(
                                       vertical: 20.0, horizontal: 10.0),
                                   hintText: '',
                                 ),
@@ -551,15 +618,15 @@ Future Sewakan_Rumah(BuildContext context) {
                     ),
                   ],
                 ),
-                Divider(
+                const Divider(
                   color: Color.fromARGB(255, 184, 184, 184),
                   thickness: 1.0,
                 ),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
+                      padding: EdgeInsets.only(left: 10.0),
                       child: Text(
                         'Jumlah Kamar Tidur',
                         style: TextStyle(
@@ -567,7 +634,7 @@ Future Sewakan_Rumah(BuildContext context) {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 10.0),
+                      padding: EdgeInsets.only(right: 10.0),
                       child: Text(
                         'Jumlah Kamar Mandi',
                         style: TextStyle(
@@ -596,7 +663,7 @@ Future Sewakan_Rumah(BuildContext context) {
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: Color.fromARGB(255, 205, 166, 122)),
                               ),
                               focusedBorder: OutlineInputBorder(
@@ -605,7 +672,7 @@ Future Sewakan_Rumah(BuildContext context) {
                               ),
                               fillColor: Colors.grey.shade200,
                               filled: true,
-                              contentPadding: EdgeInsets.symmetric(
+                              contentPadding: const EdgeInsets.symmetric(
                                   vertical: 20.0, horizontal: 10.0),
                               hintText: '',
                             ),
@@ -630,7 +697,7 @@ Future Sewakan_Rumah(BuildContext context) {
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: Color.fromARGB(255, 205, 166, 122)),
                               ),
                               focusedBorder: OutlineInputBorder(
@@ -639,7 +706,7 @@ Future Sewakan_Rumah(BuildContext context) {
                               ),
                               fillColor: Colors.grey.shade200,
                               filled: true,
-                              contentPadding: EdgeInsets.symmetric(
+                              contentPadding: const EdgeInsets.symmetric(
                                   vertical: 20.0, horizontal: 10.0),
                               hintText: '',
                             ),
@@ -649,24 +716,24 @@ Future Sewakan_Rumah(BuildContext context) {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
-                    child: Text('Pasang Iklan'),
                     onPressed: () {},
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
-                            Color.fromARGB(255, 205, 166, 122)),
+                            const Color.fromARGB(255, 205, 166, 122)),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20.0),
-                                    side: BorderSide(
+                                    side: const BorderSide(
                                         color: Color.fromARGB(
                                             255, 205, 166, 122))))),
+                    child: const Text('Pasang Iklan'),
                   ),
                 )
               ],

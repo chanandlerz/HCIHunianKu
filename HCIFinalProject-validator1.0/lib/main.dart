@@ -1,12 +1,7 @@
 import 'package:app_development/components/bottom_nav_bar.dart';
-import 'package:app_development/components/get_udid.dart';
+import 'package:app_development/pages/create_post_page.dart';
 import 'package:app_development/pages/pasang_iklan_page.dart';
-import 'package:app_development/pages/login_page.dart';
-import 'package:app_development/pages/profile_page.dart';
-import 'package:app_development/pages/register_page.dart';
-import 'package:app_development/splash/splash.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_udid/flutter_udid.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthUtils {
@@ -29,7 +24,7 @@ class AuthUtils {
 }
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 // class MyApp extends StatelessWidget {
@@ -86,9 +81,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: FilterPasangIklan(),
+      home: BottomNavBar(),
     );
   }
 }
