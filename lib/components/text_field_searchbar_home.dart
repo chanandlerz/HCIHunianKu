@@ -21,12 +21,10 @@ class SearchTextFieldHomePage extends StatelessWidget {
         controller: controller,
         decoration: InputDecoration(
             hintStyle: const TextStyle(fontSize: 15),
-            enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Color.fromARGB(255, 205, 166, 122)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey.shade400),
-            ),
+            enabledBorder: OutlineInputBorder(
+                borderSide:
+                    BorderSide(color: Color.fromARGB(255, 205, 166, 122)),
+                borderRadius: BorderRadius.circular(15.0)),
             fillColor: Colors.grey.shade200,
             filled: true,
             contentPadding:

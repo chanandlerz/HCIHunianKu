@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:convert';
+import 'package:app_development/components/bottom_nav_bar.dart';
 import 'package:app_development/pages/pasang_iklan_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_udid/flutter_udid.dart';
@@ -78,7 +79,7 @@ class _JualKomersilState extends State<JualKomersil> {
   }
 
   Future postPropertyToServer() async {
-    final Uri url = Uri.https('debug.lubisputri16.repl.co', 'properties');
+    final Uri url = Uri.https('debug.lubisputri16.repl.co', 'property');
     String udid = await FlutterUdid.udid;
 
     int timestamp = DateTime.now().millisecondsSinceEpoch;
@@ -93,7 +94,7 @@ class _JualKomersilState extends State<JualKomersil> {
       body: jsonEncode({
         'udid': udid,
         'action': "Jual",
-        'type': "Komersil",
+        'type': "Komersial",
         'lokasi': lokasiController.text,
         'harga': hargaController.text,
         'area': luasController.text,
@@ -470,6 +471,8 @@ class _JualKomersilState extends State<JualKomersil> {
             child: ElevatedButton(
               onPressed: () async {
                 await postPropertyToServer();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => BottomNavBar()));
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
@@ -557,7 +560,7 @@ class _JualRumahState extends State<JualRumah> {
   }
 
   Future postPropertyToServer() async {
-    final Uri url = Uri.https('debug.lubisputri16.repl.co', 'properties');
+    final Uri url = Uri.https('debug.lubisputri16.repl.co', 'property');
     String udid = await FlutterUdid.udid;
 
     int timestamp = DateTime.now().millisecondsSinceEpoch;
@@ -572,7 +575,7 @@ class _JualRumahState extends State<JualRumah> {
       body: jsonEncode({
         'udid': udid,
         'action': "Jual",
-        'type': "Komersil",
+        'type': "Rumah",
         'lokasi': lokasiController.text,
         'harga': hargaController.text,
         'area': luasController.text,
@@ -949,6 +952,8 @@ class _JualRumahState extends State<JualRumah> {
             child: ElevatedButton(
               onPressed: () async {
                 await postPropertyToServer();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => BottomNavBar()));
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
@@ -1036,7 +1041,7 @@ class _JualApartementState extends State<JualApartement> {
   }
 
   Future postPropertyToServer() async {
-    final Uri url = Uri.https('debug.lubisputri16.repl.co', 'properties');
+    final Uri url = Uri.https('debug.lubisputri16.repl.co', 'property');
     String udid = await FlutterUdid.udid;
 
     int timestamp = DateTime.now().millisecondsSinceEpoch;
@@ -1051,7 +1056,7 @@ class _JualApartementState extends State<JualApartement> {
       body: jsonEncode({
         'udid': udid,
         'action': "Jual",
-        'type': "Komersil",
+        'type': "Apartement",
         'lokasi': lokasiController.text,
         'harga': hargaController.text,
         'area': luasController.text,
@@ -1428,6 +1433,8 @@ class _JualApartementState extends State<JualApartement> {
             child: ElevatedButton(
               onPressed: () async {
                 await postPropertyToServer();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => BottomNavBar()));
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
@@ -1582,14 +1589,30 @@ class _JualKostState extends State<JualKost> {
   }
 
   Future postPropertyToServer() async {
-    final Uri url = Uri.https('debug.lubisputri16.repl.co', 'properties');
+    final Uri url = Uri.https('debug.lubisputri16.repl.co', 'property');
     String udid = await FlutterUdid.udid;
+    String kMandiKos = "";
+    String tipeKost = "";
 
     int timestamp = DateTime.now().millisecondsSinceEpoch;
     DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
     String formattedDate =
         "${dateTime.year}-${_addLeadingZero(dateTime.month)}-${_addLeadingZero(dateTime.day)} "
         "${_addLeadingZero(dateTime.hour)}:${_addLeadingZero(dateTime.minute)}:${_addLeadingZero(dateTime.second)}";
+
+    if (isPressedJualTipeKamarMandiDalam == true) {
+      kMandiKos = "Dalam";
+    } else if (isPressedJualTipeKamarMandiLuar == true) {
+      kMandiKos = "Luar";
+    }
+
+    if (isPressedJualTipeKostPutra == true) {
+      tipeKost = "Putra";
+    } else if (isPressedJualTipeKostPutri == true) {
+      tipeKost = "Putri";
+    } else if (isPressedJualTipeKostCampur == true) {
+      tipeKost = "Campur";
+    }
 
     final response = await http.post(
       url,
@@ -1601,9 +1624,8 @@ class _JualKostState extends State<JualKost> {
         'lokasi': lokasiController.text,
         'harga': hargaController.text,
         'area': luasController.text,
-        //masi belum
-        'kMandiKos': '',
-        'tipeKost': '',
+        'kMandiKos': kMandiKos,
+        'tipeKost': tipeKost,
         'kTidur': jumlahKamarTidurController.text,
         'kMandi': jumlahKamarMandiController.text,
         'image': base64string,
@@ -2105,6 +2127,8 @@ class _JualKostState extends State<JualKost> {
             child: ElevatedButton(
               onPressed: () async {
                 await postPropertyToServer();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => BottomNavBar()));
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
@@ -2196,7 +2220,7 @@ class _JualTanahState extends State<JualTanah> {
   }
 
   Future postPropertyToServer() async {
-    final Uri url = Uri.https('debug.lubisputri16.repl.co', 'properties');
+    final Uri url = Uri.https('debug.lubisputri16.repl.co', 'property');
     String udid = await FlutterUdid.udid;
 
     int timestamp = DateTime.now().millisecondsSinceEpoch;
@@ -2529,6 +2553,8 @@ class _JualTanahState extends State<JualTanah> {
             child: ElevatedButton(
               onPressed: () async {
                 await postPropertyToServer();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => BottomNavBar()));
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(

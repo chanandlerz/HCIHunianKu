@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:convert';
+import 'package:app_development/components/bottom_nav_bar.dart';
 import 'package:app_development/pages/pasang_iklan_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_udid/flutter_udid.dart';
@@ -28,6 +29,131 @@ class _SewakanRumahState extends State<SewakanRumah> {
   final TextEditingController jumlahKamarMandiController =
       TextEditingController();
   final TextEditingController ketinggianController = TextEditingController();
+
+  final TextEditingController rentangHarga1Controller = TextEditingController();
+  final TextEditingController rentangHarga2Controller = TextEditingController();
+  final TextEditingController rentangArea1Controller = TextEditingController();
+  final TextEditingController rentangArea2Controller = TextEditingController();
+
+  bool isPressedSewakanRentangHarian = false;
+  bool isPressedSewakanRentangMingguan = false;
+  bool isPressedSewakanRentangBulanan = false;
+  bool isPressedSewakanRentang3Bulan = false;
+  bool isPressedSewakanRentang6Bulan = false;
+  bool isPressedSewakanRentangTahunan = false;
+  bool isPressedSewakanRentangSemua = false;
+
+  void activeHarian() {
+    setState(() {
+      if (isPressedSewakanRentangHarian) {
+        isPressedSewakanRentangHarian = false;
+      } else {
+        isPressedSewakanRentangHarian = true;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void activeMingguan() {
+    setState(() {
+      if (isPressedSewakanRentangMingguan) {
+        isPressedSewakanRentangMingguan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = true;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void activeBulanan() {
+    setState(() {
+      if (isPressedSewakanRentangBulanan) {
+        isPressedSewakanRentangBulanan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = true;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void active3Bulan() {
+    setState(() {
+      if (isPressedSewakanRentang3Bulan) {
+        isPressedSewakanRentang3Bulan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = true;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void active6Bulan() {
+    setState(() {
+      if (isPressedSewakanRentang6Bulan) {
+        isPressedSewakanRentang6Bulan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = true;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void activeTahunan() {
+    setState(() {
+      if (isPressedSewakanRentangTahunan) {
+        isPressedSewakanRentangTahunan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = true;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void activeSemua() {
+    setState(() {
+      if (isPressedSewakanRentangSemua) {
+        isPressedSewakanRentangSemua = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = true;
+      }
+    });
+  }
 
   File? image;
   final picker = ImagePicker();
@@ -164,120 +290,162 @@ class _SewakanRumahState extends State<SewakanRumah> {
               alignment: WrapAlignment.center,
               children: <Widget>[
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeHarian,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangHarian
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('harian',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangHarian
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('harian',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangHarian
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeMingguan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangMingguan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('mingguan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangMingguan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('mingguan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangMingguan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeBulanan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangBulanan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('bulanan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangBulanan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('bulanan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangBulanan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: active3Bulan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentang3Bulan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('3 bulan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentang3Bulan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('3 bulan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentang3Bulan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: active6Bulan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentang6Bulan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('6 bulan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentang6Bulan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('6 bulan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentang6Bulan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeTahunan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangTahunan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('tahunan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangTahunan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('tahunan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangTahunan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeSemua,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangSemua
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('semua',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangSemua
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('semua',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangSemua
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
@@ -289,27 +457,28 @@ class _SewakanRumahState extends State<SewakanRumah> {
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              'Rentang Harga (Rp)',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          // const SizedBox(
+          //   height: 10,
+          // ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(
-                  'Kisaran Harga (Rp)',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
               Padding(
                 padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 205.0,
+                    width: 160.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: hargaController,
+                      controller: rentangHarga1Controller,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
@@ -330,45 +499,34 @@ class _SewakanRumahState extends State<SewakanRumah> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 15.0),
+                            vertical: 5.0, horizontal: 10.0),
                         hintText: '',
                       ),
                     ),
                   ),
                 ]),
               ),
-            ],
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
-          ),
-          Row(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
                 child: Text(
-                  'Luas Area (meter persegi)',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  'hingga',
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
               ),
               Padding(
                 padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 147.0,
+                    width: 160.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: luasController,
+                      controller: rentangArea1Controller,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
                       //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan rentang area properti";
+                      //     return "Masukkan harga properti";
                       //   }
                       //   return null;
                       // },
@@ -384,7 +542,102 @@ class _SewakanRumahState extends State<SewakanRumah> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 15.0),
+                            vertical: 5.0, horizontal: 10.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+            ],
+          ),
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              'Rentang Area (meter persegi)',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 160.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: rentangArea2Controller,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan harga properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                child: Text(
+                  'hingga',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 160.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: rentangHarga2Controller,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan harga properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
                         hintText: '',
                       ),
                     ),
@@ -544,7 +797,10 @@ class _SewakanRumahState extends State<SewakanRumah> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => BottomNavBar()));
+              },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
                       const Color.fromARGB(255, 205, 166, 122)),
@@ -581,6 +837,131 @@ class _SewakanTanahState extends State<SewakanTanah> {
   final TextEditingController jumlahKamarMandiController =
       TextEditingController();
   final TextEditingController ketinggianController = TextEditingController();
+
+  final TextEditingController rentangHarga1Controller = TextEditingController();
+  final TextEditingController rentangHarga2Controller = TextEditingController();
+  final TextEditingController rentangArea1Controller = TextEditingController();
+  final TextEditingController rentangArea2Controller = TextEditingController();
+
+  bool isPressedSewakanRentangHarian = false;
+  bool isPressedSewakanRentangMingguan = false;
+  bool isPressedSewakanRentangBulanan = false;
+  bool isPressedSewakanRentang3Bulan = false;
+  bool isPressedSewakanRentang6Bulan = false;
+  bool isPressedSewakanRentangTahunan = false;
+  bool isPressedSewakanRentangSemua = false;
+
+  void activeHarian() {
+    setState(() {
+      if (isPressedSewakanRentangHarian) {
+        isPressedSewakanRentangHarian = false;
+      } else {
+        isPressedSewakanRentangHarian = true;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void activeMingguan() {
+    setState(() {
+      if (isPressedSewakanRentangMingguan) {
+        isPressedSewakanRentangMingguan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = true;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void activeBulanan() {
+    setState(() {
+      if (isPressedSewakanRentangBulanan) {
+        isPressedSewakanRentangBulanan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = true;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void active3Bulan() {
+    setState(() {
+      if (isPressedSewakanRentang3Bulan) {
+        isPressedSewakanRentang3Bulan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = true;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void active6Bulan() {
+    setState(() {
+      if (isPressedSewakanRentang6Bulan) {
+        isPressedSewakanRentang6Bulan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = true;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void activeTahunan() {
+    setState(() {
+      if (isPressedSewakanRentangTahunan) {
+        isPressedSewakanRentangTahunan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = true;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void activeSemua() {
+    setState(() {
+      if (isPressedSewakanRentangSemua) {
+        isPressedSewakanRentangSemua = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = true;
+      }
+    });
+  }
 
   File? image;
   final picker = ImagePicker();
@@ -717,120 +1098,162 @@ class _SewakanTanahState extends State<SewakanTanah> {
               alignment: WrapAlignment.center,
               children: <Widget>[
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeHarian,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangHarian
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('harian',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangHarian
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('harian',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangHarian
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeMingguan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangMingguan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('mingguan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangMingguan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('mingguan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangMingguan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeBulanan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangBulanan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('bulanan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangBulanan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('bulanan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangBulanan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: active3Bulan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentang3Bulan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('3 bulan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentang3Bulan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('3 bulan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentang3Bulan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: active6Bulan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentang6Bulan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('6 bulan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentang6Bulan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('6 bulan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentang6Bulan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeTahunan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangTahunan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('tahunan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangTahunan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('tahunan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangTahunan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeSemua,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangSemua
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('semua',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangSemua
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('semua',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangSemua
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
@@ -842,27 +1265,28 @@ class _SewakanTanahState extends State<SewakanTanah> {
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              'Rentang Harga (Rp)',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          // const SizedBox(
+          //   height: 10,
+          // ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(
-                  'Kisaran Harga (Rp)',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
               Padding(
                 padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 205.0,
+                    width: 160.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: hargaController,
+                      controller: rentangHarga1Controller,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
@@ -883,45 +1307,34 @@ class _SewakanTanahState extends State<SewakanTanah> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 15.0),
+                            vertical: 5.0, horizontal: 10.0),
                         hintText: '',
                       ),
                     ),
                   ),
                 ]),
               ),
-            ],
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
-          ),
-          Row(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
                 child: Text(
-                  'Luas Area (meter persegi)',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  'hingga',
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
               ),
               Padding(
                 padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 147.0,
+                    width: 160.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: luasController,
+                      controller: rentangArea1Controller,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
                       //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan rentang area properti";
+                      //     return "Masukkan harga properti";
                       //   }
                       //   return null;
                       // },
@@ -937,7 +1350,102 @@ class _SewakanTanahState extends State<SewakanTanah> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 15.0),
+                            vertical: 5.0, horizontal: 10.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+            ],
+          ),
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              'Rentang Area (meter persegi)',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 160.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: rentangArea2Controller,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan harga properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                child: Text(
+                  'hingga',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 160.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: rentangHarga2Controller,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan harga properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
                         hintText: '',
                       ),
                     ),
@@ -1055,7 +1563,10 @@ class _SewakanTanahState extends State<SewakanTanah> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => BottomNavBar()));
+              },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
                       const Color.fromARGB(255, 205, 166, 122)),
@@ -1098,6 +1609,131 @@ class _SewakanKostState extends State<SewakanKost> {
   bool isPressedSewakanTipeKostPutra = false;
   bool isPressedSewakanTipeKostPutri = false;
   bool isPressedSewakanTipeKostCampur = false;
+
+  final TextEditingController rentangHarga1Controller = TextEditingController();
+  final TextEditingController rentangHarga2Controller = TextEditingController();
+  final TextEditingController rentangArea1Controller = TextEditingController();
+  final TextEditingController rentangArea2Controller = TextEditingController();
+
+  bool isPressedSewakanRentangHarian = false;
+  bool isPressedSewakanRentangMingguan = false;
+  bool isPressedSewakanRentangBulanan = false;
+  bool isPressedSewakanRentang3Bulan = false;
+  bool isPressedSewakanRentang6Bulan = false;
+  bool isPressedSewakanRentangTahunan = false;
+  bool isPressedSewakanRentangSemua = false;
+
+  void activeHarian() {
+    setState(() {
+      if (isPressedSewakanRentangHarian) {
+        isPressedSewakanRentangHarian = false;
+      } else {
+        isPressedSewakanRentangHarian = true;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void activeMingguan() {
+    setState(() {
+      if (isPressedSewakanRentangMingguan) {
+        isPressedSewakanRentangMingguan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = true;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void activeBulanan() {
+    setState(() {
+      if (isPressedSewakanRentangBulanan) {
+        isPressedSewakanRentangBulanan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = true;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void active3Bulan() {
+    setState(() {
+      if (isPressedSewakanRentang3Bulan) {
+        isPressedSewakanRentang3Bulan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = true;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void active6Bulan() {
+    setState(() {
+      if (isPressedSewakanRentang6Bulan) {
+        isPressedSewakanRentang6Bulan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = true;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void activeTahunan() {
+    setState(() {
+      if (isPressedSewakanRentangTahunan) {
+        isPressedSewakanRentangTahunan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = true;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void activeSemua() {
+    setState(() {
+      if (isPressedSewakanRentangSemua) {
+        isPressedSewakanRentangSemua = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = true;
+      }
+    });
+  }
 
   void activeKamarMandiDalam() {
     setState(() {
@@ -1292,120 +1928,162 @@ class _SewakanKostState extends State<SewakanKost> {
               alignment: WrapAlignment.center,
               children: <Widget>[
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeHarian,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangHarian
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('harian',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangHarian
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('harian',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangHarian
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeMingguan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangMingguan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('mingguan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangMingguan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('mingguan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangMingguan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeBulanan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangBulanan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('bulanan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangBulanan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('bulanan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangBulanan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: active3Bulan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentang3Bulan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('3 bulan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentang3Bulan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('3 bulan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentang3Bulan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: active6Bulan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentang6Bulan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('6 bulan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentang6Bulan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('6 bulan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentang6Bulan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeTahunan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangTahunan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('tahunan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangTahunan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('tahunan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangTahunan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeSemua,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangSemua
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('semua',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangSemua
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('semua',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangSemua
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
@@ -1417,27 +2095,28 @@ class _SewakanKostState extends State<SewakanKost> {
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              'Rentang Harga (Rp)',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          // const SizedBox(
+          //   height: 10,
+          // ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(
-                  'Kisaran Harga (Rp)',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
               Padding(
                 padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 205.0,
+                    width: 160.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: hargaController,
+                      controller: rentangHarga1Controller,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
@@ -1458,45 +2137,34 @@ class _SewakanKostState extends State<SewakanKost> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 15.0),
+                            vertical: 5.0, horizontal: 10.0),
                         hintText: '',
                       ),
                     ),
                   ),
                 ]),
               ),
-            ],
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
-          ),
-          Row(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
                 child: Text(
-                  'Luas Area (meter persegi)',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  'hingga',
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
               ),
               Padding(
                 padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 148.0,
+                    width: 160.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: luasController,
+                      controller: rentangArea1Controller,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
                       //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan rentang area properti";
+                      //     return "Masukkan harga properti";
                       //   }
                       //   return null;
                       // },
@@ -1512,7 +2180,102 @@ class _SewakanKostState extends State<SewakanKost> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 15.0),
+                            vertical: 5.0, horizontal: 10.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+            ],
+          ),
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              'Rentang Area (meter persegi)',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 160.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: rentangArea2Controller,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan harga properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                child: Text(
+                  'hingga',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 160.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: rentangHarga2Controller,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan harga properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
                         hintText: '',
                       ),
                     ),
@@ -1817,7 +2580,10 @@ class _SewakanKostState extends State<SewakanKost> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => BottomNavBar()));
+              },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
                       const Color.fromARGB(255, 205, 166, 122)),
@@ -1854,6 +2620,131 @@ class _SewakanApartementState extends State<SewakanApartement> {
   final TextEditingController jumlahKamarMandiController =
       TextEditingController();
   final TextEditingController ketinggianController = TextEditingController();
+
+  final TextEditingController rentangHarga1Controller = TextEditingController();
+  final TextEditingController rentangHarga2Controller = TextEditingController();
+  final TextEditingController rentangArea1Controller = TextEditingController();
+  final TextEditingController rentangArea2Controller = TextEditingController();
+
+  bool isPressedSewakanRentangHarian = false;
+  bool isPressedSewakanRentangMingguan = false;
+  bool isPressedSewakanRentangBulanan = false;
+  bool isPressedSewakanRentang3Bulan = false;
+  bool isPressedSewakanRentang6Bulan = false;
+  bool isPressedSewakanRentangTahunan = false;
+  bool isPressedSewakanRentangSemua = false;
+
+  void activeHarian() {
+    setState(() {
+      if (isPressedSewakanRentangHarian) {
+        isPressedSewakanRentangHarian = false;
+      } else {
+        isPressedSewakanRentangHarian = true;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void activeMingguan() {
+    setState(() {
+      if (isPressedSewakanRentangMingguan) {
+        isPressedSewakanRentangMingguan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = true;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void activeBulanan() {
+    setState(() {
+      if (isPressedSewakanRentangBulanan) {
+        isPressedSewakanRentangBulanan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = true;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void active3Bulan() {
+    setState(() {
+      if (isPressedSewakanRentang3Bulan) {
+        isPressedSewakanRentang3Bulan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = true;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void active6Bulan() {
+    setState(() {
+      if (isPressedSewakanRentang6Bulan) {
+        isPressedSewakanRentang6Bulan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = true;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void activeTahunan() {
+    setState(() {
+      if (isPressedSewakanRentangTahunan) {
+        isPressedSewakanRentangTahunan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = true;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void activeSemua() {
+    setState(() {
+      if (isPressedSewakanRentangSemua) {
+        isPressedSewakanRentangSemua = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = true;
+      }
+    });
+  }
 
   File? image;
   final picker = ImagePicker();
@@ -1990,120 +2881,162 @@ class _SewakanApartementState extends State<SewakanApartement> {
               alignment: WrapAlignment.center,
               children: <Widget>[
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeHarian,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangHarian
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('harian',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangHarian
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('harian',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangHarian
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeMingguan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangMingguan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('mingguan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangMingguan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('mingguan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangMingguan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeBulanan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangBulanan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('bulanan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangBulanan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('bulanan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangBulanan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: active3Bulan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentang3Bulan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('3 bulan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentang3Bulan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('3 bulan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentang3Bulan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: active6Bulan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentang6Bulan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('6 bulan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentang6Bulan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('6 bulan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentang6Bulan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeTahunan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangTahunan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('tahunan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangTahunan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('tahunan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangTahunan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeSemua,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangSemua
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('semua',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangSemua
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('semua',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangSemua
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
@@ -2115,27 +3048,28 @@ class _SewakanApartementState extends State<SewakanApartement> {
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              'Rentang Harga (Rp)',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          // const SizedBox(
+          //   height: 10,
+          // ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(
-                  'Kisaran Harga (Rp)',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
               Padding(
                 padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 205.0,
+                    width: 160.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: hargaController,
+                      controller: rentangHarga1Controller,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
@@ -2156,45 +3090,34 @@ class _SewakanApartementState extends State<SewakanApartement> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 15.0),
+                            vertical: 5.0, horizontal: 10.0),
                         hintText: '',
                       ),
                     ),
                   ),
                 ]),
               ),
-            ],
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
-          ),
-          Row(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
                 child: Text(
-                  'Luas Area (meter persegi)',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  'hingga',
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
               ),
               Padding(
                 padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 147.0,
+                    width: 160.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: luasController,
+                      controller: rentangArea1Controller,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
                       //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan rentang area properti";
+                      //     return "Masukkan harga properti";
                       //   }
                       //   return null;
                       // },
@@ -2210,7 +3133,102 @@ class _SewakanApartementState extends State<SewakanApartement> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 15.0),
+                            vertical: 5.0, horizontal: 10.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+            ],
+          ),
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              'Rentang Area (meter persegi)',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 160.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: rentangArea2Controller,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan harga properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                child: Text(
+                  'hingga',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 160.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: rentangHarga2Controller,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan harga properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
                         hintText: '',
                       ),
                     ),
@@ -2370,7 +3388,10 @@ class _SewakanApartementState extends State<SewakanApartement> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => BottomNavBar()));
+              },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
                       const Color.fromARGB(255, 205, 166, 122)),
@@ -2407,6 +3428,131 @@ class _SewakanKomersilState extends State<SewakanKomersil> {
   final TextEditingController jumlahKamarMandiController =
       TextEditingController();
   final TextEditingController ketinggianController = TextEditingController();
+
+  final TextEditingController rentangHarga1Controller = TextEditingController();
+  final TextEditingController rentangHarga2Controller = TextEditingController();
+  final TextEditingController rentangArea1Controller = TextEditingController();
+  final TextEditingController rentangArea2Controller = TextEditingController();
+
+  bool isPressedSewakanRentangHarian = false;
+  bool isPressedSewakanRentangMingguan = false;
+  bool isPressedSewakanRentangBulanan = false;
+  bool isPressedSewakanRentang3Bulan = false;
+  bool isPressedSewakanRentang6Bulan = false;
+  bool isPressedSewakanRentangTahunan = false;
+  bool isPressedSewakanRentangSemua = false;
+
+  void activeHarian() {
+    setState(() {
+      if (isPressedSewakanRentangHarian) {
+        isPressedSewakanRentangHarian = false;
+      } else {
+        isPressedSewakanRentangHarian = true;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void activeMingguan() {
+    setState(() {
+      if (isPressedSewakanRentangMingguan) {
+        isPressedSewakanRentangMingguan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = true;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void activeBulanan() {
+    setState(() {
+      if (isPressedSewakanRentangBulanan) {
+        isPressedSewakanRentangBulanan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = true;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void active3Bulan() {
+    setState(() {
+      if (isPressedSewakanRentang3Bulan) {
+        isPressedSewakanRentang3Bulan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = true;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void active6Bulan() {
+    setState(() {
+      if (isPressedSewakanRentang6Bulan) {
+        isPressedSewakanRentang6Bulan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = true;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void activeTahunan() {
+    setState(() {
+      if (isPressedSewakanRentangTahunan) {
+        isPressedSewakanRentangTahunan = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = true;
+        isPressedSewakanRentangSemua = false;
+      }
+    });
+  }
+
+  void activeSemua() {
+    setState(() {
+      if (isPressedSewakanRentangSemua) {
+        isPressedSewakanRentangSemua = false;
+      } else {
+        isPressedSewakanRentangHarian = false;
+        isPressedSewakanRentangMingguan = false;
+        isPressedSewakanRentangBulanan = false;
+        isPressedSewakanRentang3Bulan = false;
+        isPressedSewakanRentang6Bulan = false;
+        isPressedSewakanRentangTahunan = false;
+        isPressedSewakanRentangSemua = true;
+      }
+    });
+  }
 
   File? image;
   final picker = ImagePicker();
@@ -2543,120 +3689,162 @@ class _SewakanKomersilState extends State<SewakanKomersil> {
               alignment: WrapAlignment.center,
               children: <Widget>[
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeHarian,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangHarian
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('harian',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangHarian
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('harian',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangHarian
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeMingguan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangMingguan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('mingguan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangMingguan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('mingguan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangMingguan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeBulanan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangBulanan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('bulanan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangBulanan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('bulanan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangBulanan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: active3Bulan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentang3Bulan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('3 bulan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentang3Bulan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('3 bulan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentang3Bulan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: active6Bulan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentang6Bulan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('6 bulan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentang6Bulan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('6 bulan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentang6Bulan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeTahunan,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangTahunan
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('tahunan',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangTahunan
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('tahunan',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangTahunan
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: activeSemua,
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          isPressedSewakanRentangSemua
+                              ? Color.fromARGB(255, 205, 166, 122)
+                              : Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 205, 166, 122))))),
-                  child: const Text('semua',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 121, 121, 121))),
+                              side: BorderSide(
+                                  color: isPressedSewakanRentangSemua
+                                      ? Colors.transparent
+                                      : Color.fromARGB(255, 205, 166, 122))))),
+                  child: Text('semua',
+                      style: TextStyle(
+                          color: isPressedSewakanRentangSemua
+                              ? Colors.white
+                              : Color.fromARGB(255, 121, 121, 121))),
                 ),
                 const SizedBox(
                   width: 15,
@@ -2668,27 +3856,28 @@ class _SewakanKomersilState extends State<SewakanKomersil> {
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              'Rentang Harga (Rp)',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          // const SizedBox(
+          //   height: 10,
+          // ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(
-                  'Kisaran Harga (Rp)',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
               Padding(
                 padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 205.0,
+                    width: 160.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: hargaController,
+                      controller: rentangHarga1Controller,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
@@ -2709,45 +3898,34 @@ class _SewakanKomersilState extends State<SewakanKomersil> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 15.0),
+                            vertical: 5.0, horizontal: 10.0),
                         hintText: '',
                       ),
                     ),
                   ),
                 ]),
               ),
-            ],
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
-          ),
-          Row(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
                 child: Text(
-                  'Luas Area (meter persegi)',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  'hingga',
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
               ),
               Padding(
                 padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 147.0,
+                    width: 160.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: luasController,
+                      controller: rentangArea1Controller,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
                       //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan rentang area properti";
+                      //     return "Masukkan harga properti";
                       //   }
                       //   return null;
                       // },
@@ -2763,7 +3941,102 @@ class _SewakanKomersilState extends State<SewakanKomersil> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 15.0),
+                            vertical: 5.0, horizontal: 10.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+            ],
+          ),
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              'Rentang Area (meter persegi)',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 160.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: rentangArea2Controller,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan harga properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                child: Text(
+                  'hingga',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 160.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: rentangHarga2Controller,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan harga properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
                         hintText: '',
                       ),
                     ),
@@ -2923,7 +4196,10 @@ class _SewakanKomersilState extends State<SewakanKomersil> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => BottomNavBar()));
+              },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
                       const Color.fromARGB(255, 205, 166, 122)),

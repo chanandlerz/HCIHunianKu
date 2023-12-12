@@ -3,12 +3,12 @@ import 'dart:typed_data';
 import 'dart:convert';
 import 'package:app_development/pages/filter_property_page.dart';
 import 'package:app_development/pages/pasang_iklan_page.dart';
-import 'package:http/http.dart' as http;
+import 'package:app_development/pages/property_page.dart';
 import 'package:flutter_udid/flutter_udid.dart';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
 
 // Beli Komersil
 class BeliKomersil extends StatefulWidget {
@@ -28,59 +28,14 @@ class _BeliKomersilState extends State<BeliKomersil> {
       TextEditingController();
   final TextEditingController ketinggianController = TextEditingController();
 
-  File? image;
-  final picker = ImagePicker();
-  String? imageFileName;
+  var filteredData;
 
-  String base64string = '';
-
-  Future<void> getImageFromGallery() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      image = File(pickedFile.path);
-
-      ///File imagefile = File(imagepath); //convert Path to File
-      Future<Uint8List> imagebytes = image!.readAsBytes(); //convert to bytes
-      Uint8List bytes = await imagebytes;
-
-      base64string = base64.encode(bytes); //convert bytes to base64 string
-      setState(() {
-        print(base64string);
-      });
-    }
-
-    updateFileName();
-  }
-
-  void updateFileName() {
-    if (image != null) {
-      Uri uri = Uri.file(image!.path);
-      imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
-      setState(() {});
-    }
-  }
-
-  Future getImageFromCamera() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-    if (pickedFile != null) {
-      image = File(pickedFile.path);
-
-      Future<Uint8List> imagebytes = image!.readAsBytes(); //convert to bytes
-      Uint8List bytes = await imagebytes;
-
-      base64string = base64.encode(bytes);
-      setState(() {
-        print(base64string);
-      });
-
-      updateFileName();
-    }
-  }
-
-  Future postPropertyToServer() async {
-    final Uri url = Uri.https('debug.lubisputri16.repl.co', 'properties');
+  Future postFilterToServer() async {
+    //current work
+    final Uri url = Uri.https('debug.lubisputri16.repl.co', 'filter');
     String udid = await FlutterUdid.udid;
+    String kMandiKos = "";
+    String tipeKost = "";
 
     int timestamp = DateTime.now().millisecondsSinceEpoch;
     DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
@@ -94,61 +49,29 @@ class _BeliKomersilState extends State<BeliKomersil> {
       body: jsonEncode({
         'udid': udid,
         'action': "Beli",
-        'type': "Komersil",
+        'type': "Komersial",
         'lokasi': lokasiController.text,
         'harga': rentangHargaController.text,
         'area': rentangAreaController.text,
+        // 'kMandikos': kMandiKos,
+        // 'tipeKost': tipeKost,
         'kTidur': jumlahKamarTidurController.text,
         'kMandi': jumlahKamarMandiController.text,
-        'image': base64string,
         'date': formattedDate,
-        'status': "Ready"
+        // 'status': "Ready"
       }),
     );
 
     if (response.statusCode == 200) {
-      print('Property added successfuly');
+      print('Data filtered successfuly');
+      filteredData = jsonDecode(response.body);
+      print(filteredData);
     } else {
-      print('Failed to add property. Status Code: ${response.statusCode}');
+      print('Failed to filter data. Status Code: ${response.statusCode}');
       print('Error Response: ${response.body}');
     }
-  }
 
-  Future showOptions() async {
-    showCupertinoModalPopup(
-        context: context,
-        builder: (context) => CupertinoActionSheet(
-              actions: [
-                CupertinoActionSheetAction(
-                  child: const Text('Photo Gallery'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-
-                    getImageFromGallery();
-                  },
-                ),
-                CupertinoActionSheetAction(
-                  child: const Text('Camera'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-
-                    getImageFromCamera();
-                  },
-                )
-              ],
-            ));
-  }
-
-  Future<void> pickImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        image = File(pickedFile.path);
-      } else {
-        print('No image selected');
-      }
-    });
+    ///
   }
 
   String _addLeadingZero(int number) {
@@ -428,7 +351,10 @@ class _BeliKomersilState extends State<BeliKomersil> {
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
               onPressed: () async {
-                await postPropertyToServer();
+                //await postPropertyToServer();
+                await postFilterToServer();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PropertyPage()));
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
@@ -465,58 +391,15 @@ class _BeliRumahState extends State<BeliRumah> {
       TextEditingController();
   final TextEditingController ketinggianController = TextEditingController();
 
-  File? image;
-  final picker = ImagePicker();
-  String? imageFileName;
-
-  String base64string = '';
-
-  Future<void> getImageFromGallery() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      image = File(pickedFile.path);
-
-      ///File imagefile = File(imagepath); //convert Path to File
-      Future<Uint8List> imagebytes = image!.readAsBytes(); //convert to bytes
-      Uint8List bytes = await imagebytes;
-
-      base64string = base64.encode(bytes); //convert bytes to base64 string
-      setState(() {
-        print(base64string);
-      });
-    }
-
-    updateFileName();
+  String _addLeadingZero(int number) {
+    return number < 10 ? '0$number' : '$number';
   }
 
-  void updateFileName() {
-    if (image != null) {
-      Uri uri = Uri.file(image!.path);
-      imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
-      setState(() {});
-    }
-  }
+  var filteredData;
 
-  Future getImageFromCamera() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-    if (pickedFile != null) {
-      image = File(pickedFile.path);
-
-      Future<Uint8List> imagebytes = image!.readAsBytes(); //convert to bytes
-      Uint8List bytes = await imagebytes;
-
-      base64string = base64.encode(bytes);
-      setState(() {
-        print(base64string);
-      });
-
-      updateFileName();
-    }
-  }
-
-  Future postPropertyToServer() async {
-    final Uri url = Uri.https('debug.lubisputri16.repl.co', 'properties');
+  Future postFilterToServer() async {
+    //current work
+    final Uri url = Uri.https('debug.lubisputri16.repl.co', 'filter');
     String udid = await FlutterUdid.udid;
 
     int timestamp = DateTime.now().millisecondsSinceEpoch;
@@ -531,65 +414,29 @@ class _BeliRumahState extends State<BeliRumah> {
       body: jsonEncode({
         'udid': udid,
         'action': "Beli",
-        'type': "Komersil",
+        'type': "Rumah",
         'lokasi': lokasiController.text,
         'harga': rentangHargaController.text,
         'area': rentangAreaController.text,
+        // 'kMandikos': kMandiKos,
+        // 'tipeKost': tipeKost,
         'kTidur': jumlahKamarTidurController.text,
         'kMandi': jumlahKamarMandiController.text,
-        'image': base64string,
         'date': formattedDate,
-        'status': "Ready"
+        // 'status': "Ready"
       }),
     );
 
     if (response.statusCode == 200) {
-      print('Property added successfuly');
+      print('Data filtered successfuly');
+      filteredData = jsonDecode(response.body);
+      print(filteredData);
     } else {
-      print('Failed to add property. Status Code: ${response.statusCode}');
+      print('Failed to filter data. Status Code: ${response.statusCode}');
       print('Error Response: ${response.body}');
     }
-  }
 
-  Future showOptions() async {
-    showCupertinoModalPopup(
-        context: context,
-        builder: (context) => CupertinoActionSheet(
-              actions: [
-                CupertinoActionSheetAction(
-                  child: const Text('Photo Gallery'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-
-                    getImageFromGallery();
-                  },
-                ),
-                CupertinoActionSheetAction(
-                  child: const Text('Camera'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-
-                    getImageFromCamera();
-                  },
-                )
-              ],
-            ));
-  }
-
-  Future<void> pickImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        image = File(pickedFile.path);
-      } else {
-        print('No image selected');
-      }
-    });
-  }
-
-  String _addLeadingZero(int number) {
-    return number < 10 ? '0$number' : '$number';
+    ///
   }
 
   final formField = GlobalKey<FormState>();
@@ -865,7 +712,9 @@ class _BeliRumahState extends State<BeliRumah> {
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
               onPressed: () async {
-                await postPropertyToServer();
+                await postFilterToServer();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PropertyPage()));
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
@@ -902,59 +751,18 @@ class _BeliApartementState extends State<BeliApartement> {
       TextEditingController();
   final TextEditingController ketinggianController = TextEditingController();
 
-  File? image;
-  final picker = ImagePicker();
-  String? imageFileName;
-
-  String base64string = '';
-
-  Future<void> getImageFromGallery() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      image = File(pickedFile.path);
-
-      ///File imagefile = File(imagepath); //convert Path to File
-      Future<Uint8List> imagebytes = image!.readAsBytes(); //convert to bytes
-      Uint8List bytes = await imagebytes;
-
-      base64string = base64.encode(bytes); //convert bytes to base64 string
-      setState(() {
-        print(base64string);
-      });
-    }
-
-    updateFileName();
+  String _addLeadingZero(int number) {
+    return number < 10 ? '0$number' : '$number';
   }
 
-  void updateFileName() {
-    if (image != null) {
-      Uri uri = Uri.file(image!.path);
-      imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
-      setState(() {});
-    }
-  }
+  var filteredData;
 
-  Future getImageFromCamera() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-    if (pickedFile != null) {
-      image = File(pickedFile.path);
-
-      Future<Uint8List> imagebytes = image!.readAsBytes(); //convert to bytes
-      Uint8List bytes = await imagebytes;
-
-      base64string = base64.encode(bytes);
-      setState(() {
-        print(base64string);
-      });
-
-      updateFileName();
-    }
-  }
-
-  Future postPropertyToServer() async {
-    final Uri url = Uri.https('debug.lubisputri16.repl.co', 'properties');
+  Future postFilterToServer() async {
+    //current work
+    final Uri url = Uri.https('debug.lubisputri16.repl.co', 'filter');
     String udid = await FlutterUdid.udid;
+    String kMandiKos = "";
+    String tipeKost = "";
 
     int timestamp = DateTime.now().millisecondsSinceEpoch;
     DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
@@ -968,65 +776,29 @@ class _BeliApartementState extends State<BeliApartement> {
       body: jsonEncode({
         'udid': udid,
         'action': "Beli",
-        'type': "Komersil",
+        'type': "Apartement",
         'lokasi': lokasiController.text,
         'harga': rentangHargaController.text,
         'area': rentangAreaController.text,
+        // 'kMandikos': kMandiKos,
+        // 'tipeKost': tipeKost,
         'kTidur': jumlahKamarTidurController.text,
         'kMandi': jumlahKamarMandiController.text,
-        'image': base64string,
         'date': formattedDate,
-        'status': "Ready"
+        // 'status': "Ready"
       }),
     );
 
     if (response.statusCode == 200) {
-      print('Property added successfuly');
+      print('Data filtered successfuly');
+      filteredData = jsonDecode(response.body);
+      print(filteredData);
     } else {
-      print('Failed to add property. Status Code: ${response.statusCode}');
+      print('Failed to filter data. Status Code: ${response.statusCode}');
       print('Error Response: ${response.body}');
     }
-  }
 
-  Future showOptions() async {
-    showCupertinoModalPopup(
-        context: context,
-        builder: (context) => CupertinoActionSheet(
-              actions: [
-                CupertinoActionSheetAction(
-                  child: const Text('Photo Gallery'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-
-                    getImageFromGallery();
-                  },
-                ),
-                CupertinoActionSheetAction(
-                  child: const Text('Camera'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-
-                    getImageFromCamera();
-                  },
-                )
-              ],
-            ));
-  }
-
-  Future<void> pickImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        image = File(pickedFile.path);
-      } else {
-        print('No image selected');
-      }
-    });
-  }
-
-  String _addLeadingZero(int number) {
-    return number < 10 ? '0$number' : '$number';
+    ///
   }
 
   final formField = GlobalKey<FormState>();
@@ -1302,7 +1074,9 @@ class _BeliApartementState extends State<BeliApartement> {
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
               onPressed: () async {
-                await postPropertyToServer();
+                await postFilterToServer();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PropertyPage()));
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
@@ -1344,6 +1118,9 @@ class _BeliKostState extends State<BeliKost> {
   bool isPressedBeliTipeKostPutra = false;
   bool isPressedBeliTipeKostPutri = false;
   bool isPressedBeliTipeKostCampur = false;
+
+  String kMandiKos = "";
+  String tipeKost = "";
 
   void activeKamarMandiDalam() {
     setState(() {
@@ -1403,64 +1180,33 @@ class _BeliKostState extends State<BeliKost> {
     });
   }
 
-  File? image;
-  String? imageFileName;
-  final picker = ImagePicker();
-  String base64string = '';
-
   String _addLeadingZero(int number) {
     return number < 10 ? '0$number' : '$number';
   }
 
-  void updateFileName() {
-    if (image != null) {
-      Uri uri = Uri.file(image!.path);
-      imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
-      setState(() {});
-    }
-  }
+  var filteredData;
 
-  Future<void> getImageFromGallery() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      image = File(pickedFile.path);
-
-      ///File imagefile = File(imagepath); //convert Path to File
-      Future<Uint8List> imagebytes = image!.readAsBytes(); //convert to bytes
-      Uint8List bytes = await imagebytes;
-
-      base64string = base64.encode(bytes); //convert bytes to base64 string
-      setState(() {
-        print(base64string);
-      });
-
-      updateFileName();
-    }
-  }
-
-  Future getImageFromCamera() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-    if (pickedFile != null) {
-      image = File(pickedFile.path);
-
-      Future<Uint8List> imagebytes = image!.readAsBytes(); //convert to bytes
-      Uint8List bytes = await imagebytes;
-
-      base64string = base64.encode(bytes);
-      setState(() {
-        print(base64string);
-      });
-
-      updateFileName();
-    }
-  }
-
-  Future postPropertyToServer() async {
-    final Uri url = Uri.https('debug.lubisputri16.repl.co', 'properties');
+  Future postFilterToServer() async {
+    //current work
+    final Uri url = Uri.https('debug.lubisputri16.repl.co', 'filter');
     String udid = await FlutterUdid.udid;
+    String kMandiKos = "";
+    String tipeKost = "";
 
     int timestamp = DateTime.now().millisecondsSinceEpoch;
+    if (isPressedBeliTipeKamarMandiDalam == true) {
+      kMandiKos = "Dalam";
+    } else if (isPressedBeliTipeKamarMandiLuar == true) {
+      kMandiKos = "Luar";
+    }
+
+    if (isPressedBeliTipeKostPutra == true) {
+      tipeKost = "Putra";
+    } else if (isPressedBeliTipeKostPutri == true) {
+      tipeKost = "Putri";
+    } else if (isPressedBeliTipeKostCampur == true) {
+      tipeKost = "Campur";
+    }
     DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
     String formattedDate =
         "${dateTime.year}-${_addLeadingZero(dateTime.month)}-${_addLeadingZero(dateTime.day)} "
@@ -1476,48 +1222,25 @@ class _BeliKostState extends State<BeliKost> {
         'lokasi': lokasiController.text,
         'harga': rentangHargaController.text,
         'area': rentangAreaController.text,
-        //masi belum
-        'kMandiKos': '',
-        'tipeKost': '',
+        'kMandikos': kMandiKos,
+        'tipeKost': tipeKost,
         'kTidur': jumlahKamarTidurController.text,
         'kMandi': jumlahKamarMandiController.text,
-        'image': base64string,
         'date': formattedDate,
-        'status': "Ready"
+        // 'status': "Ready"
       }),
     );
 
     if (response.statusCode == 200) {
-      print('Property added successfuly');
+      print('Data filtered successfuly');
+      filteredData = jsonDecode(response.body);
+      print(filteredData);
     } else {
-      print('Failed to add property. Status Code: ${response.statusCode}');
+      print('Failed to filter data. Status Code: ${response.statusCode}');
       print('Error Response: ${response.body}');
     }
-  }
 
-  Future showOptions() async {
-    showCupertinoModalPopup(
-        context: context,
-        builder: (context) => CupertinoActionSheet(
-              actions: [
-                CupertinoActionSheetAction(
-                  child: const Text('Photo Gallery'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-
-                    getImageFromGallery();
-                  },
-                ),
-                CupertinoActionSheetAction(
-                  child: const Text('Camera'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-
-                    getImageFromCamera();
-                  },
-                )
-              ],
-            ));
+    ///
   }
 
   final formField = GlobalKey<FormState>();
@@ -1937,7 +1660,9 @@ class _BeliKostState extends State<BeliKost> {
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
               onPressed: () async {
-                await postPropertyToServer();
+                //await postFilterToServer();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PropertyPage()));
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
@@ -1978,58 +1703,15 @@ class _BeliTanahState extends State<BeliTanah> {
     return number < 10 ? '0$number' : '$number';
   }
 
-  File? image;
-  final picker = ImagePicker();
-  String? imageFileName;
+  var filteredData;
 
-  String base64string = '';
-
-  void updateFileName() {
-    if (image != null) {
-      Uri uri = Uri.file(image!.path);
-      imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
-      setState(() {});
-    }
+  Future sendFilteredData() async {
+    print(filteredData);
   }
 
-  Future<void> getImageFromGallery() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      image = File(pickedFile.path);
-
-      ///File imagefile = File(imagepath); //convert Path to File
-      Future<Uint8List> imagebytes = image!.readAsBytes(); //convert to bytes
-      Uint8List bytes = await imagebytes;
-
-      base64string = base64.encode(bytes); //convert bytes to base64 string
-      setState(() {
-        print(base64string);
-      });
-
-      updateFileName();
-    }
-  }
-
-  Future getImageFromCamera() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-    if (pickedFile != null) {
-      image = File(pickedFile.path);
-
-      Future<Uint8List> imagebytes = image!.readAsBytes(); //convert to bytes
-      Uint8List bytes = await imagebytes;
-
-      base64string = base64.encode(bytes);
-      setState(() {
-        print(base64string);
-      });
-
-      updateFileName();
-    }
-  }
-
-  Future postPropertyToServer() async {
-    final Uri url = Uri.https('debug.lubisputri16.repl.co', 'properties');
+  Future postFilterToServer() async {
+    //current work
+    final Uri url = Uri.https('debug.lubisputri16.repl.co', 'filter');
     String udid = await FlutterUdid.udid;
 
     int timestamp = DateTime.now().millisecondsSinceEpoch;
@@ -2048,45 +1730,27 @@ class _BeliTanahState extends State<BeliTanah> {
         'lokasi': lokasiController.text,
         'harga': rentangHargaController.text,
         'area': rentangAreaController.text,
-        //masi belum
+        // 'kMandikos': kMandiKos,
+        // 'tipeKost': tipeKost,
+        // 'kTidur': jumlahKamarTidurController.text,
+        // 'kMandi': jumlahKamarMandiController.text,
         'ketinggian': ketinggianController.text,
-        'image': base64string,
         'date': formattedDate,
-        'status': "Ready"
+        // 'status': "Ready"
       }),
     );
 
     if (response.statusCode == 200) {
-      print('Property added successfuly');
+      print('Data filtered successfuly');
+      filteredData = jsonDecode(response.body);
+      //print(filteredData);
+      sendFilteredData();
     } else {
-      print('Failed to add property. Status Code: ${response.statusCode}');
+      print('Failed to filter data. Status Code: ${response.statusCode}');
       print('Error Response: ${response.body}');
     }
-  }
 
-  Future showOptions() async {
-    showCupertinoModalPopup(
-        context: context,
-        builder: (context) => CupertinoActionSheet(
-              actions: [
-                CupertinoActionSheetAction(
-                  child: const Text('Photo Gallery'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-
-                    getImageFromGallery();
-                  },
-                ),
-                CupertinoActionSheetAction(
-                  child: const Text('Camera'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-
-                    getImageFromCamera();
-                  },
-                )
-              ],
-            ));
+    ///
   }
 
   final formField = GlobalKey<FormState>();
@@ -2320,7 +1984,9 @@ class _BeliTanahState extends State<BeliTanah> {
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
               onPressed: () async {
-                await postPropertyToServer();
+                //await postFilterToServer();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PropertyPage()));
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(

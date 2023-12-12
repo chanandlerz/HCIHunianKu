@@ -1,15 +1,16 @@
-import 'package:app_development/components/home_page_grid.dart';
+import 'package:app_development/components/bottom_nav_bar.dart';
+import 'package:app_development/components/property_page_grid.dart';
 import 'package:app_development/components/text_field_searchbar_home.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
+class PropertyPage extends StatelessWidget {
+  PropertyPage({super.key});
 
   final searchbarController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final String query = ModalRoute.of(context)!.settings.arguments as String;
+    // final String query = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       // appBar: AppBar(
       //   title: Text("Home Page"),
@@ -38,10 +39,32 @@ class HomePage extends StatelessWidget {
 
           Column(
             children: [
-              Text('test: $query'),
-              const SizedBox(
-                height: 20,
+              SizedBox(
+                height: 10,
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.arrow_back_ios_new_rounded),
+                    color: Color.fromARGB(255, 205, 166, 122),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BottomNavBar()));
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+
+              // Text('test: $query'),
+              // const SizedBox(
+              //   height: 20,
+              // ),
 
               // Container(
               //   padding: EdgeInsets.all(10.0),
@@ -112,7 +135,7 @@ class HomePage extends StatelessWidget {
       //     IconButton(
       //         onPressed: () {
       //           Navigator.push(
-      //               context, MaterialPageRoute(builder: (_) => HomePage()));
+      //               context, MaterialPageRoute(builder: (_) => PropertyPage()));
       //         },
       //         icon: Icon(
       //           Icons.home_filled,
@@ -150,8 +173,8 @@ class HomePage extends StatelessWidget {
   }
 }
 
-// class HomePageGrid extends StatelessWidget {
-//   const HomePageGrid({super.key});
+// class PropertyPageGrid extends StatelessWidget {
+//   const PropertyPageGrid({super.key});
 
 //   @override
 //   Widget build(BuildContext context) {

@@ -13,10 +13,10 @@ class PropertyWidget extends StatelessWidget {
       children: [
         for (int i = 1; i < 11; i++)
           Container(
-            padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
-            margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+            padding: const EdgeInsets.only(left: 15, right: 15, top: 5),
+            margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
             decoration: BoxDecoration(
-              color: Colors.black,
+              color: Colors.white,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
@@ -36,14 +36,17 @@ class PropertyWidget extends StatelessWidget {
                 InkWell(
                   onTap: () {},
                   child: Container(
-                    margin: const EdgeInsets.all(1),
-                    child: 
-                    // Image.network(
-                    //     'https://blog.psinv.net/wp-content/uploads/2023/06/1-e1686983943196.jpg',
-                    //     height: 110,
-                    //     width: 500),
-                    Image.asset('assets/property 1.png', height: 110, width: 500,)
-                  ),
+                      margin: const EdgeInsets.all(1),
+                      child:
+                          // Image.network(
+                          //     'https://blog.psinv.net/wp-content/uploads/2023/06/1-e1686983943196.jpg',
+                          //     height: 110,
+                          //     width: 500),
+                          Image.asset(
+                        'assets/property 1.png',
+                        height: 110,
+                        width: 500,
+                      )),
                 ),
 
                 Container(
@@ -51,8 +54,7 @@ class PropertyWidget extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: const Text(
                     "3 hari yang lalu",
-                    style: TextStyle(
-                        fontSize: 8, color: Color.fromARGB(255, 184, 184, 184)),
+                    style: TextStyle(fontSize: 10, color: Colors.black),
                   ),
                 ),
 
@@ -62,7 +64,7 @@ class PropertyWidget extends StatelessWidget {
                     "RP. 1.8 Miliar",
                     style: TextStyle(
                         fontSize: 20,
-                        color: Colors.white,
+                        color: Colors.black,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -73,7 +75,7 @@ class PropertyWidget extends StatelessWidget {
                     "Pasar Rebo, Jakarta Timur",
                     style: TextStyle(
                         fontSize: 12,
-                        color: Colors.white,
+                        color: Colors.black,
                         fontWeight: FontWeight.w500),
                   ),
                 ),
@@ -82,7 +84,7 @@ class PropertyWidget extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: const Text(
                     "Rumah Dijual",
-                    style: TextStyle(fontSize: 12, color: Colors.white),
+                    style: TextStyle(fontSize: 12, color: Colors.black),
                   ),
                 ),
 
@@ -91,12 +93,12 @@ class PropertyWidget extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.bed,
-                      color: Colors.white,
+                      color: Colors.black,
                       size: 15,
                     ),
                     Icon(
                       Icons.favorite_border,
-                      color: Colors.white,
+                      color: Color.fromARGB(255, 205, 166, 122),
                     )
                   ],
                 ),

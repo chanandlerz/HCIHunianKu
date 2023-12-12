@@ -1,9 +1,12 @@
 import 'package:app_development/components/add_property_jual.dart';
 import 'package:app_development/components/bottom_nav_bar.dart';
+import 'package:app_development/pages/compare.dart';
 import 'package:app_development/pages/create_post_page.dart';
 import 'package:app_development/pages/filter_property_page.dart';
+import 'package:app_development/pages/listing_saya_page.dart';
 import 'package:app_development/pages/pasang_iklan_page.dart';
 import 'package:app_development/pages/profile_page.dart';
+import 'package:app_development/pages/property_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -84,9 +87,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: FilterProperty(),
+      home: ListingPage(),
     );
   }
 }

@@ -13,7 +13,7 @@ class CreatePost extends StatefulWidget {
 }
 
 class _CreatePostState extends State<CreatePost> {
-  final TextEditingController createPost = TextEditingController();
+  final TextEditingController captionController = TextEditingController();
   bool hintVisible = true;
   File? _image;
 
@@ -76,13 +76,13 @@ class _CreatePostState extends State<CreatePost> {
               Padding(
                 padding: const EdgeInsets.only(left: 10.0, right: 20.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    IconButton(
-                      icon: const Icon(Icons.close),
-                      color: const Color.fromARGB(255, 205, 166, 122),
-                      onPressed: () {},
-                    ),
+                    // IconButton(
+                    //   icon: const Icon(Icons.close),
+                    //   color: const Color.fromARGB(255, 205, 166, 122),
+                    //   onPressed: () {},
+                    // ),
                     SizedBox(
                       height: 30,
                       width: 70,
@@ -149,7 +149,7 @@ class _CreatePostState extends State<CreatePost> {
                         maxLines: null,
                         expands: true,
                         keyboardType: TextInputType.multiline,
-                        controller: createPost,
+                        controller: captionController,
                         textAlignVertical: TextAlignVertical.top,
                         style: TextStyle(color: Colors.white, fontSize: 20),
                         // autovalidateMode:
