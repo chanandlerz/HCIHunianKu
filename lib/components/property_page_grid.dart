@@ -5,6 +5,8 @@ class PropertyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return GridView.count(
       childAspectRatio: 0.68,
       physics: const NeverScrollableScrollPhysics(),
@@ -91,10 +93,27 @@ class PropertyWidget extends StatelessWidget {
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(
-                      Icons.bed,
-                      color: Colors.black,
-                      size: 15,
+                    Wrap(
+                      children: [
+                        Icon(
+                          Icons.bed,
+                          color: Color.fromARGB(255, 205, 166, 122),
+                          size: 15,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 3, right: 5),
+                          child: Text('3'),
+                        ),
+                        Icon(
+                          Icons.bathtub_rounded,
+                          color: Color.fromARGB(255, 205, 166, 122),
+                          size: 15,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 3),
+                          child: Text('2'),
+                        ),
+                      ],
                     ),
                     Icon(
                       Icons.favorite_border,
@@ -117,7 +136,7 @@ class PropertyWidget extends StatelessWidget {
                     onPressed: () {},
                     child: const Text(
                       "Hubungi Penjual",
-                      style: TextStyle(color: Colors.white, fontSize: 10),
+                      style: TextStyle(color: Colors.white, fontSize: 15),
                     ),
                   ),
                 )

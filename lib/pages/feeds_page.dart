@@ -1,3 +1,5 @@
+import 'package:app_development/components/filter_property_beli.dart';
+import 'package:app_development/components/filter_property_sewa.dart';
 import 'package:app_development/pages/create_post_page.dart';
 import 'package:app_development/pages/favorites_page.dart';
 import 'package:app_development/pages/filter_property_page.dart';
@@ -65,7 +67,7 @@ class _FeedsPageState extends State<FeedsPage> {
                         color: const Color.fromARGB(255, 205, 166, 122),
                       ),
                       IconButton(
-                        icon: const Icon(Icons.filter_alt_rounded),
+                        icon: const Icon(Icons.tune_rounded),
                         onPressed: () {
                           Navigator.push(
                               context,
@@ -231,488 +233,532 @@ class _FeedsPageState extends State<FeedsPage> {
       ),
     );
   }
-}
-// Widget makeDismissible({
-//   required BuildContext context,
-//   required Widget child,
-// }) => GestureDetector(
-//       behavior: HitTestBehavior.opaque,
-//       onTap: () => Navigator.of(context).pop(),
-//       child: GestureDetector(onTap: () {}, child: child),
-//     );
 
-// Widget buildButton({
-//   required String text,
-//   required VoidCallback onClicked,
-// }) =>
-//     ElevatedButton(
-//       style: ElevatedButton.styleFrom(
-//         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-//       ),
-//       child: Text(
-//         text,
-//         style: TextStyle(fontSize: 15),
-//       ),
-//       onPressed: onClicked,
-//     );
+  // Future Filter_Property(BuildContext context) {
+  //   bool isPressedBeli = false;
+  //   bool isPressedSewa = false;
+  //   bool isPressedTanah = false;
+  //   bool isPressedRumah = false;
+  //   bool isPressedApartement = false;
+  //   bool isPressedKost = false;
+  //   bool isPressedKomersil = false;
 
-// Widget buildSheet() => DraggableScrollableSheet(
-//       initialChildSize: 0.7,
-//       minChildSize: 0.5,
-//       maxChildSize: 1,
-//       builder: (_, controller) => Container(
-//         decoration: BoxDecoration(
-//             color: Colors.white,
-//             borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-//         padding: EdgeInsets.all(16),
-//         child: ListView(
-//           controller: controller,
-//           children: [
-//             TextFormField(
+  //   void activeBeli() {
+  //     setState(() {
+  //       if (isPressedBeli) {
+  //         isPressedBeli = false;
+  //       } else {
+  //         isPressedBeli = true;
+  //         isPressedSewa = false;
+  //       }
+  //     });
+  //   }
 
-//           )
-//           ],
-//         ),
-//       ),
-//     );
+  //   void activeSewa() {
+  //     setState(() {
+  //       if (isPressedSewa) {
+  //         isPressedSewa = false;
+  //       } else {
+  //         isPressedSewa = true;
+  //         isPressedBeli = false;
+  //       }
+  //     });
+  //   }
 
-Future Sewakan_Rumah(BuildContext context) {
-  final formField = GlobalKey<FormState>();
-  return showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.white,
-      isDismissible: true,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-      builder: (context) => SizedBox(
-            height: 700,
-            child: ListView(
-              children: [
-                Form(
-                  key: formField,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 25.0),
-                    child: TextFormField(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Masukkan lokasi properti";
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 205, 166, 122)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade400),
-                        ),
-                        fillColor: Colors.grey.shade200,
-                        filled: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 15.0),
-                        hintText: 'Lokasi Properti',
-                        // suffixIcon: Icon(Icons.search_rounded),
-                      ),
-                    ),
-                  ),
-                ),
-                const Divider(
-                  color: Color.fromARGB(255, 184, 184, 184),
-                  thickness: 1.0,
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 10.0, top: 10.0),
-                  child: Text(
-                    'Rentang Sewa',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 10.0, right: 10.0, bottom: 20.0),
-                  child: Wrap(
-                    alignment: WrapAlignment.center,
-                    children: <Widget>[
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
-                            shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    side: const BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 205, 166, 122))))),
-                        child: const Text('harian',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 121, 121, 121))),
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
-                            shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    side: const BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 205, 166, 122))))),
-                        child: const Text('mingguan',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 121, 121, 121))),
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
-                            shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    side: const BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 205, 166, 122))))),
-                        child: const Text('bulanan',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 121, 121, 121))),
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
-                            shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    side: const BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 205, 166, 122))))),
-                        child: const Text('3 bulan',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 121, 121, 121))),
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
-                            shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    side: const BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 205, 166, 122))))),
-                        child: const Text('6 bulan',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 121, 121, 121))),
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
-                            shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    side: const BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 205, 166, 122))))),
-                        child: const Text('tahunan',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 121, 121, 121))),
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
-                            shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    side: const BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 205, 166, 122))))),
-                        child: const Text('semua',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 121, 121, 121))),
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                    ],
-                  ),
-                ),
-                const Divider(
-                  color: Color.fromARGB(255, 184, 184, 184),
-                  thickness: 1.0,
-                ),
-                Row(
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 10.0),
-                      child: Text(
-                        'Kisaran Harga (Rp)',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          bottom: 20.0, left: 10.0, top: 18.0),
-                      child: Wrap(
-                          alignment: WrapAlignment.start,
-                          children: <Widget>[
-                            SizedBox(
-                              width: 205.0,
-                              height: 35.0,
-                              child: TextFormField(
-                                // autovalidateMode:
-                                //     AutovalidateMode.onUserInteraction,
-                                // validator: (value) {
-                                //   if (value == null || value.isEmpty) {
-                                //     return "Masukkan harga properti";
-                                //   }
-                                //   return null;
-                                // },
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    borderSide: const BorderSide(
-                                        color:
-                                            Color.fromARGB(255, 205, 166, 122)),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.grey.shade400),
-                                  ),
-                                  fillColor: Colors.grey.shade200,
-                                  filled: true,
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 20.0, horizontal: 10.0),
-                                  hintText: '',
-                                ),
-                              ),
-                            ),
-                          ]),
-                    ),
-                  ],
-                ),
-                const Divider(
-                  color: Color.fromARGB(255, 184, 184, 184),
-                  thickness: 1.0,
-                ),
-                Row(
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 10.0),
-                      child: Text(
-                        'Rentang Area (meter persegi)',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          bottom: 20.0, left: 10.0, top: 18.0),
-                      child: Wrap(
-                          alignment: WrapAlignment.start,
-                          children: <Widget>[
-                            SizedBox(
-                              width: 120.0,
-                              height: 35.0,
-                              child: TextFormField(
-                                // autovalidateMode:
-                                //     AutovalidateMode.onUserInteraction,
-                                // validator: (value) {
-                                //   if (value == null || value.isEmpty) {
-                                //     return "Masukkan rentang area properti";
-                                //   }
-                                //   return null;
-                                // },
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    borderSide: const BorderSide(
-                                        color:
-                                            Color.fromARGB(255, 205, 166, 122)),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.grey.shade400),
-                                  ),
-                                  fillColor: Colors.grey.shade200,
-                                  filled: true,
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 20.0, horizontal: 10.0),
-                                  hintText: '',
-                                ),
-                              ),
-                            ),
-                          ]),
-                    ),
-                  ],
-                ),
-                const Divider(
-                  color: Color.fromARGB(255, 184, 184, 184),
-                  thickness: 1.0,
-                ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 10.0),
-                      child: Text(
-                        'Jumlah Kamar Tidur',
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(right: 10.0),
-                      child: Text(
-                        'Jumlah Kamar Mandi',
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Form(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 25.0, top: 10.0),
-                        child: SizedBox(
-                          width: 100.0,
-                          height: 35.0,
-                          child: TextFormField(
-                            // autovalidateMode: AutovalidateMode.onUserInteraction,
-                            // validator: (value) {
-                            //   if (value == null || value.isEmpty) {
-                            //     return "Masukkan jumlah kamar tidur";
-                            //   }
-                            //   return null;
-                            // },
-                            decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                                borderSide: const BorderSide(
-                                    color: Color.fromARGB(255, 205, 166, 122)),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.grey.shade400),
-                              ),
-                              fillColor: Colors.grey.shade200,
-                              filled: true,
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 20.0, horizontal: 10.0),
-                              hintText: '',
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Form(
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 25.0, top: 10.0),
-                        child: SizedBox(
-                          width: 100.0,
-                          height: 35.0,
-                          child: TextFormField(
-                            // autovalidateMode: AutovalidateMode.onUserInteraction,
-                            // validator: (value) {
-                            //   if (value == null || value.isEmpty) {
-                            //     return "Masukkan jumlah kamar mandi";
-                            //   }
-                            //   return null;
-                            // },
-                            decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                                borderSide: const BorderSide(
-                                    color: Color.fromARGB(255, 205, 166, 122)),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.grey.shade400),
-                              ),
-                              fillColor: Colors.grey.shade200,
-                              filled: true,
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 20.0, horizontal: 10.0),
-                              hintText: '',
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color.fromARGB(255, 205, 166, 122)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    side: const BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 205, 166, 122))))),
-                    child: const Text('Pasang Iklan'),
-                  ),
-                )
-              ],
-            ),
-          ));
+  //   void activeTanah() {
+  //     setState(() {
+  //       if (isPressedTanah) {
+  //         isPressedTanah = false;
+  //       } else {
+  //         isPressedTanah = true;
+  //         isPressedRumah = false;
+  //         isPressedApartement = false;
+  //         isPressedKost = false;
+  //         isPressedKomersil = false;
+  //       }
+  //     });
+  //   }
+
+  //   void activeRumah() {
+  //     setState(() {
+  //       if (isPressedRumah) {
+  //         isPressedRumah = false;
+  //       } else {
+  //         isPressedTanah = false;
+  //         isPressedRumah = true;
+  //         isPressedApartement = false;
+  //         isPressedKost = false;
+  //         isPressedKomersil = false;
+  //       }
+  //     });
+  //   }
+
+  //   void activeApartement() {
+  //     setState(() {
+  //       if (isPressedApartement) {
+  //         isPressedApartement = false;
+  //       } else {
+  //         isPressedTanah = false;
+  //         isPressedRumah = false;
+  //         isPressedApartement = true;
+  //         isPressedKost = false;
+  //         isPressedKomersil = false;
+  //       }
+  //     });
+  //   }
+
+  //   void activeKost() {
+  //     setState(() {
+  //       if (isPressedKost) {
+  //         isPressedKost = false;
+  //       } else {
+  //         isPressedTanah = false;
+  //         isPressedRumah = false;
+  //         isPressedApartement = false;
+  //         isPressedKost = true;
+  //         isPressedKomersil = false;
+  //       }
+  //     });
+  //   }
+
+  //   void activeKomersil() {
+  //     setState(() {
+  //       if (isPressedKomersil) {
+  //         isPressedKomersil = false;
+  //       } else {
+  //         isPressedTanah = false;
+  //         isPressedRumah = false;
+  //         isPressedApartement = false;
+  //         isPressedKost = false;
+  //         isPressedKomersil = true;
+  //       }
+  //     });
+  //   }
+
+  //   String _addLeadingZero(int number) {
+  //     return number < 10 ? '0$number' : '$number';
+  //   }
+
+  //   return showModalBottomSheet(
+  //       context: context,
+  //       backgroundColor: Color.fromARGB(255, 58, 58, 58),
+  //       isDismissible: true,
+  //       isScrollControlled: true,
+  //       shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+  //       builder: (BuildContext context) {
+  //         double screenWidth = MediaQuery.of(context).size.width;
+  //         double screenHeight = MediaQuery.of(context).size.height;
+  //         return DraggableScrollableSheet(
+  //           initialChildSize: 0.8,
+  //           minChildSize: 0.5,
+  //           maxChildSize: 1,
+  //           expand: false,
+  //           builder: (_, controller) => SafeArea(
+  //             child: SizedBox(
+  //               height: screenHeight,
+  //               child: ListView(
+  //                 controller: controller,
+  //                 children: [
+  //                   Padding(
+  //                     padding: EdgeInsets.only(left: 15, top: 20),
+  //                     child: Row(
+  //                       // crossAxisAlignment: CrossAxisAlignment.center,
+  //                       mainAxisAlignment: MainAxisAlignment.center,
+  //                       children: [
+  //                         Text(
+  //                           'Properti apa yang anda cari?',
+  //                           style: TextStyle(
+  //                               color: Color.fromARGB(255, 205, 166, 122),
+  //                               fontSize: 16),
+  //                         ),
+  //                       ],
+  //                     ),
+  //                   ),
+
+  //                   const SizedBox(
+  //                     height: 50,
+  //                   ),
+  //                   Padding(
+  //                     padding: EdgeInsets.only(left: 15, bottom: 20),
+  //                     child: Text(
+  //                       'Kategori',
+  //                       style: TextStyle(
+  //                           color: Color.fromARGB(255, 205, 166, 122),
+  //                           fontSize: 20),
+  //                     ),
+  //                   ),
+  //                   Padding(
+  //                     padding: EdgeInsets.only(left: 15),
+  //                     child: Row(
+  //                       // mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //                       children: [
+  //                         ElevatedButton(
+  //                           style: ButtonStyle(
+  //                               shape: MaterialStateProperty.all<
+  //                                       RoundedRectangleBorder>(
+  //                                   RoundedRectangleBorder(
+  //                                       borderRadius:
+  //                                           BorderRadius.circular(20))),
+  //                               backgroundColor: MaterialStateProperty.all(
+  //                                   isPressedBeli
+  //                                       ? Colors.white
+  //                                       : const Color.fromARGB(
+  //                                           255, 205, 166, 122))),
+  //                           onPressed: activeBeli,
+  //                           child: Text(
+  //                             'Beli',
+  //                             style: isPressedBeli
+  //                                 ? const TextStyle(
+  //                                     color: Color.fromARGB(255, 205, 166, 122))
+  //                                 : const TextStyle(color: Colors.white),
+  //                           ),
+  //                         ),
+  //                         const SizedBox(
+  //                           width: 15,
+  //                         ),
+  //                         ElevatedButton(
+  //                           style: ButtonStyle(
+  //                               shape: MaterialStateProperty.all<
+  //                                       RoundedRectangleBorder>(
+  //                                   RoundedRectangleBorder(
+  //                                       borderRadius:
+  //                                           BorderRadius.circular(20))),
+  //                               backgroundColor: MaterialStateProperty.all(
+  //                                   isPressedSewa
+  //                                       ? Colors.white
+  //                                       : const Color.fromARGB(
+  //                                           255, 205, 166, 122))),
+  //                           onPressed: activeSewa,
+  //                           child: Text(
+  //                             'Sewa',
+  //                             style: isPressedSewa
+  //                                 ? const TextStyle(
+  //                                     color: Color.fromARGB(255, 205, 166, 122))
+  //                                 : const TextStyle(color: Colors.white),
+  //                           ),
+  //                         ),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                   const SizedBox(
+  //                     height: 30,
+  //                   ),
+  //                   const Divider(
+  //                     color: Color.fromARGB(255, 184, 184, 184),
+  //                     thickness: 1.0,
+  //                   ),
+  //                   const SizedBox(
+  //                     height: 30,
+  //                   ),
+  //                   Padding(
+  //                     padding: EdgeInsets.only(left: 15, bottom: 20),
+  //                     child: Text(
+  //                       'Tipe Properti',
+  //                       style: TextStyle(
+  //                           color: Color.fromARGB(255, 205, 166, 122),
+  //                           fontSize: 20),
+  //                     ),
+  //                   ),
+  //                   Padding(
+  //                     padding: EdgeInsets.only(left: 15),
+  //                     child: Wrap(
+  //                       alignment: WrapAlignment.start,
+  //                       children: <Widget>[
+  //                         ElevatedButton(
+  //                             style: ElevatedButton.styleFrom(
+  //                               shape: RoundedRectangleBorder(
+  //                                   borderRadius: BorderRadius.circular(20)),
+  //                               backgroundColor: isPressedTanah
+  //                                   ? Colors.white
+  //                                   : const Color.fromARGB(255, 205, 166, 122),
+  //                             ),
+  //                             onPressed: activeTanah,
+  //                             child: Text(
+  //                               'Tanah',
+  //                               style: isPressedTanah
+  //                                   ? const TextStyle(
+  //                                       color:
+  //                                           Color.fromARGB(255, 205, 166, 122))
+  //                                   : const TextStyle(color: Colors.white),
+  //                             )),
+  //                         const SizedBox(
+  //                           width: 15,
+  //                         ),
+  //                         ElevatedButton(
+  //                             style: ElevatedButton.styleFrom(
+  //                               shape: RoundedRectangleBorder(
+  //                                   borderRadius: BorderRadius.circular(20)),
+  //                               backgroundColor: isPressedRumah
+  //                                   ? Colors.white
+  //                                   : const Color.fromARGB(255, 205, 166, 122),
+  //                             ),
+  //                             onPressed: activeRumah,
+  //                             child: Text(
+  //                               'Rumah',
+  //                               style: isPressedRumah
+  //                                   ? const TextStyle(
+  //                                       color:
+  //                                           Color.fromARGB(255, 205, 166, 122))
+  //                                   : const TextStyle(color: Colors.white),
+  //                             )),
+  //                         const SizedBox(
+  //                           width: 15,
+  //                         ),
+  //                         ElevatedButton(
+  //                             style: ElevatedButton.styleFrom(
+  //                               shape: RoundedRectangleBorder(
+  //                                   borderRadius: BorderRadius.circular(20)),
+  //                               backgroundColor: isPressedApartement
+  //                                   ? Colors.white
+  //                                   : const Color.fromARGB(255, 205, 166, 122),
+  //                             ),
+  //                             onPressed: activeApartement,
+  //                             child: Text(
+  //                               'Apartement',
+  //                               style: isPressedApartement
+  //                                   ? const TextStyle(
+  //                                       color:
+  //                                           Color.fromARGB(255, 205, 166, 122))
+  //                                   : const TextStyle(color: Colors.white),
+  //                             )),
+  //                         const SizedBox(
+  //                           width: 15,
+  //                         ),
+  //                         ElevatedButton(
+  //                             style: ElevatedButton.styleFrom(
+  //                               shape: RoundedRectangleBorder(
+  //                                   borderRadius: BorderRadius.circular(20)),
+  //                               backgroundColor: isPressedKost
+  //                                   ? Colors.white
+  //                                   : const Color.fromARGB(255, 205, 166, 122),
+  //                             ),
+  //                             onPressed: activeKost,
+  //                             child: Text(
+  //                               'Kost',
+  //                               style: isPressedKost
+  //                                   ? const TextStyle(
+  //                                       color:
+  //                                           Color.fromARGB(255, 205, 166, 122))
+  //                                   : const TextStyle(color: Colors.white),
+  //                             )),
+  //                         const SizedBox(
+  //                           width: 15,
+  //                         ),
+  //                         ElevatedButton(
+  //                             style: ElevatedButton.styleFrom(
+  //                               shape: RoundedRectangleBorder(
+  //                                   borderRadius: BorderRadius.circular(20)),
+  //                               backgroundColor: isPressedKomersil
+  //                                   ? Colors.white
+  //                                   : const Color.fromARGB(255, 205, 166, 122),
+  //                             ),
+  //                             onPressed: activeKomersil,
+  //                             child: Text(
+  //                               'Komersil',
+  //                               style: isPressedKomersil
+  //                                   ? const TextStyle(
+  //                                       color:
+  //                                           Color.fromARGB(255, 205, 166, 122))
+  //                                   : const TextStyle(color: Colors.white),
+  //                             )),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                   // Column(
+  //                   //   mainAxisAlignment: MainAxisAlignment.start,
+  //                   //   crossAxisAlignment: CrossAxisAlignment.start,
+  //                   //   children: [
+  //                   //     SizedBox(
+  //                   //       width: 150,
+  //                   //       height: 35,
+  //                   //       child: ElevatedButton(
+  //                   //           style: ElevatedButton.styleFrom(
+  //                   //             backgroundColor: isPressedTanah
+  //                   //                 ? Colors.white
+  //                   //                 : const Color.fromARGB(255, 205, 166, 122),
+  //                   //           ),
+  //                   //           onPressed: activeTanah,
+  //                   //           child: Text(
+  //                   //             'Tanah',
+  //                   //             style: isPressedTanah
+  //                   //                 ? const TextStyle(
+  //                   //                     color: Color.fromARGB(255, 205, 166, 122))
+  //                   //                 : const TextStyle(color: Colors.white),
+  //                   //           )),
+  //                   //     ),
+  //                   //     const SizedBox(
+  //                   //       height: 15,
+  //                   //     ),
+  //                   //     SizedBox(
+  //                   //       width: 150,
+  //                   //       height: 35,
+  //                   //       child: ElevatedButton(
+  //                   //           style: ElevatedButton.styleFrom(
+  //                   //             backgroundColor: isPressedRumah
+  //                   //                 ? Colors.white
+  //                   //                 : const Color.fromARGB(255, 205, 166, 122),
+  //                   //           ),
+  //                   //           onPressed: activeRumah,
+  //                   //           child: Text(
+  //                   //             'Rumah',
+  //                   //             style: isPressedRumah
+  //                   //                 ? const TextStyle(
+  //                   //                     color: Color.fromARGB(255, 205, 166, 122))
+  //                   //                 : const TextStyle(color: Colors.white),
+  //                   //           )),
+  //                   //     ),
+  //                   //     const SizedBox(
+  //                   //       height: 15,
+  //                   //     ),
+  //                   //     SizedBox(
+  //                   //       width: 150,
+  //                   //       height: 35,
+  //                   //       child: ElevatedButton(
+  //                   //           style: ElevatedButton.styleFrom(
+  //                   //             backgroundColor: isPressedApartement
+  //                   //                 ? Colors.white
+  //                   //                 : const Color.fromARGB(255, 205, 166, 122),
+  //                   //           ),
+  //                   //           onPressed: activeApartement,
+  //                   //           child: Text(
+  //                   //             'Apartement',
+  //                   //             style: isPressedApartement
+  //                   //                 ? const TextStyle(
+  //                   //                     color: Color.fromARGB(255, 205, 166, 122))
+  //                   //                 : const TextStyle(color: Colors.white),
+  //                   //           )),
+  //                   //     ),
+  //                   //     const SizedBox(
+  //                   //       height: 15,
+  //                   //     ),
+  //                   //     SizedBox(
+  //                   //       width: 150,
+  //                   //       height: 35,
+  //                   //       child: ElevatedButton(
+  //                   //           style: ElevatedButton.styleFrom(
+  //                   //             backgroundColor: isPressedKost
+  //                   //                 ? Colors.white
+  //                   //                 : const Color.fromARGB(255, 205, 166, 122),
+  //                   //           ),
+  //                   //           onPressed: activeKost,
+  //                   //           child: Text(
+  //                   //             'Kost',
+  //                   //             style: isPressedKost
+  //                   //                 ? const TextStyle(
+  //                   //                     color: Color.fromARGB(255, 205, 166, 122))
+  //                   //                 : const TextStyle(color: Colors.white),
+  //                   //           )),
+  //                   //     ),
+  //                   //     const SizedBox(
+  //                   //       height: 15,
+  //                   //     ),
+  //                   //     SizedBox(
+  //                   //       width: 150,
+  //                   //       height: 35,
+  //                   //       child: ElevatedButton(
+  //                   //           style: ElevatedButton.styleFrom(
+  //                   //             backgroundColor: isPressedKomersil
+  //                   //                 ? Colors.white
+  //                   //                 : const Color.fromARGB(255, 205, 166, 122),
+  //                   //           ),
+  //                   //           onPressed: activeKomersil,
+  //                   //           child: Text(
+  //                   //             'Komersil',
+  //                   //             style: isPressedKomersil
+  //                   //                 ? const TextStyle(
+  //                   //                     color: Color.fromARGB(255, 205, 166, 122))
+  //                   //                 : const TextStyle(color: Colors.white),
+  //                   //           )),
+  //                   //     ),
+  //                   //   ],
+  //                   // ),
+  //                   const SizedBox(
+  //                     height: 50,
+  //                   ),
+  //                   Padding(
+  //                     padding: const EdgeInsets.all(8.0),
+  //                     child: ElevatedButton(
+  //                       onPressed: () {
+  //                         if (isPressedBeli == true && isPressedTanah == true) {
+  //                           Navigator.push(
+  //                               context,
+  //                               MaterialPageRoute(
+  //                                   builder: (context) => BeliTanah()));
+  //                         } else if (isPressedBeli == true &&
+  //                             isPressedRumah == true) {
+  //                           Navigator.push(
+  //                               context,
+  //                               MaterialPageRoute(
+  //                                   builder: (context) => BeliRumah()));
+  //                         } else if (isPressedBeli == true &&
+  //                             isPressedApartement == true) {
+  //                           Navigator.push(
+  //                               context,
+  //                               MaterialPageRoute(
+  //                                   builder: (context) => BeliApartement()));
+  //                         } else if (isPressedBeli == true &&
+  //                             isPressedKost == true) {
+  //                           Navigator.push(
+  //                               context,
+  //                               MaterialPageRoute(
+  //                                   builder: (context) => BeliKost()));
+  //                         } else if (isPressedBeli == true &&
+  //                             isPressedKomersil == true) {
+  //                           Navigator.push(
+  //                               context,
+  //                               MaterialPageRoute(
+  //                                   builder: (context) => BeliKomersil()));
+  //                         } else if (isPressedSewa == true &&
+  //                             isPressedTanah == true) {
+  //                           Navigator.push(
+  //                               context,
+  //                               MaterialPageRoute(
+  //                                   builder: (context) => SewaTanah()));
+  //                         } else if (isPressedSewa == true &&
+  //                             isPressedRumah == true) {
+  //                           Navigator.push(
+  //                               context,
+  //                               MaterialPageRoute(
+  //                                   builder: (context) => SewaRumah()));
+  //                         } else if (isPressedSewa == true &&
+  //                             isPressedApartement == true) {
+  //                           Navigator.push(
+  //                               context,
+  //                               MaterialPageRoute(
+  //                                   builder: (context) => SewaApartement()));
+  //                         } else if (isPressedSewa == true &&
+  //                             isPressedKost == true) {
+  //                           Navigator.push(
+  //                               context,
+  //                               MaterialPageRoute(
+  //                                   builder: (context) => SewaKost()));
+  //                         } else if (isPressedSewa == true &&
+  //                             isPressedKomersil == true) {
+  //                           Navigator.push(
+  //                               context,
+  //                               MaterialPageRoute(
+  //                                   builder: (context) => SewaKomersil()));
+  //                         }
+  //                       },
+  //                       style: ButtonStyle(
+  //                           backgroundColor: MaterialStateProperty.all<Color>(
+  //                               const Color.fromARGB(255, 205, 166, 122)),
+  //                           shape: MaterialStateProperty.all<
+  //                                   RoundedRectangleBorder>(
+  //                               RoundedRectangleBorder(
+  //                                   borderRadius: BorderRadius.circular(5.0),
+  //                                   side: const BorderSide(
+  //                                       color: Color.fromARGB(
+  //                                           255, 205, 166, 122))))),
+  //                       child: const Text('Selanjutnya'),
+  //                     ),
+  //                   )
+  //                 ],
+  //               ),
+  //             ),
+  //           ),
+  //         );
+  //       });
+  // }
 }

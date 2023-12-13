@@ -11,119 +11,82 @@ class PropertyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final String query = ModalRoute.of(context)!.settings.arguments as String;
-    return Scaffold(
+    return SafeArea(
       // appBar: AppBar(
       //   title: Text("Home Page"),
       // ),
-      backgroundColor: const Color.fromARGB(255, 58, 58, 58),
-      body: ListView(
-        children: <Widget>[
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.start,
-          //   mainAxisSize: MainAxisSize.max,
-          //   crossAxisAlignment: CrossAxisAlignment.center,
-          //   children: [
-          //     Icon(
-          //       Icons.favorite,
-          //       color: Colors.pink,
-          //       size: 20.0,
-          //     ),
 
-          //     SearchTextField(
-          //       controller: searchbarController,
-          //       hintText: 'Find Property, Land, and more...',
-          //       obscureText: false,
-          //     )
-          //   ],
-          // )
+      child: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 58, 58, 58),
+        body: ListView(
+          children: [
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.start,
+            //   mainAxisSize: MainAxisSize.max,
+            //   crossAxisAlignment: CrossAxisAlignment.center,
+            //   children: [
+            //     Icon(
+            //       Icons.favorite,
+            //       color: Colors.pink,
+            //       size: 20.0,
+            //     ),
 
-          Column(
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+            //     SearchTextField(
+            //       controller: searchbarController,
+            //       hintText: 'Find Property, Land, and more...',
+            //       obscureText: false,
+            //     )
+            //   ],
+            // )
+            Padding(
+              padding: EdgeInsets.only(top: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  IconButton(
-                    icon: Icon(Icons.arrow_back_ios_new_rounded),
-                    color: Color.fromARGB(255, 205, 166, 122),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => BottomNavBar()));
-                    },
+                  Wrap(
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.arrow_back_ios_new_rounded),
+                        color: Color.fromARGB(255, 205, 166, 122),
+                        onPressed: () {},
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 14),
+                        child: Text(
+                          'Properti',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                      )
+                    ],
                   ),
                 ],
               ),
-              SizedBox(
-                height: 10,
+            ),
+            const Divider(
+              color: Color.fromARGB(255, 184, 184, 184),
+              thickness: 1.0,
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 15),
+              child: Column(
+                children: [
+                  SearchTextFieldHomePage(
+                    controller: searchbarController,
+                    hintText: 'Jakarta Timur',
+                    obscureText: false,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const PropertyWidget(),
+                ],
               ),
-
-              // Text('test: $query'),
-              // const SizedBox(
-              //   height: 20,
-              // ),
-
-              // Container(
-              //   padding: EdgeInsets.all(10.0),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.start,
-              //     mainAxisSize: MainAxisSize.max,
-              //     crossAxisAlignment: CrossAxisAlignment.center,
-              //     children: [
-              //       Icon(
-              //         Icons.favorite,
-              //         color: Colors.pink,
-              //         size: 20.0,
-              //       ),
-              //       SearchTextField(
-              //         controller: searchbarController,
-              //         hintText: 'Find Property, Land, and more...',
-              //         obscureText: false,
-              //       )
-              //     ],
-              //   ),
-              // )
-
-              // Icon(
-              //   Icons.favorite,
-              //   color: Colors.pink,
-              //   size: 20.0,
-              // ),
-
-              // Row(
-              //   children: [
-              //     SearchTextField(
-              //       controller: searchbarController,
-              //       hintText: 'Find Property, Land, and more...',
-              //       obscureText: false,
-              //     ),
-              //     Container(
-              //       width: 200,
-              //       height: 200,
-              //       decoration: BoxDecoration(
-              //         color: Colors.red,
-              //       ),
-              //     ),
-              //   ],
-              // )
-
-              SearchTextFieldHomePage(
-                controller: searchbarController,
-                hintText: 'Jakarta Timur',
-                obscureText: false,
-              ),
-
-              const SizedBox(
-                height: 10,
-              ),
-
-              const PropertyWidget(),
-            ],
-          ),
-        ],
+            )
+          ],
+        ),
       ),
 
       // bottomNavigationBar: CurvedNavigationBar(

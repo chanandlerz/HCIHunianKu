@@ -845,8 +845,12 @@ class ProfilePage extends StatelessWidget {
                         onPressed: () async {
                           String udid = await FlutterUdid.udid;
 
-                          Navigator.pushReplacementNamed(context, '/login',
-                              arguments: {'udid': ''});
+                          // Navigator.pushReplacementNamed(context, '/login',
+                          //     arguments: {'udid': ''});
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginPage(udid: udid)));
                         },
                       ),
                       Expanded(
