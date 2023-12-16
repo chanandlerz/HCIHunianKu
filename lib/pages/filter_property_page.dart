@@ -129,36 +129,26 @@ class _FilterPropertyState extends State<FilterProperty> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 58, 58, 58),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new_rounded),
+            color: Color.fromARGB(255, 205, 166, 122),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => BottomNavBar()));
+            },
+          ),
+          title: Text(
+            'Properti apa yang anda cari?',
+            style: TextStyle(color: Color.fromARGB(255, 205, 166, 122)),
+          ),
+        ),
         backgroundColor: const Color.fromARGB(255, 58, 58, 58),
         body: ListView(
           children: <Widget>[
-            Row(
-              children: [
-                IconButton(
-                  color: const Color.fromARGB(255, 205, 166, 122),
-                  icon: const Icon(Icons.arrow_back_ios_rounded),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => BottomNavBar()));
-                  },
-                ),
-                const SizedBox(
-                  width: 50,
-                ),
-                const Text(
-                  'Properti apa yang anda cari?',
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 205, 166, 122), fontSize: 16),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 50,
-            ),
             Padding(
-              padding: EdgeInsets.only(left: 15, bottom: 20),
+              padding: EdgeInsets.only(left: 15, bottom: 20, top: 20),
               child: Text(
                 'Kategori',
                 style: TextStyle(

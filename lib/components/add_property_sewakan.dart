@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:convert';
 import 'package:app_development/components/bottom_nav_bar.dart';
+import 'package:app_development/pages/listing_saya_page.dart';
 import 'package:app_development/pages/pasang_iklan_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_udid/flutter_udid.dart';
@@ -159,13 +160,13 @@ class _SewakanRumahState extends State<SewakanRumah> {
   final picker = ImagePicker();
   String? imageFileName;
 
-  void updateFileName() {
-    if (image != null) {
-      Uri uri = Uri.file(image!.path);
-      imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
-      setState(() {});
-    }
-  }
+  // void updateFileName() {
+  //   if (image != null) {
+  //     Uri uri = Uri.file(image!.path);
+  //     imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
+  //     setState(() {});
+  //   }
+  // }
 
   Future getImageFromGallery() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -176,7 +177,7 @@ class _SewakanRumahState extends State<SewakanRumah> {
       }
     });
 
-    updateFileName();
+    // updateFileName();
   }
 
   Future getImageFromCamera() async {
@@ -188,7 +189,7 @@ class _SewakanRumahState extends State<SewakanRumah> {
       }
     });
 
-    updateFileName();
+    // updateFileName();
   }
 
   Future showOptions() async {
@@ -219,22 +220,19 @@ class _SewakanRumahState extends State<SewakanRumah> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          color: Color.fromARGB(255, 205, 166, 122),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FilterPasangIklan()));
+          },
+        ),
+      ),
       body: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FilterPasangIklan()));
-                },
-              ),
-            ],
-          ),
           Form(
             key: formField,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -457,71 +455,28 @@ class _SewakanRumahState extends State<SewakanRumah> {
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 10.0, top: 10.0),
-            child: Text(
-              'Rentang Harga (Rp)',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-          ),
-          // const SizedBox(
-          //   height: 10,
-          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
-                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
-                  SizedBox(
-                    width: 160.0,
-                    height: 35.0,
-                    child: TextFormField(
-                      controller: rentangHarga1Controller,
-                      // autovalidateMode:
-                      //     AutovalidateMode.onUserInteraction,
-                      // validator: (value) {
-                      //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan harga properti";
-                      //   }
-                      //   return null;
-                      // },
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 205, 166, 122)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade400),
-                        ),
-                        fillColor: Colors.grey.shade200,
-                        filled: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
-                        hintText: '',
-                      ),
-                    ),
-                  ),
-                ]),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+              const Padding(
+                padding: EdgeInsets.only(left: 10.0),
                 child: Text(
-                  'hingga',
-                  textAlign: TextAlign.center,
+                  'Kisaran Harga (Rp)',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
+              // const SizedBox(
+              //   height: 10,
+              // ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 10.0, top: 18.0, right: 10),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 160.0,
+                    width: 205.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: rentangArea1Controller,
+                      controller: hargaController,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
@@ -542,7 +497,7 @@ class _SewakanRumahState extends State<SewakanRumah> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
+                            vertical: 5.0, horizontal: 15.0),
                         hintText: '',
                       ),
                     ),
@@ -555,73 +510,33 @@ class _SewakanRumahState extends State<SewakanRumah> {
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 10.0, top: 10.0),
-            child: Text(
-              'Rentang Area (meter persegi)',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
-                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
-                  SizedBox(
-                    width: 160.0,
-                    height: 35.0,
-                    child: TextFormField(
-                      controller: rentangArea2Controller,
-                      // autovalidateMode:
-                      //     AutovalidateMode.onUserInteraction,
-                      // validator: (value) {
-                      //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan harga properti";
-                      //   }
-                      //   return null;
-                      // },
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 205, 166, 122)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade400),
-                        ),
-                        fillColor: Colors.grey.shade200,
-                        filled: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
-                        hintText: '',
-                      ),
-                    ),
-                  ),
-                ]),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+              const Padding(
+                padding: EdgeInsets.only(left: 10.0),
                 child: Text(
-                  'hingga',
-                  textAlign: TextAlign.center,
+                  'Luas Area (meter persegi)',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
+              const SizedBox(
+                height: 10,
+              ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 10.0, top: 18.0, right: 10),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 160.0,
+                    width: 147.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: rentangHarga2Controller,
+                      controller: luasController,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
                       //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan harga properti";
+                      //     return "Masukkan rentang area properti";
                       //   }
                       //   return null;
                       // },
@@ -637,7 +552,7 @@ class _SewakanRumahState extends State<SewakanRumah> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
+                            vertical: 5.0, horizontal: 15.0),
                         hintText: '',
                       ),
                     ),
@@ -654,7 +569,10 @@ class _SewakanRumahState extends State<SewakanRumah> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: EdgeInsets.only(left: 10.0, top: 10.0),
+                padding: EdgeInsets.only(
+                  left: 10.0,
+                  top: 10.0,
+                ),
                 child: Text(
                   'Jumlah Kamar Tidur',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
@@ -674,7 +592,8 @@ class _SewakanRumahState extends State<SewakanRumah> {
             children: [
               Form(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 25.0, top: 10.0),
+                  padding:
+                      const EdgeInsets.only(left: 25.0, top: 10.0, bottom: 15),
                   child: SizedBox(
                     width: 100.0,
                     height: 35.0,
@@ -708,7 +627,8 @@ class _SewakanRumahState extends State<SewakanRumah> {
               ),
               Form(
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 25.0, top: 10.0),
+                  padding:
+                      const EdgeInsets.only(right: 25.0, top: 10.0, bottom: 15),
                   child: SizedBox(
                     width: 100.0,
                     height: 35.0,
@@ -742,64 +662,94 @@ class _SewakanRumahState extends State<SewakanRumah> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 15,
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 15, bottom: 15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 10, bottom: 10),
+                  child: Text(
+                    'Deskripsi Produk',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  child: TextField(
+                    obscureText: false,
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 205, 166, 122)))),
+                  ),
+                )
+              ],
+            ),
           ),
           const Divider(
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(
-                  'Foto Properti',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(imageFileName ?? 'No image selected'),
-              SizedBox(
-                width: 15,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: SizedBox(
-                  width: 120,
-                  child: ElevatedButton(
-                    onPressed: showOptions,
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color.fromARGB(255, 205, 166, 122)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    side: const BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 205, 166, 122))))),
-                    child: const Text('Select Image'),
+          Padding(
+            padding: EdgeInsets.only(top: 15, bottom: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 10.0),
+                  child: Text(
+                    'Foto Properti',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: SizedBox(
+                    width: 120,
+                    child: ElevatedButton(
+                      onPressed: showOptions,
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color.fromARGB(255, 205, 166, 122)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      side: const BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 205, 166, 122))))),
+                      child: const Text('Select Image'),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          image != null
+              ? Container(
+                  height: 180,
+                  child: Image.file(
+                    image!,
+                  ),
+                )
+              : Text(''),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding:
+                const EdgeInsets.only(top: 20, bottom: 20, left: 10, right: 10),
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => BottomNavBar()));
+                    MaterialPageRoute(builder: (context) => ListingPage()));
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
@@ -967,13 +917,13 @@ class _SewakanTanahState extends State<SewakanTanah> {
   final picker = ImagePicker();
   String? imageFileName;
 
-  void updateFileName() {
-    if (image != null) {
-      Uri uri = Uri.file(image!.path);
-      imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
-      setState(() {});
-    }
-  }
+  // void updateFileName() {
+  //   if (image != null) {
+  //     Uri uri = Uri.file(image!.path);
+  //     imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
+  //     setState(() {});
+  //   }
+  // }
 
   Future getImageFromGallery() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -984,7 +934,7 @@ class _SewakanTanahState extends State<SewakanTanah> {
       }
     });
 
-    updateFileName();
+    // updateFileName();
   }
 
   Future getImageFromCamera() async {
@@ -996,7 +946,7 @@ class _SewakanTanahState extends State<SewakanTanah> {
       }
     });
 
-    updateFileName();
+    // updateFileName();
   }
 
   Future showOptions() async {
@@ -1027,22 +977,19 @@ class _SewakanTanahState extends State<SewakanTanah> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          color: Color.fromARGB(255, 205, 166, 122),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FilterPasangIklan()));
+          },
+        ),
+      ),
       body: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FilterPasangIklan()));
-                },
-              ),
-            ],
-          ),
           Form(
             key: formField,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -1265,71 +1212,28 @@ class _SewakanTanahState extends State<SewakanTanah> {
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 10.0, top: 10.0),
-            child: Text(
-              'Rentang Harga (Rp)',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-          ),
-          // const SizedBox(
-          //   height: 10,
-          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
-                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
-                  SizedBox(
-                    width: 160.0,
-                    height: 35.0,
-                    child: TextFormField(
-                      controller: rentangHarga1Controller,
-                      // autovalidateMode:
-                      //     AutovalidateMode.onUserInteraction,
-                      // validator: (value) {
-                      //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan harga properti";
-                      //   }
-                      //   return null;
-                      // },
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 205, 166, 122)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade400),
-                        ),
-                        fillColor: Colors.grey.shade200,
-                        filled: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
-                        hintText: '',
-                      ),
-                    ),
-                  ),
-                ]),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+              const Padding(
+                padding: EdgeInsets.only(left: 10.0),
                 child: Text(
-                  'hingga',
-                  textAlign: TextAlign.center,
+                  'Kisaran Harga (Rp)',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
+              // const SizedBox(
+              //   height: 10,
+              // ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 10.0, top: 18.0, right: 10),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 160.0,
+                    width: 205.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: rentangArea1Controller,
+                      controller: hargaController,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
@@ -1350,102 +1254,7 @@ class _SewakanTanahState extends State<SewakanTanah> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
-                        hintText: '',
-                      ),
-                    ),
-                  ),
-                ]),
-              ),
-            ],
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 10.0, top: 10.0),
-            child: Text(
-              'Rentang Area (meter persegi)',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
-                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
-                  SizedBox(
-                    width: 160.0,
-                    height: 35.0,
-                    child: TextFormField(
-                      controller: rentangArea2Controller,
-                      // autovalidateMode:
-                      //     AutovalidateMode.onUserInteraction,
-                      // validator: (value) {
-                      //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan harga properti";
-                      //   }
-                      //   return null;
-                      // },
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 205, 166, 122)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade400),
-                        ),
-                        fillColor: Colors.grey.shade200,
-                        filled: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
-                        hintText: '',
-                      ),
-                    ),
-                  ),
-                ]),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 5.0, right: 5.0),
-                child: Text(
-                  'hingga',
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
-                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
-                  SizedBox(
-                    width: 160.0,
-                    height: 35.0,
-                    child: TextFormField(
-                      controller: rentangHarga2Controller,
-                      // autovalidateMode:
-                      //     AutovalidateMode.onUserInteraction,
-                      // validator: (value) {
-                      //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan harga properti";
-                      //   }
-                      //   return null;
-                      // },
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 205, 166, 122)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade400),
-                        ),
-                        fillColor: Colors.grey.shade200,
-                        filled: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
+                            vertical: 5.0, horizontal: 15.0),
                         hintText: '',
                       ),
                     ),
@@ -1459,6 +1268,62 @@ class _SewakanTanahState extends State<SewakanTanah> {
             thickness: 1.0,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(left: 10.0),
+                child: Text(
+                  'Luas Area (meter persegi)',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 10.0, top: 18.0, right: 10),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 147.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: luasController,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan rentang area properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 15.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+            ],
+          ),
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
                 padding: EdgeInsets.only(left: 10.0),
@@ -1467,12 +1332,9 @@ class _SewakanTanahState extends State<SewakanTanah> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                padding: const EdgeInsets.only(
+                    bottom: 15.0, left: 10.0, top: 18.0, right: 10),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
                     width: 215.0,
@@ -1508,64 +1370,94 @@ class _SewakanTanahState extends State<SewakanTanah> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 15,
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 15, bottom: 15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 10, bottom: 10),
+                  child: Text(
+                    'Deskripsi Produk',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  child: TextField(
+                    obscureText: false,
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 205, 166, 122)))),
+                  ),
+                )
+              ],
+            ),
           ),
           const Divider(
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(
-                  'Foto Properti',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(imageFileName ?? 'No image selected'),
-              SizedBox(
-                width: 15,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: SizedBox(
-                  width: 120,
-                  child: ElevatedButton(
-                    onPressed: showOptions,
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color.fromARGB(255, 205, 166, 122)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    side: const BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 205, 166, 122))))),
-                    child: const Text('Select Image'),
+          Padding(
+            padding: EdgeInsets.only(top: 15, bottom: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 10.0),
+                  child: Text(
+                    'Foto Properti',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: SizedBox(
+                    width: 120,
+                    child: ElevatedButton(
+                      onPressed: showOptions,
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color.fromARGB(255, 205, 166, 122)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      side: const BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 205, 166, 122))))),
+                      child: const Text('Select Image'),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          image != null
+              ? Container(
+                  height: 180,
+                  child: Image.file(
+                    image!,
+                  ),
+                )
+              : Text(''),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding:
+                const EdgeInsets.only(top: 20, bottom: 20, left: 10, right: 10),
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => BottomNavBar()));
+                    MaterialPageRoute(builder: (context) => ListingPage()));
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
@@ -1797,13 +1689,13 @@ class _SewakanKostState extends State<SewakanKost> {
   final picker = ImagePicker();
   String? imageFileName;
 
-  void updateFileName() {
-    if (image != null) {
-      Uri uri = Uri.file(image!.path);
-      imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
-      setState(() {});
-    }
-  }
+  // void updateFileName() {
+  //   if (image != null) {
+  //     Uri uri = Uri.file(image!.path);
+  //     imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
+  //     setState(() {});
+  //   }
+  // }
 
   Future getImageFromGallery() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -1814,7 +1706,7 @@ class _SewakanKostState extends State<SewakanKost> {
       }
     });
 
-    updateFileName();
+    // updateFileName();
   }
 
   Future getImageFromCamera() async {
@@ -1826,7 +1718,7 @@ class _SewakanKostState extends State<SewakanKost> {
       }
     });
 
-    updateFileName();
+    // updateFileName();
   }
 
   Future showOptions() async {
@@ -1857,22 +1749,19 @@ class _SewakanKostState extends State<SewakanKost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          color: Color.fromARGB(255, 205, 166, 122),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FilterPasangIklan()));
+          },
+        ),
+      ),
       body: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FilterPasangIklan()));
-                },
-              ),
-            ],
-          ),
           Form(
             key: formField,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -2095,71 +1984,28 @@ class _SewakanKostState extends State<SewakanKost> {
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 10.0, top: 10.0),
-            child: Text(
-              'Rentang Harga (Rp)',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-          ),
-          // const SizedBox(
-          //   height: 10,
-          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
-                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
-                  SizedBox(
-                    width: 160.0,
-                    height: 35.0,
-                    child: TextFormField(
-                      controller: rentangHarga1Controller,
-                      // autovalidateMode:
-                      //     AutovalidateMode.onUserInteraction,
-                      // validator: (value) {
-                      //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan harga properti";
-                      //   }
-                      //   return null;
-                      // },
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 205, 166, 122)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade400),
-                        ),
-                        fillColor: Colors.grey.shade200,
-                        filled: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
-                        hintText: '',
-                      ),
-                    ),
-                  ),
-                ]),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+              const Padding(
+                padding: EdgeInsets.only(left: 10.0),
                 child: Text(
-                  'hingga',
-                  textAlign: TextAlign.center,
+                  'Kisaran Harga (Rp)',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
+              // const SizedBox(
+              //   height: 10,
+              // ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 10.0, top: 18.0, right: 10),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 160.0,
+                    width: 205.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: rentangArea1Controller,
+                      controller: hargaController,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
@@ -2180,102 +2026,7 @@ class _SewakanKostState extends State<SewakanKost> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
-                        hintText: '',
-                      ),
-                    ),
-                  ),
-                ]),
-              ),
-            ],
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 10.0, top: 10.0),
-            child: Text(
-              'Rentang Area (meter persegi)',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
-                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
-                  SizedBox(
-                    width: 160.0,
-                    height: 35.0,
-                    child: TextFormField(
-                      controller: rentangArea2Controller,
-                      // autovalidateMode:
-                      //     AutovalidateMode.onUserInteraction,
-                      // validator: (value) {
-                      //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan harga properti";
-                      //   }
-                      //   return null;
-                      // },
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 205, 166, 122)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade400),
-                        ),
-                        fillColor: Colors.grey.shade200,
-                        filled: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
-                        hintText: '',
-                      ),
-                    ),
-                  ),
-                ]),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 5.0, right: 5.0),
-                child: Text(
-                  'hingga',
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
-                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
-                  SizedBox(
-                    width: 160.0,
-                    height: 35.0,
-                    child: TextFormField(
-                      controller: rentangHarga2Controller,
-                      // autovalidateMode:
-                      //     AutovalidateMode.onUserInteraction,
-                      // validator: (value) {
-                      //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan harga properti";
-                      //   }
-                      //   return null;
-                      // },
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 205, 166, 122)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade400),
-                        ),
-                        fillColor: Colors.grey.shade200,
-                        filled: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
+                            vertical: 5.0, horizontal: 15.0),
                         hintText: '',
                       ),
                     ),
@@ -2289,6 +2040,62 @@ class _SewakanKostState extends State<SewakanKost> {
             thickness: 1.0,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(left: 10.0),
+                child: Text(
+                  'Luas Area (meter persegi)',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 10.0, top: 18.0, right: 10),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 147.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: luasController,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan rentang area properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 15.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+            ],
+          ),
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
                 padding: EdgeInsets.only(left: 10.0),
@@ -2297,52 +2104,61 @@ class _SewakanKostState extends State<SewakanKost> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
-              const SizedBox(
-                width: 108,
-              ),
-              ElevatedButton(
-                onPressed: activeKamarMandiDalam,
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        isPressedSewakanTipeKamarMandiDalam
-                            ? Color.fromARGB(255, 205, 166, 122)
-                            : Colors.white),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                            side: BorderSide(
-                                color: isPressedSewakanTipeKamarMandiDalam
-                                    ? Colors.transparent
-                                    : Color.fromARGB(255, 205, 166, 122))))),
-                child: Text('dalam',
-                    style: TextStyle(
-                        color: isPressedSewakanTipeKamarMandiDalam
-                            ? Colors.white
-                            : Color.fromARGB(255, 121, 121, 121))),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              ElevatedButton(
-                onPressed: activeKamarMandiLuar,
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        isPressedSewakanTipeKamarMandiLuar
-                            ? Color.fromARGB(255, 205, 166, 122)
-                            : Colors.white),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                            side: BorderSide(
-                                color: isPressedSewakanTipeKamarMandiLuar
-                                    ? Colors.transparent
-                                    : Color.fromARGB(255, 205, 166, 122))))),
-                child: Text('luar',
-                    style: TextStyle(
-                        color: isPressedSewakanTipeKamarMandiLuar
-                            ? Colors.white
-                            : Color.fromARGB(255, 121, 121, 121))),
-              ),
+              Padding(
+                padding: EdgeInsets.only(right: 10),
+                child: Wrap(
+                  children: [
+                    ElevatedButton(
+                      onPressed: activeKamarMandiDalam,
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              isPressedSewakanTipeKamarMandiDalam
+                                  ? Color.fromARGB(255, 205, 166, 122)
+                                  : Colors.white),
+                          shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  side: BorderSide(
+                                      color: isPressedSewakanTipeKamarMandiDalam
+                                          ? Colors.transparent
+                                          : Color.fromARGB(
+                                              255, 205, 166, 122))))),
+                      child: Text('dalam',
+                          style: TextStyle(
+                              color: isPressedSewakanTipeKamarMandiDalam
+                                  ? Colors.white
+                                  : Color.fromARGB(255, 121, 121, 121))),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    ElevatedButton(
+                      onPressed: activeKamarMandiLuar,
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              isPressedSewakanTipeKamarMandiLuar
+                                  ? Color.fromARGB(255, 205, 166, 122)
+                                  : Colors.white),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      side: BorderSide(
+                                          color:
+                                              isPressedSewakanTipeKamarMandiLuar
+                                                  ? Colors.transparent
+                                                  : Color.fromARGB(
+                                                      255, 205, 166, 122))))),
+                      child: Text('luar',
+                          style: TextStyle(
+                              color: isPressedSewakanTipeKamarMandiLuar
+                                  ? Colors.white
+                                  : Color.fromARGB(255, 121, 121, 121))),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
           const Divider(
@@ -2350,6 +2166,7 @@ class _SewakanKostState extends State<SewakanKost> {
             thickness: 1.0,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
                 padding: EdgeInsets.only(left: 10.0),
@@ -2358,75 +2175,85 @@ class _SewakanKostState extends State<SewakanKost> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
-              const SizedBox(
-                width: 65,
-              ),
-              ElevatedButton(
-                onPressed: activeTipeKostPutra,
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        isPressedSewakanTipeKostPutra
-                            ? Color.fromARGB(255, 205, 166, 122)
-                            : Colors.white),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                            side: BorderSide(
-                                color: isPressedSewakanTipeKostPutra
-                                    ? Colors.transparent
-                                    : Color.fromARGB(255, 205, 166, 122))))),
-                child: Text('putra',
-                    style: TextStyle(
-                        color: isPressedSewakanTipeKostPutra
-                            ? Colors.white
-                            : Color.fromARGB(255, 121, 121, 121))),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              ElevatedButton(
-                onPressed: activeTipeKostPutri,
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        isPressedSewakanTipeKostPutri
-                            ? Color.fromARGB(255, 205, 166, 122)
-                            : Colors.white),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                            side: BorderSide(
-                                color: isPressedSewakanTipeKostPutri
-                                    ? Colors.transparent
-                                    : Color.fromARGB(255, 205, 166, 122))))),
-                child: Text('putri',
-                    style: TextStyle(
-                        color: isPressedSewakanTipeKostPutri
-                            ? Colors.white
-                            : Color.fromARGB(255, 121, 121, 121))),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              ElevatedButton(
-                onPressed: activeTipeKostCampur,
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        isPressedSewakanTipeKostCampur
-                            ? Color.fromARGB(255, 205, 166, 122)
-                            : Colors.white),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                            side: BorderSide(
-                                color: isPressedSewakanTipeKostCampur
-                                    ? Colors.transparent
-                                    : Color.fromARGB(255, 205, 166, 122))))),
-                child: Text('campur',
-                    style: TextStyle(
-                        color: isPressedSewakanTipeKostCampur
-                            ? Colors.white
-                            : Color.fromARGB(255, 121, 121, 121))),
-              ),
+              Padding(
+                padding: EdgeInsets.only(right: 10),
+                child: Wrap(
+                  children: [
+                    ElevatedButton(
+                      onPressed: activeTipeKostPutra,
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              isPressedSewakanTipeKostPutra
+                                  ? Color.fromARGB(255, 205, 166, 122)
+                                  : Colors.white),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      side: BorderSide(
+                                          color: isPressedSewakanTipeKostPutra
+                                              ? Colors.transparent
+                                              : Color.fromARGB(
+                                                  255, 205, 166, 122))))),
+                      child: Text('putra',
+                          style: TextStyle(
+                              color: isPressedSewakanTipeKostPutra
+                                  ? Colors.white
+                                  : Color.fromARGB(255, 121, 121, 121))),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    ElevatedButton(
+                      onPressed: activeTipeKostPutri,
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              isPressedSewakanTipeKostPutri
+                                  ? Color.fromARGB(255, 205, 166, 122)
+                                  : Colors.white),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      side: BorderSide(
+                                          color: isPressedSewakanTipeKostPutri
+                                              ? Colors.transparent
+                                              : Color.fromARGB(
+                                                  255, 205, 166, 122))))),
+                      child: Text('putri',
+                          style: TextStyle(
+                              color: isPressedSewakanTipeKostPutri
+                                  ? Colors.white
+                                  : Color.fromARGB(255, 121, 121, 121))),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    ElevatedButton(
+                      onPressed: activeTipeKostCampur,
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              isPressedSewakanTipeKostCampur
+                                  ? Color.fromARGB(255, 205, 166, 122)
+                                  : Colors.white),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      side: BorderSide(
+                                          color: isPressedSewakanTipeKostCampur
+                                              ? Colors.transparent
+                                              : Color.fromARGB(
+                                                  255, 205, 166, 122))))),
+                      child: Text('campur',
+                          style: TextStyle(
+                              color: isPressedSewakanTipeKostCampur
+                                  ? Colors.white
+                                  : Color.fromARGB(255, 121, 121, 121))),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
           const Divider(
@@ -2457,7 +2284,8 @@ class _SewakanKostState extends State<SewakanKost> {
             children: [
               Form(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 25.0, top: 10.0),
+                  padding:
+                      const EdgeInsets.only(left: 25.0, top: 10.0, bottom: 15),
                   child: SizedBox(
                     width: 100.0,
                     height: 35.0,
@@ -2491,7 +2319,8 @@ class _SewakanKostState extends State<SewakanKost> {
               ),
               Form(
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 25.0, top: 10.0),
+                  padding:
+                      const EdgeInsets.only(right: 25.0, top: 10.0, bottom: 15),
                   child: SizedBox(
                     width: 100.0,
                     height: 35.0,
@@ -2525,64 +2354,94 @@ class _SewakanKostState extends State<SewakanKost> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 15,
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 15, bottom: 15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 10, bottom: 10),
+                  child: Text(
+                    'Deskripsi Produk',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  child: TextField(
+                    obscureText: false,
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 205, 166, 122)))),
+                  ),
+                )
+              ],
+            ),
           ),
           const Divider(
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(
-                  'Foto Properti',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(imageFileName ?? 'No image selected'),
-              SizedBox(
-                width: 15,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: SizedBox(
-                  width: 120,
-                  child: ElevatedButton(
-                    onPressed: showOptions,
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color.fromARGB(255, 205, 166, 122)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    side: const BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 205, 166, 122))))),
-                    child: const Text('Select Image'),
+          Padding(
+            padding: EdgeInsets.only(top: 15, bottom: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 10.0),
+                  child: Text(
+                    'Foto Properti',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: SizedBox(
+                    width: 120,
+                    child: ElevatedButton(
+                      onPressed: showOptions,
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color.fromARGB(255, 205, 166, 122)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      side: const BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 205, 166, 122))))),
+                      child: const Text('Select Image'),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          image != null
+              ? Container(
+                  height: 180,
+                  child: Image.file(
+                    image!,
+                  ),
+                )
+              : Text(''),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding:
+                const EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => BottomNavBar()));
+                    MaterialPageRoute(builder: (context) => ListingPage()));
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
@@ -2750,13 +2609,13 @@ class _SewakanApartementState extends State<SewakanApartement> {
   final picker = ImagePicker();
   String? imageFileName;
 
-  void updateFileName() {
-    if (image != null) {
-      Uri uri = Uri.file(image!.path);
-      imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
-      setState(() {});
-    }
-  }
+  // void updateFileName() {
+  //   if (image != null) {
+  //     Uri uri = Uri.file(image!.path);
+  //     imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
+  //     setState(() {});
+  //   }
+  // }
 
   Future getImageFromGallery() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -2767,7 +2626,7 @@ class _SewakanApartementState extends State<SewakanApartement> {
       }
     });
 
-    updateFileName();
+    // updateFileName();
   }
 
   Future getImageFromCamera() async {
@@ -2779,7 +2638,7 @@ class _SewakanApartementState extends State<SewakanApartement> {
       }
     });
 
-    updateFileName();
+    // updateFileName();
   }
 
   Future showOptions() async {
@@ -2810,22 +2669,19 @@ class _SewakanApartementState extends State<SewakanApartement> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          color: Color.fromARGB(255, 205, 166, 122),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FilterPasangIklan()));
+          },
+        ),
+      ),
       body: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FilterPasangIklan()));
-                },
-              ),
-            ],
-          ),
           Form(
             key: formField,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -3048,71 +2904,28 @@ class _SewakanApartementState extends State<SewakanApartement> {
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 10.0, top: 10.0),
-            child: Text(
-              'Rentang Harga (Rp)',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-          ),
-          // const SizedBox(
-          //   height: 10,
-          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
-                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
-                  SizedBox(
-                    width: 160.0,
-                    height: 35.0,
-                    child: TextFormField(
-                      controller: rentangHarga1Controller,
-                      // autovalidateMode:
-                      //     AutovalidateMode.onUserInteraction,
-                      // validator: (value) {
-                      //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan harga properti";
-                      //   }
-                      //   return null;
-                      // },
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 205, 166, 122)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade400),
-                        ),
-                        fillColor: Colors.grey.shade200,
-                        filled: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
-                        hintText: '',
-                      ),
-                    ),
-                  ),
-                ]),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+              const Padding(
+                padding: EdgeInsets.only(left: 10.0),
                 child: Text(
-                  'hingga',
-                  textAlign: TextAlign.center,
+                  'Kisaran Harga (Rp)',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
+              // const SizedBox(
+              //   height: 10,
+              // ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 10.0, top: 18.0, right: 10),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 160.0,
+                    width: 205.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: rentangArea1Controller,
+                      controller: hargaController,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
@@ -3133,7 +2946,7 @@ class _SewakanApartementState extends State<SewakanApartement> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
+                            vertical: 5.0, horizontal: 15.0),
                         hintText: '',
                       ),
                     ),
@@ -3146,73 +2959,33 @@ class _SewakanApartementState extends State<SewakanApartement> {
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 10.0, top: 10.0),
-            child: Text(
-              'Rentang Area (meter persegi)',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
-                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
-                  SizedBox(
-                    width: 160.0,
-                    height: 35.0,
-                    child: TextFormField(
-                      controller: rentangArea2Controller,
-                      // autovalidateMode:
-                      //     AutovalidateMode.onUserInteraction,
-                      // validator: (value) {
-                      //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan harga properti";
-                      //   }
-                      //   return null;
-                      // },
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 205, 166, 122)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade400),
-                        ),
-                        fillColor: Colors.grey.shade200,
-                        filled: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
-                        hintText: '',
-                      ),
-                    ),
-                  ),
-                ]),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+              const Padding(
+                padding: EdgeInsets.only(left: 10.0),
                 child: Text(
-                  'hingga',
-                  textAlign: TextAlign.center,
+                  'Luas Area (meter persegi)',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
+              const SizedBox(
+                height: 10,
+              ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 10.0, top: 18.0, right: 10),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 160.0,
+                    width: 147.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: rentangHarga2Controller,
+                      controller: luasController,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
                       //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan harga properti";
+                      //     return "Masukkan rentang area properti";
                       //   }
                       //   return null;
                       // },
@@ -3228,7 +3001,7 @@ class _SewakanApartementState extends State<SewakanApartement> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
+                            vertical: 5.0, horizontal: 15.0),
                         hintText: '',
                       ),
                     ),
@@ -3265,7 +3038,8 @@ class _SewakanApartementState extends State<SewakanApartement> {
             children: [
               Form(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 25.0, top: 10.0),
+                  padding:
+                      const EdgeInsets.only(left: 25.0, top: 10.0, bottom: 15),
                   child: SizedBox(
                     width: 100.0,
                     height: 35.0,
@@ -3299,7 +3073,8 @@ class _SewakanApartementState extends State<SewakanApartement> {
               ),
               Form(
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 25.0, top: 10.0),
+                  padding:
+                      const EdgeInsets.only(right: 25.0, top: 10.0, bottom: 15),
                   child: SizedBox(
                     width: 100.0,
                     height: 35.0,
@@ -3333,64 +3108,94 @@ class _SewakanApartementState extends State<SewakanApartement> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 15,
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 15, bottom: 15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 10, bottom: 10),
+                  child: Text(
+                    'Deskripsi Produk',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  child: TextField(
+                    obscureText: false,
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 205, 166, 122)))),
+                  ),
+                )
+              ],
+            ),
           ),
           const Divider(
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(
-                  'Foto Properti',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(imageFileName ?? 'No image selected'),
-              SizedBox(
-                width: 15,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: SizedBox(
-                  width: 120,
-                  child: ElevatedButton(
-                    onPressed: showOptions,
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color.fromARGB(255, 205, 166, 122)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    side: const BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 205, 166, 122))))),
-                    child: const Text('Select Image'),
+          Padding(
+            padding: EdgeInsets.only(top: 15, bottom: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 10.0),
+                  child: Text(
+                    'Foto Properti',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: SizedBox(
+                    width: 120,
+                    child: ElevatedButton(
+                      onPressed: showOptions,
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color.fromARGB(255, 205, 166, 122)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      side: const BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 205, 166, 122))))),
+                      child: const Text('Select Image'),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          image != null
+              ? Container(
+                  height: 180,
+                  child: Image.file(
+                    image!,
+                  ),
+                )
+              : Text(''),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding:
+                const EdgeInsets.only(top: 20, bottom: 20, left: 10, right: 10),
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => BottomNavBar()));
+                    MaterialPageRoute(builder: (context) => ListingPage()));
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
@@ -3558,13 +3363,13 @@ class _SewakanKomersilState extends State<SewakanKomersil> {
   final picker = ImagePicker();
   String? imageFileName;
 
-  void updateFileName() {
-    if (image != null) {
-      Uri uri = Uri.file(image!.path);
-      imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
-      setState(() {});
-    }
-  }
+  // void updateFileName() {
+  //   if (image != null) {
+  //     Uri uri = Uri.file(image!.path);
+  //     imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
+  //     setState(() {});
+  //   }
+  // }
 
   Future getImageFromGallery() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -3575,7 +3380,7 @@ class _SewakanKomersilState extends State<SewakanKomersil> {
       }
     });
 
-    updateFileName();
+    // updateFileName();
   }
 
   Future getImageFromCamera() async {
@@ -3587,7 +3392,7 @@ class _SewakanKomersilState extends State<SewakanKomersil> {
       }
     });
 
-    updateFileName();
+    // updateFileName();
   }
 
   Future showOptions() async {
@@ -3618,22 +3423,19 @@ class _SewakanKomersilState extends State<SewakanKomersil> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          color: Color.fromARGB(255, 205, 166, 122),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FilterPasangIklan()));
+          },
+        ),
+      ),
       body: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FilterPasangIklan()));
-                },
-              ),
-            ],
-          ),
           Form(
             key: formField,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -3856,71 +3658,28 @@ class _SewakanKomersilState extends State<SewakanKomersil> {
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 10.0, top: 10.0),
-            child: Text(
-              'Rentang Harga (Rp)',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-          ),
-          // const SizedBox(
-          //   height: 10,
-          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
-                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
-                  SizedBox(
-                    width: 160.0,
-                    height: 35.0,
-                    child: TextFormField(
-                      controller: rentangHarga1Controller,
-                      // autovalidateMode:
-                      //     AutovalidateMode.onUserInteraction,
-                      // validator: (value) {
-                      //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan harga properti";
-                      //   }
-                      //   return null;
-                      // },
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 205, 166, 122)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade400),
-                        ),
-                        fillColor: Colors.grey.shade200,
-                        filled: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
-                        hintText: '',
-                      ),
-                    ),
-                  ),
-                ]),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+              const Padding(
+                padding: EdgeInsets.only(left: 10.0),
                 child: Text(
-                  'hingga',
-                  textAlign: TextAlign.center,
+                  'Kisaran Harga (Rp)',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
+              // const SizedBox(
+              //   height: 10,
+              // ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 10.0, top: 18.0, right: 10),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 160.0,
+                    width: 205.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: rentangArea1Controller,
+                      controller: hargaController,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
@@ -3941,7 +3700,7 @@ class _SewakanKomersilState extends State<SewakanKomersil> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
+                            vertical: 5.0, horizontal: 15.0),
                         hintText: '',
                       ),
                     ),
@@ -3954,73 +3713,33 @@ class _SewakanKomersilState extends State<SewakanKomersil> {
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 10.0, top: 10.0),
-            child: Text(
-              'Rentang Area (meter persegi)',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
-                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
-                  SizedBox(
-                    width: 160.0,
-                    height: 35.0,
-                    child: TextFormField(
-                      controller: rentangArea2Controller,
-                      // autovalidateMode:
-                      //     AutovalidateMode.onUserInteraction,
-                      // validator: (value) {
-                      //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan harga properti";
-                      //   }
-                      //   return null;
-                      // },
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 205, 166, 122)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade400),
-                        ),
-                        fillColor: Colors.grey.shade200,
-                        filled: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
-                        hintText: '',
-                      ),
-                    ),
-                  ),
-                ]),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+              const Padding(
+                padding: EdgeInsets.only(left: 10.0),
                 child: Text(
-                  'hingga',
-                  textAlign: TextAlign.center,
+                  'Luas Area (meter persegi)',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
+              const SizedBox(
+                height: 10,
+              ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 10.0, top: 18.0, right: 10),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 160.0,
+                    width: 147.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: rentangHarga2Controller,
+                      controller: luasController,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
                       //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan harga properti";
+                      //     return "Masukkan rentang area properti";
                       //   }
                       //   return null;
                       // },
@@ -4036,7 +3755,7 @@ class _SewakanKomersilState extends State<SewakanKomersil> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
+                            vertical: 5.0, horizontal: 15.0),
                         hintText: '',
                       ),
                     ),
@@ -4073,7 +3792,8 @@ class _SewakanKomersilState extends State<SewakanKomersil> {
             children: [
               Form(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 25.0, top: 10.0),
+                  padding:
+                      const EdgeInsets.only(left: 25.0, top: 10.0, bottom: 15),
                   child: SizedBox(
                     width: 100.0,
                     height: 35.0,
@@ -4107,7 +3827,8 @@ class _SewakanKomersilState extends State<SewakanKomersil> {
               ),
               Form(
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 25.0, top: 10.0),
+                  padding:
+                      const EdgeInsets.only(right: 25.0, top: 10.0, bottom: 15),
                   child: SizedBox(
                     width: 100.0,
                     height: 35.0,
@@ -4141,64 +3862,94 @@ class _SewakanKomersilState extends State<SewakanKomersil> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 15,
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 15, bottom: 15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 10, bottom: 10),
+                  child: Text(
+                    'Deskripsi Produk',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  child: TextField(
+                    obscureText: false,
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 205, 166, 122)))),
+                  ),
+                )
+              ],
+            ),
           ),
           const Divider(
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(
-                  'Foto Properti',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(imageFileName ?? 'No image selected'),
-              SizedBox(
-                width: 15,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: SizedBox(
-                  width: 120,
-                  child: ElevatedButton(
-                    onPressed: showOptions,
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color.fromARGB(255, 205, 166, 122)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    side: const BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 205, 166, 122))))),
-                    child: const Text('Select Image'),
+          Padding(
+            padding: EdgeInsets.only(top: 15, bottom: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 10.0),
+                  child: Text(
+                    'Foto Properti',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: SizedBox(
+                    width: 120,
+                    child: ElevatedButton(
+                      onPressed: showOptions,
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color.fromARGB(255, 205, 166, 122)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      side: const BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 205, 166, 122))))),
+                      child: const Text('Select Image'),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          image != null
+              ? Container(
+                  height: 180,
+                  child: Image.file(
+                    image!,
+                  ),
+                )
+              : Text(''),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding:
+                const EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => BottomNavBar()));
+                    MaterialPageRoute(builder: (context) => ListingPage()));
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:convert';
 import 'package:app_development/components/bottom_nav_bar.dart';
+import 'package:app_development/pages/listing_saya_page.dart';
 import 'package:app_development/pages/pasang_iklan_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_udid/flutter_udid.dart';
@@ -50,16 +51,16 @@ class _JualKomersilState extends State<JualKomersil> {
       });
     }
 
-    updateFileName();
+    // updateFileName();
   }
 
-  void updateFileName() {
-    if (image != null) {
-      Uri uri = Uri.file(image!.path);
-      imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
-      setState(() {});
-    }
-  }
+  // void updateFileName() {
+  //   if (image != null) {
+  //     Uri uri = Uri.file(image!.path);
+  //     imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
+  //     setState(() {});
+  //   }
+  // }
 
   Future getImageFromCamera() async {
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
@@ -74,7 +75,7 @@ class _JualKomersilState extends State<JualKomersil> {
         print(base64string);
       });
 
-      updateFileName();
+      // updateFileName();
     }
   }
 
@@ -159,23 +160,20 @@ class _JualKomersilState extends State<JualKomersil> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          color: Color.fromARGB(255, 205, 166, 122),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FilterPasangIklan()));
+          },
+        ),
+      ),
       backgroundColor: Colors.white,
       body: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FilterPasangIklan()));
-                },
-              ),
-            ],
-          ),
           Form(
             key: formField,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -215,6 +213,7 @@ class _JualKomersilState extends State<JualKomersil> {
             thickness: 1.0,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
                 padding: EdgeInsets.only(left: 10.0),
@@ -223,12 +222,12 @@ class _JualKomersilState extends State<JualKomersil> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              // const SizedBox(
+              //   height: 10,
+              // ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 10.0, top: 18.0, right: 10),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
                     width: 205.0,
@@ -269,6 +268,7 @@ class _JualKomersilState extends State<JualKomersil> {
             thickness: 1.0,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
                 padding: EdgeInsets.only(left: 10.0),
@@ -281,8 +281,8 @@ class _JualKomersilState extends State<JualKomersil> {
                 height: 10,
               ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 10.0, top: 18.0, right: 10),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
                     width: 147.0,
@@ -346,7 +346,8 @@ class _JualKomersilState extends State<JualKomersil> {
             children: [
               Form(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 25.0, top: 10.0),
+                  padding:
+                      const EdgeInsets.only(left: 25.0, top: 10.0, bottom: 15),
                   child: SizedBox(
                     width: 100.0,
                     height: 35.0,
@@ -380,7 +381,8 @@ class _JualKomersilState extends State<JualKomersil> {
               ),
               Form(
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 25.0, top: 10.0),
+                  padding: const EdgeInsets.only(
+                      right: 25.0, top: 10.0, bottom: 15.0),
                   child: SizedBox(
                     width: 100.0,
                     height: 35.0,
@@ -414,65 +416,94 @@ class _JualKomersilState extends State<JualKomersil> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 15,
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 15, bottom: 15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 10, bottom: 10),
+                  child: Text(
+                    'Deskripsi Produk',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  child: TextField(
+                    obscureText: false,
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 205, 166, 122)))),
+                  ),
+                )
+              ],
+            ),
           ),
           const Divider(
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(
-                  'Foto Properti',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(imageFileName ?? 'No image selected'),
-              SizedBox(
-                width: 15,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: SizedBox(
-                  width: 120,
-                  child: ElevatedButton(
-                    onPressed: showOptions,
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color.fromARGB(255, 205, 166, 122)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    side: const BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 205, 166, 122))))),
-                    child: const Text('Select Image'),
+          Padding(
+            padding: EdgeInsets.only(top: 15, bottom: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 10.0),
+                  child: Text(
+                    'Foto Properti',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: SizedBox(
+                    width: 120,
+                    child: ElevatedButton(
+                      onPressed: showOptions,
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color.fromARGB(255, 205, 166, 122)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      side: const BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 205, 166, 122))))),
+                      child: const Text('Select Image'),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          image != null
+              ? Container(
+                  height: 180,
+                  child: Image.file(
+                    image!,
+                  ),
+                )
+              : Text(''),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(top: 20, right: 10, left: 10),
             child: ElevatedButton(
               onPressed: () async {
                 await postPropertyToServer();
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => BottomNavBar()));
+                    MaterialPageRoute(builder: (context) => ListingPage()));
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
@@ -531,16 +562,16 @@ class _JualRumahState extends State<JualRumah> {
       });
     }
 
-    updateFileName();
+    // updateFileName();
   }
 
-  void updateFileName() {
-    if (image != null) {
-      Uri uri = Uri.file(image!.path);
-      imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
-      setState(() {});
-    }
-  }
+  // void updateFileName() {
+  //   if (image != null) {
+  //     Uri uri = Uri.file(image!.path);
+  //     imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
+  //     setState(() {});
+  //   }
+  // }
 
   Future getImageFromCamera() async {
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
@@ -555,7 +586,7 @@ class _JualRumahState extends State<JualRumah> {
         print(base64string);
       });
 
-      updateFileName();
+      // updateFileName();
     }
   }
 
@@ -640,23 +671,20 @@ class _JualRumahState extends State<JualRumah> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          color: Color.fromARGB(255, 205, 166, 122),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FilterPasangIklan()));
+          },
+        ),
+      ),
       backgroundColor: Colors.white,
       body: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FilterPasangIklan()));
-                },
-              ),
-            ],
-          ),
           Form(
             key: formField,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -696,6 +724,7 @@ class _JualRumahState extends State<JualRumah> {
             thickness: 1.0,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
                 padding: EdgeInsets.only(left: 10.0),
@@ -708,8 +737,8 @@ class _JualRumahState extends State<JualRumah> {
                 height: 10,
               ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 10.0, top: 18.0, right: 10),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
                     width: 205.0,
@@ -750,6 +779,7 @@ class _JualRumahState extends State<JualRumah> {
             thickness: 1.0,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
                 padding: EdgeInsets.only(left: 10.0),
@@ -762,8 +792,8 @@ class _JualRumahState extends State<JualRumah> {
                 height: 10,
               ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 10.0, top: 18.0, right: 10),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
                     width: 147.0,
@@ -827,7 +857,8 @@ class _JualRumahState extends State<JualRumah> {
             children: [
               Form(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 25.0, top: 10.0),
+                  padding:
+                      const EdgeInsets.only(left: 25.0, top: 10.0, bottom: 15),
                   child: SizedBox(
                     width: 100.0,
                     height: 35.0,
@@ -861,7 +892,8 @@ class _JualRumahState extends State<JualRumah> {
               ),
               Form(
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 25.0, top: 10.0),
+                  padding:
+                      const EdgeInsets.only(right: 25.0, top: 10.0, bottom: 15),
                   child: SizedBox(
                     width: 100.0,
                     height: 35.0,
@@ -895,65 +927,94 @@ class _JualRumahState extends State<JualRumah> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 15,
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 15, bottom: 15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 10, bottom: 10),
+                  child: Text(
+                    'Deskripsi Produk',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  child: TextField(
+                    obscureText: false,
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 205, 166, 122)))),
+                  ),
+                )
+              ],
+            ),
           ),
           const Divider(
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(
-                  'Foto Properti',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(imageFileName ?? 'No image selected'),
-              SizedBox(
-                width: 15,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: SizedBox(
-                  width: 120,
-                  child: ElevatedButton(
-                    onPressed: showOptions,
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color.fromARGB(255, 205, 166, 122)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    side: const BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 205, 166, 122))))),
-                    child: const Text('Select Image'),
+          Padding(
+            padding: EdgeInsets.only(top: 15, bottom: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 10.0),
+                  child: Text(
+                    'Foto Properti',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: SizedBox(
+                    width: 120,
+                    child: ElevatedButton(
+                      onPressed: showOptions,
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color.fromARGB(255, 205, 166, 122)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      side: const BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 205, 166, 122))))),
+                      child: const Text('Select Image'),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          image != null
+              ? Container(
+                  height: 180,
+                  child: Image.file(
+                    image!,
+                  ),
+                )
+              : Text(''),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
             child: ElevatedButton(
               onPressed: () async {
                 await postPropertyToServer();
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => BottomNavBar()));
+                    MaterialPageRoute(builder: (context) => ListingPage()));
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
@@ -1012,16 +1073,16 @@ class _JualApartementState extends State<JualApartement> {
       });
     }
 
-    updateFileName();
+    // updateFileName();
   }
 
-  void updateFileName() {
-    if (image != null) {
-      Uri uri = Uri.file(image!.path);
-      imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
-      setState(() {});
-    }
-  }
+  // void updateFileName() {
+  //   if (image != null) {
+  //     Uri uri = Uri.file(image!.path);
+  //     imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
+  //     setState(() {});
+  //   }
+  // }
 
   Future getImageFromCamera() async {
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
@@ -1036,7 +1097,7 @@ class _JualApartementState extends State<JualApartement> {
         print(base64string);
       });
 
-      updateFileName();
+      // updateFileName();
     }
   }
 
@@ -1121,23 +1182,20 @@ class _JualApartementState extends State<JualApartement> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          color: Color.fromARGB(255, 205, 166, 122),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FilterPasangIklan()));
+          },
+        ),
+      ),
       backgroundColor: Colors.white,
       body: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FilterPasangIklan()));
-                },
-              ),
-            ],
-          ),
           Form(
             key: formField,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -1177,6 +1235,7 @@ class _JualApartementState extends State<JualApartement> {
             thickness: 1.0,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
                 padding: EdgeInsets.only(left: 10.0),
@@ -1185,12 +1244,9 @@ class _JualApartementState extends State<JualApartement> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 10.0, top: 18.0, right: 10),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
                     width: 205.0,
@@ -1231,6 +1287,7 @@ class _JualApartementState extends State<JualApartement> {
             thickness: 1.0,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
                 padding: EdgeInsets.only(left: 10.0),
@@ -1243,8 +1300,8 @@ class _JualApartementState extends State<JualApartement> {
                 height: 10,
               ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 10.0, top: 18.0, right: 10),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
                     width: 147.0,
@@ -1308,7 +1365,8 @@ class _JualApartementState extends State<JualApartement> {
             children: [
               Form(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 25.0, top: 10.0),
+                  padding:
+                      const EdgeInsets.only(left: 25.0, top: 10.0, bottom: 15),
                   child: SizedBox(
                     width: 100.0,
                     height: 35.0,
@@ -1342,7 +1400,11 @@ class _JualApartementState extends State<JualApartement> {
               ),
               Form(
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 25.0, top: 10.0),
+                  padding: const EdgeInsets.only(
+                    right: 25.0,
+                    top: 10.0,
+                    bottom: 15,
+                  ),
                   child: SizedBox(
                     width: 100.0,
                     height: 35.0,
@@ -1376,65 +1438,94 @@ class _JualApartementState extends State<JualApartement> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 15,
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 15, bottom: 15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 10, bottom: 10),
+                  child: Text(
+                    'Deskripsi Produk',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  child: TextField(
+                    obscureText: false,
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 205, 166, 122)))),
+                  ),
+                )
+              ],
+            ),
           ),
           const Divider(
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(
-                  'Foto Properti',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(imageFileName ?? 'No image selected'),
-              SizedBox(
-                width: 15,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: SizedBox(
-                  width: 120,
-                  child: ElevatedButton(
-                    onPressed: showOptions,
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color.fromARGB(255, 205, 166, 122)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    side: const BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 205, 166, 122))))),
-                    child: const Text('Select Image'),
+          Padding(
+            padding: EdgeInsets.only(top: 15, bottom: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 10.0),
+                  child: Text(
+                    'Foto Properti',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: SizedBox(
+                    width: 120,
+                    child: ElevatedButton(
+                      onPressed: showOptions,
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color.fromARGB(255, 205, 166, 122)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      side: const BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 205, 166, 122))))),
+                      child: const Text('Select Image'),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          image != null
+              ? Container(
+                  height: 180,
+                  child: Image.file(
+                    image!,
+                  ),
+                )
+              : Text(''),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
             child: ElevatedButton(
               onPressed: () async {
                 await postPropertyToServer();
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => BottomNavBar()));
+                    MaterialPageRoute(builder: (context) => ListingPage()));
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
@@ -1544,13 +1635,13 @@ class _JualKostState extends State<JualKost> {
     return number < 10 ? '0$number' : '$number';
   }
 
-  void updateFileName() {
-    if (image != null) {
-      Uri uri = Uri.file(image!.path);
-      imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
-      setState(() {});
-    }
-  }
+  // void updateFileName() {
+  //   if (image != null) {
+  //     Uri uri = Uri.file(image!.path);
+  //     imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
+  //     setState(() {});
+  //   }
+  // }
 
   Future<void> getImageFromGallery() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -1567,7 +1658,7 @@ class _JualKostState extends State<JualKost> {
         print(base64string);
       });
 
-      updateFileName();
+      // updateFileName();
     }
   }
 
@@ -1584,7 +1675,7 @@ class _JualKostState extends State<JualKost> {
         print(base64string);
       });
 
-      updateFileName();
+      // updateFileName();
     }
   }
 
@@ -1671,22 +1762,19 @@ class _JualKostState extends State<JualKost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          color: Color.fromARGB(255, 205, 166, 122),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FilterPasangIklan()));
+          },
+        ),
+      ),
       body: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FilterPasangIklan()));
-                },
-              ),
-            ],
-          ),
           Form(
             key: formField,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -1726,6 +1814,7 @@ class _JualKostState extends State<JualKost> {
             thickness: 1.0,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
                 padding: EdgeInsets.only(left: 10.0),
@@ -1734,12 +1823,9 @@ class _JualKostState extends State<JualKost> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 10.0, top: 18.0, right: 10),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
                     width: 205.0,
@@ -1780,6 +1866,7 @@ class _JualKostState extends State<JualKost> {
             thickness: 1.0,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
                 padding: EdgeInsets.only(left: 10.0),
@@ -1788,12 +1875,9 @@ class _JualKostState extends State<JualKost> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 10.0, top: 18.0, right: 10),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
                     width: 148.0,
@@ -1834,6 +1918,7 @@ class _JualKostState extends State<JualKost> {
             thickness: 1.0,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
                 padding: EdgeInsets.only(left: 10.0),
@@ -1842,52 +1927,61 @@ class _JualKostState extends State<JualKost> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
-              const SizedBox(
-                width: 108,
-              ),
-              ElevatedButton(
-                onPressed: activeKamarMandiDalam,
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        isPressedJualTipeKamarMandiDalam
-                            ? Color.fromARGB(255, 205, 166, 122)
-                            : Colors.white),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                            side: BorderSide(
-                                color: isPressedJualTipeKamarMandiDalam
-                                    ? Colors.transparent
-                                    : Color.fromARGB(255, 205, 166, 122))))),
-                child: Text('dalam',
-                    style: TextStyle(
-                        color: isPressedJualTipeKamarMandiDalam
-                            ? Colors.white
-                            : Color.fromARGB(255, 121, 121, 121))),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              ElevatedButton(
-                onPressed: activeKamarMandiLuar,
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        isPressedJualTipeKamarMandiLuar
-                            ? Color.fromARGB(255, 205, 166, 122)
-                            : Colors.white),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                            side: BorderSide(
-                                color: isPressedJualTipeKamarMandiLuar
-                                    ? Colors.transparent
-                                    : Color.fromARGB(255, 205, 166, 122))))),
-                child: Text('luar',
-                    style: TextStyle(
-                        color: isPressedJualTipeKamarMandiLuar
-                            ? Colors.white
-                            : Color.fromARGB(255, 121, 121, 121))),
-              ),
+              Padding(
+                padding: EdgeInsets.only(right: 10),
+                child: Wrap(
+                  children: [
+                    ElevatedButton(
+                      onPressed: activeKamarMandiDalam,
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              isPressedJualTipeKamarMandiDalam
+                                  ? Color.fromARGB(255, 205, 166, 122)
+                                  : Colors.white),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      side: BorderSide(
+                                          color:
+                                              isPressedJualTipeKamarMandiDalam
+                                                  ? Colors.transparent
+                                                  : Color.fromARGB(
+                                                      255, 205, 166, 122))))),
+                      child: Text('dalam',
+                          style: TextStyle(
+                              color: isPressedJualTipeKamarMandiDalam
+                                  ? Colors.white
+                                  : Color.fromARGB(255, 121, 121, 121))),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    ElevatedButton(
+                      onPressed: activeKamarMandiLuar,
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              isPressedJualTipeKamarMandiLuar
+                                  ? Color.fromARGB(255, 205, 166, 122)
+                                  : Colors.white),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      side: BorderSide(
+                                          color: isPressedJualTipeKamarMandiLuar
+                                              ? Colors.transparent
+                                              : Color.fromARGB(
+                                                  255, 205, 166, 122))))),
+                      child: Text('luar',
+                          style: TextStyle(
+                              color: isPressedJualTipeKamarMandiLuar
+                                  ? Colors.white
+                                  : Color.fromARGB(255, 121, 121, 121))),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
           const Divider(
@@ -1895,6 +1989,7 @@ class _JualKostState extends State<JualKost> {
             thickness: 1.0,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
                 padding: EdgeInsets.only(left: 10.0),
@@ -1903,75 +1998,85 @@ class _JualKostState extends State<JualKost> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
-              const SizedBox(
-                width: 65,
-              ),
-              ElevatedButton(
-                onPressed: activeTipeKostPutra,
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        isPressedJualTipeKostPutra
-                            ? Color.fromARGB(255, 205, 166, 122)
-                            : Colors.white),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                            side: BorderSide(
-                                color: isPressedJualTipeKostPutra
-                                    ? Colors.transparent
-                                    : Color.fromARGB(255, 205, 166, 122))))),
-                child: Text('putra',
-                    style: TextStyle(
-                        color: isPressedJualTipeKostPutra
-                            ? Colors.white
-                            : Color.fromARGB(255, 121, 121, 121))),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              ElevatedButton(
-                onPressed: activeTipeKostPutri,
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        isPressedJualTipeKostPutri
-                            ? Color.fromARGB(255, 205, 166, 122)
-                            : Colors.white),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                            side: BorderSide(
-                                color: isPressedJualTipeKostPutri
-                                    ? Colors.transparent
-                                    : Color.fromARGB(255, 205, 166, 122))))),
-                child: Text('putri',
-                    style: TextStyle(
-                        color: isPressedJualTipeKostPutri
-                            ? Colors.white
-                            : Color.fromARGB(255, 121, 121, 121))),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              ElevatedButton(
-                onPressed: activeTipeKostCampur,
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        isPressedJualTipeKostCampur
-                            ? Color.fromARGB(255, 205, 166, 122)
-                            : Colors.white),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                            side: BorderSide(
-                                color: isPressedJualTipeKostCampur
-                                    ? Colors.transparent
-                                    : Color.fromARGB(255, 205, 166, 122))))),
-                child: Text('campur',
-                    style: TextStyle(
-                        color: isPressedJualTipeKostCampur
-                            ? Colors.white
-                            : Color.fromARGB(255, 121, 121, 121))),
-              ),
+              Padding(
+                padding: EdgeInsets.only(right: 10),
+                child: Wrap(
+                  children: [
+                    ElevatedButton(
+                      onPressed: activeTipeKostPutra,
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              isPressedJualTipeKostPutra
+                                  ? Color.fromARGB(255, 205, 166, 122)
+                                  : Colors.white),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      side: BorderSide(
+                                          color: isPressedJualTipeKostPutra
+                                              ? Colors.transparent
+                                              : Color.fromARGB(
+                                                  255, 205, 166, 122))))),
+                      child: Text('putra',
+                          style: TextStyle(
+                              color: isPressedJualTipeKostPutra
+                                  ? Colors.white
+                                  : Color.fromARGB(255, 121, 121, 121))),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    ElevatedButton(
+                      onPressed: activeTipeKostPutri,
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              isPressedJualTipeKostPutri
+                                  ? Color.fromARGB(255, 205, 166, 122)
+                                  : Colors.white),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      side: BorderSide(
+                                          color: isPressedJualTipeKostPutri
+                                              ? Colors.transparent
+                                              : Color.fromARGB(
+                                                  255, 205, 166, 122))))),
+                      child: Text('putri',
+                          style: TextStyle(
+                              color: isPressedJualTipeKostPutri
+                                  ? Colors.white
+                                  : Color.fromARGB(255, 121, 121, 121))),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    ElevatedButton(
+                      onPressed: activeTipeKostCampur,
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              isPressedJualTipeKostCampur
+                                  ? Color.fromARGB(255, 205, 166, 122)
+                                  : Colors.white),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      side: BorderSide(
+                                          color: isPressedJualTipeKostCampur
+                                              ? Colors.transparent
+                                              : Color.fromARGB(
+                                                  255, 205, 166, 122))))),
+                      child: Text('campur',
+                          style: TextStyle(
+                              color: isPressedJualTipeKostCampur
+                                  ? Colors.white
+                                  : Color.fromARGB(255, 121, 121, 121))),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
           const Divider(
@@ -2002,7 +2107,8 @@ class _JualKostState extends State<JualKost> {
             children: [
               Form(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 25.0, top: 10.0),
+                  padding:
+                      const EdgeInsets.only(left: 25.0, top: 10.0, bottom: 15),
                   child: SizedBox(
                     width: 100.0,
                     height: 35.0,
@@ -2036,7 +2142,8 @@ class _JualKostState extends State<JualKost> {
               ),
               Form(
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 25.0, top: 10.0),
+                  padding:
+                      const EdgeInsets.only(right: 25.0, top: 10.0, bottom: 15),
                   child: SizedBox(
                     width: 100.0,
                     height: 35.0,
@@ -2070,65 +2177,95 @@ class _JualKostState extends State<JualKost> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 15,
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 15, bottom: 15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 10, bottom: 10),
+                  child: Text(
+                    'Deskripsi Produk',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  child: TextField(
+                    obscureText: false,
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 205, 166, 122)))),
+                  ),
+                )
+              ],
+            ),
           ),
           const Divider(
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(
-                  'Foto Properti',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(imageFileName ?? 'No image selected'),
-              SizedBox(
-                width: 15,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: SizedBox(
-                  width: 120,
-                  child: ElevatedButton(
-                    onPressed: showOptions,
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color.fromARGB(255, 205, 166, 122)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    side: const BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 205, 166, 122))))),
-                    child: const Text('Select Image'),
+          Padding(
+            padding: EdgeInsets.only(top: 15, bottom: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 10.0),
+                  child: Text(
+                    'Foto Properti',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: SizedBox(
+                    width: 120,
+                    child: ElevatedButton(
+                      onPressed: showOptions,
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color.fromARGB(255, 205, 166, 122)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      side: const BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 205, 166, 122))))),
+                      child: const Text('Select Image'),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          image != null
+              ? Container(
+                  height: 180,
+                  child: Image.file(
+                    image!,
+                  ),
+                )
+              : Text(''),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding:
+                const EdgeInsets.only(bottom: 20, top: 20, right: 10, left: 10),
             child: ElevatedButton(
               onPressed: () async {
                 await postPropertyToServer();
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => BottomNavBar()));
+                    MaterialPageRoute(builder: (context) => ListingPage()));
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
@@ -2175,13 +2312,13 @@ class _JualTanahState extends State<JualTanah> {
 
   String base64string = '';
 
-  void updateFileName() {
-    if (image != null) {
-      Uri uri = Uri.file(image!.path);
-      imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
-      setState(() {});
-    }
-  }
+  // void updateFileName() {
+  //   if (image != null) {
+  //     Uri uri = Uri.file(image!.path);
+  //     imageFileName = utf8.decode(uri.pathSegments.last.codeUnits);
+  //     setState(() {});
+  //   }
+  // }
 
   Future<void> getImageFromGallery() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -2198,7 +2335,7 @@ class _JualTanahState extends State<JualTanah> {
         print(base64string);
       });
 
-      updateFileName();
+      // updateFileName();
     }
   }
 
@@ -2215,7 +2352,7 @@ class _JualTanahState extends State<JualTanah> {
         print(base64string);
       });
 
-      updateFileName();
+      // updateFileName();
     }
   }
 
@@ -2284,23 +2421,19 @@ class _JualTanahState extends State<JualTanah> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          color: Color.fromARGB(255, 205, 166, 122),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FilterPasangIklan()));
+          },
+        ),
+      ),
       body: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FilterPasangIklan()));
-                },
-              ),
-            ],
-          ),
-
           Form(
             key: formField,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -2342,6 +2475,7 @@ class _JualTanahState extends State<JualTanah> {
             thickness: 1.0,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
                 padding: EdgeInsets.only(left: 10.0),
@@ -2350,12 +2484,9 @@ class _JualTanahState extends State<JualTanah> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 10.0, top: 18.0, right: 10),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
                     width: 205.0,
@@ -2396,6 +2527,7 @@ class _JualTanahState extends State<JualTanah> {
             thickness: 1.0,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
                 padding: EdgeInsets.only(left: 10.0),
@@ -2408,8 +2540,8 @@ class _JualTanahState extends State<JualTanah> {
                 height: 10,
               ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 10.0, top: 18.0, right: 10),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
                     width: 147.0,
@@ -2450,6 +2582,7 @@ class _JualTanahState extends State<JualTanah> {
             thickness: 1.0,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
                 padding: EdgeInsets.only(left: 10.0),
@@ -2458,12 +2591,9 @@ class _JualTanahState extends State<JualTanah> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                padding: const EdgeInsets.only(
+                    bottom: 20.0, left: 10.0, top: 18.0, right: 10),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
                     width: 215.0,
@@ -2503,58 +2633,90 @@ class _JualTanahState extends State<JualTanah> {
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(
-                  'Foto Properti',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(imageFileName ?? 'No image selected'),
-              SizedBox(
-                width: 15,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: SizedBox(
-                  width: 120,
-                  child: ElevatedButton(
-                    onPressed: showOptions,
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color.fromARGB(255, 205, 166, 122)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    side: const BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 205, 166, 122))))),
-                    child: const Text('Select Image'),
+          Padding(
+            padding: EdgeInsets.only(top: 15, bottom: 15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 10, bottom: 10),
+                  child: Text(
+                    'Deskripsi Produk',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                 ),
-              )
-            ],
+                Padding(
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  child: TextField(
+                    obscureText: false,
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 205, 166, 122)))),
+                  ),
+                )
+              ],
+            ),
           ),
-          const SizedBox(
-            height: 30,
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.only(top: 15, bottom: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 10.0),
+                  child: Text(
+                    'Foto Properti',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: SizedBox(
+                    width: 120,
+                    child: ElevatedButton(
+                      onPressed: showOptions,
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color.fromARGB(255, 205, 166, 122)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      side: const BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 205, 166, 122))))),
+                      child: const Text('Select Image'),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          image != null
+              ? Container(
+                  height: 180,
+                  child: Image.file(
+                    image!,
+                  ),
+                )
+              : Text(''),
+          Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
             child: ElevatedButton(
               onPressed: () async {
                 await postPropertyToServer();
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => BottomNavBar()));
+                    MaterialPageRoute(builder: (context) => ListingPage()));
               },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(

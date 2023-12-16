@@ -17,6 +17,21 @@ class PropertyPage extends StatelessWidget {
       // ),
 
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 58, 58, 58),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new_rounded),
+            color: Color.fromARGB(255, 205, 166, 122),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => BottomNavBar()));
+            },
+          ),
+          title: Text(
+            'List Properti',
+            style: TextStyle(color: Color.fromARGB(255, 205, 166, 122)),
+          ),
+        ),
         backgroundColor: const Color.fromARGB(255, 58, 58, 58),
         body: ListView(
           children: [
@@ -38,37 +53,7 @@ class PropertyPage extends StatelessWidget {
             //     )
             //   ],
             // )
-            Padding(
-              padding: EdgeInsets.only(top: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Wrap(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.arrow_back_ios_new_rounded),
-                        color: Color.fromARGB(255, 205, 166, 122),
-                        onPressed: () {},
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 14),
-                        child: Text(
-                          'Properti',
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Color.fromARGB(255, 205, 166, 122)),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const Divider(
-              color: Color.fromARGB(255, 184, 184, 184),
-              thickness: 1.0,
-            ),
+
             Padding(
               padding: EdgeInsets.only(top: 15),
               child: Column(

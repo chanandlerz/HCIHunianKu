@@ -67,7 +67,7 @@ class _FeedsPageState extends State<FeedsPage> {
                         color: const Color.fromARGB(255, 205, 166, 122),
                       ),
                       IconButton(
-                        icon: const Icon(Icons.tune_rounded),
+                        icon: const Icon(Icons.search),
                         onPressed: () {
                           Navigator.push(
                               context,
@@ -181,41 +181,24 @@ class _FeedsPageState extends State<FeedsPage> {
                                     )),
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 55.0),
+                                padding: const EdgeInsets.only(),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceAround,
                                   children: <Widget>[
-                                    Row(
-                                      children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            IconButton(
-                                              icon: Icon(favorite
-                                                  ? Icons.favorite_border
-                                                  : Icons.favorite),
-                                              color: favorite
-                                                  ? Colors.black
-                                                  : Colors.pink,
-                                              iconSize: 35.0,
-                                              onPressed: activeFavorite,
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          width: 150,
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            IconButton(
-                                              icon: const Icon(Icons.chat),
-                                              iconSize: 35.0,
-                                              onPressed: () {},
-                                            )
-                                          ],
-                                        )
-                                      ],
+                                    IconButton(
+                                      icon: Icon(favorite
+                                          ? Icons.favorite_border
+                                          : Icons.favorite),
+                                      color:
+                                          favorite ? Colors.black : Colors.pink,
+                                      iconSize: 35.0,
+                                      onPressed: activeFavorite,
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.chat),
+                                      iconSize: 35.0,
+                                      onPressed: () {},
                                     )
                                   ],
                                 ),

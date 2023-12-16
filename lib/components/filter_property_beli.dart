@@ -28,6 +28,11 @@ class _BeliKomersilState extends State<BeliKomersil> {
       TextEditingController();
   final TextEditingController ketinggianController = TextEditingController();
 
+  final TextEditingController rentangHarga1Controller = TextEditingController();
+  final TextEditingController rentangHarga2Controller = TextEditingController();
+  final TextEditingController rentangArea1Controller = TextEditingController();
+  final TextEditingController rentangArea2Controller = TextEditingController();
+
   var filteredData;
 
   Future postFilterToServer() async {
@@ -82,23 +87,20 @@ class _BeliKomersilState extends State<BeliKomersil> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          color: Color.fromARGB(255, 205, 166, 122),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FilterProperty()));
+          },
+        ),
+      ),
       backgroundColor: Colors.white,
       body: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FilterProperty()));
-                },
-              ),
-            ],
-          ),
           Form(
             key: formField,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -137,27 +139,28 @@ class _BeliKomersilState extends State<BeliKomersil> {
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              'Rentang Harga (Rp)',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          // const SizedBox(
+          //   height: 10,
+          // ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(
-                  'Rentang Harga (Rp)',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
               Padding(
                 padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 205.0,
+                    width: 160.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: rentangHargaController,
+                      controller: rentangHarga1Controller,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
@@ -178,45 +181,34 @@ class _BeliKomersilState extends State<BeliKomersil> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 15.0),
+                            vertical: 5.0, horizontal: 10.0),
                         hintText: '',
                       ),
                     ),
                   ),
                 ]),
               ),
-            ],
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
-          ),
-          Row(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
                 child: Text(
-                  'Rentang Area (meter persegi)',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  'hingga',
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
               ),
               Padding(
                 padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 147.0,
+                    width: 160.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: rentangAreaController,
+                      controller: rentangArea1Controller,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
                       //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan rentang area properti";
+                      //     return "Masukkan harga properti";
                       //   }
                       //   return null;
                       // },
@@ -232,7 +224,102 @@ class _BeliKomersilState extends State<BeliKomersil> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 15.0),
+                            vertical: 5.0, horizontal: 10.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+            ],
+          ),
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              'Rentang Area (meter persegi)',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 160.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: rentangArea2Controller,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan harga properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                child: Text(
+                  'hingga',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 160.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: rentangHarga2Controller,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan harga properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
                         hintText: '',
                       ),
                     ),
@@ -337,13 +424,7 @@ class _BeliKomersilState extends State<BeliKomersil> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 15,
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
-          ),
+
           const SizedBox(
             height: 30,
           ),
@@ -390,6 +471,11 @@ class _BeliRumahState extends State<BeliRumah> {
   final TextEditingController jumlahKamarMandiController =
       TextEditingController();
   final TextEditingController ketinggianController = TextEditingController();
+
+  final TextEditingController rentangHarga1Controller = TextEditingController();
+  final TextEditingController rentangHarga2Controller = TextEditingController();
+  final TextEditingController rentangArea1Controller = TextEditingController();
+  final TextEditingController rentangArea2Controller = TextEditingController();
 
   String _addLeadingZero(int number) {
     return number < 10 ? '0$number' : '$number';
@@ -443,23 +529,20 @@ class _BeliRumahState extends State<BeliRumah> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          color: Color.fromARGB(255, 205, 166, 122),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FilterProperty()));
+          },
+        ),
+      ),
       backgroundColor: Colors.white,
       body: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FilterProperty()));
-                },
-              ),
-            ],
-          ),
           Form(
             key: formField,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -498,27 +581,28 @@ class _BeliRumahState extends State<BeliRumah> {
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              'Rentang Harga (Rp)',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          // const SizedBox(
+          //   height: 10,
+          // ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(
-                  'Rentang Harga (Rp)',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
               Padding(
                 padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 205.0,
+                    width: 160.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: rentangHargaController,
+                      controller: rentangHarga1Controller,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
@@ -539,45 +623,34 @@ class _BeliRumahState extends State<BeliRumah> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 15.0),
+                            vertical: 5.0, horizontal: 10.0),
                         hintText: '',
                       ),
                     ),
                   ),
                 ]),
               ),
-            ],
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
-          ),
-          Row(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
                 child: Text(
-                  'Rentang Area (meter persegi)',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  'hingga',
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
               ),
               Padding(
                 padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 147.0,
+                    width: 160.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: rentangAreaController,
+                      controller: rentangArea1Controller,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
                       //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan rentang area properti";
+                      //     return "Masukkan harga properti";
                       //   }
                       //   return null;
                       // },
@@ -593,7 +666,102 @@ class _BeliRumahState extends State<BeliRumah> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 15.0),
+                            vertical: 5.0, horizontal: 10.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+            ],
+          ),
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              'Rentang Area (meter persegi)',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 160.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: rentangArea2Controller,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan harga properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                child: Text(
+                  'hingga',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 160.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: rentangHarga2Controller,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan harga properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
                         hintText: '',
                       ),
                     ),
@@ -698,13 +866,7 @@ class _BeliRumahState extends State<BeliRumah> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 15,
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
-          ),
+
           const SizedBox(
             height: 30,
           ),
@@ -750,6 +912,11 @@ class _BeliApartementState extends State<BeliApartement> {
   final TextEditingController jumlahKamarMandiController =
       TextEditingController();
   final TextEditingController ketinggianController = TextEditingController();
+
+  final TextEditingController rentangHarga1Controller = TextEditingController();
+  final TextEditingController rentangHarga2Controller = TextEditingController();
+  final TextEditingController rentangArea1Controller = TextEditingController();
+  final TextEditingController rentangArea2Controller = TextEditingController();
 
   String _addLeadingZero(int number) {
     return number < 10 ? '0$number' : '$number';
@@ -805,23 +972,20 @@ class _BeliApartementState extends State<BeliApartement> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          color: Color.fromARGB(255, 205, 166, 122),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FilterProperty()));
+          },
+        ),
+      ),
       backgroundColor: Colors.white,
       body: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FilterProperty()));
-                },
-              ),
-            ],
-          ),
           Form(
             key: formField,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -860,27 +1024,28 @@ class _BeliApartementState extends State<BeliApartement> {
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              'Rentang Harga (Rp)',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          // const SizedBox(
+          //   height: 10,
+          // ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(
-                  'Rentang Harga (Rp)',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
               Padding(
                 padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 205.0,
+                    width: 160.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: rentangHargaController,
+                      controller: rentangHarga1Controller,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
@@ -901,45 +1066,34 @@ class _BeliApartementState extends State<BeliApartement> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 15.0),
+                            vertical: 5.0, horizontal: 10.0),
                         hintText: '',
                       ),
                     ),
                   ),
                 ]),
               ),
-            ],
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
-          ),
-          Row(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
                 child: Text(
-                  'Rentang Area (meter persegi)',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  'hingga',
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
               ),
               Padding(
                 padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 147.0,
+                    width: 160.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: rentangAreaController,
+                      controller: rentangArea1Controller,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
                       //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan rentang area properti";
+                      //     return "Masukkan harga properti";
                       //   }
                       //   return null;
                       // },
@@ -955,7 +1109,102 @@ class _BeliApartementState extends State<BeliApartement> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 15.0),
+                            vertical: 5.0, horizontal: 10.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+            ],
+          ),
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              'Rentang Area (meter persegi)',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 160.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: rentangArea2Controller,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan harga properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                child: Text(
+                  'hingga',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 160.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: rentangHarga2Controller,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan harga properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
                         hintText: '',
                       ),
                     ),
@@ -1060,13 +1309,7 @@ class _BeliApartementState extends State<BeliApartement> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 15,
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
-          ),
+
           const SizedBox(
             height: 30,
           ),
@@ -1112,6 +1355,11 @@ class _BeliKostState extends State<BeliKost> {
   final TextEditingController jumlahKamarMandiController =
       TextEditingController();
   final TextEditingController ketinggianController = TextEditingController();
+
+  final TextEditingController rentangHarga1Controller = TextEditingController();
+  final TextEditingController rentangHarga2Controller = TextEditingController();
+  final TextEditingController rentangArea1Controller = TextEditingController();
+  final TextEditingController rentangArea2Controller = TextEditingController();
 
   bool isPressedBeliTipeKamarMandiDalam = false;
   bool isPressedBeliTipeKamarMandiLuar = false;
@@ -1247,22 +1495,19 @@ class _BeliKostState extends State<BeliKost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          color: Color.fromARGB(255, 205, 166, 122),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FilterProperty()));
+          },
+        ),
+      ),
       body: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FilterProperty()));
-                },
-              ),
-            ],
-          ),
           Form(
             key: formField,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -1301,27 +1546,28 @@ class _BeliKostState extends State<BeliKost> {
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              'Rentang Harga (Rp)',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          // const SizedBox(
+          //   height: 10,
+          // ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(
-                  'Rentang Harga (Rp)',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
               Padding(
                 padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 205.0,
+                    width: 160.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: rentangHargaController,
+                      controller: rentangHarga1Controller,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
@@ -1342,45 +1588,34 @@ class _BeliKostState extends State<BeliKost> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 15.0),
+                            vertical: 5.0, horizontal: 10.0),
                         hintText: '',
                       ),
                     ),
                   ),
                 ]),
               ),
-            ],
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
-          ),
-          Row(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
                 child: Text(
-                  'Rentang Area (meter persegi)',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  'hingga',
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
               ),
               Padding(
                 padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 148.0,
+                    width: 160.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: rentangAreaController,
+                      controller: rentangArea1Controller,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
                       //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan rentang area properti";
+                      //     return "Masukkan harga properti";
                       //   }
                       //   return null;
                       // },
@@ -1396,7 +1631,102 @@ class _BeliKostState extends State<BeliKost> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 15.0),
+                            vertical: 5.0, horizontal: 10.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+            ],
+          ),
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              'Rentang Area (meter persegi)',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 160.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: rentangArea2Controller,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan harga properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                child: Text(
+                  'hingga',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 160.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: rentangHarga2Controller,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan harga properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
                         hintText: '',
                       ),
                     ),
@@ -1646,13 +1976,7 @@ class _BeliKostState extends State<BeliKost> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 15,
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
-          ),
+
           const SizedBox(
             height: 30,
           ),
@@ -1660,7 +1984,7 @@ class _BeliKostState extends State<BeliKost> {
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
               onPressed: () async {
-                //await postFilterToServer();
+                await postFilterToServer();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => PropertyPage()));
               },
@@ -1698,6 +2022,11 @@ class _BeliTanahState extends State<BeliTanah> {
   final TextEditingController jumlahKamarMandiController =
       TextEditingController();
   final TextEditingController ketinggianController = TextEditingController();
+
+  final TextEditingController rentangHarga1Controller = TextEditingController();
+  final TextEditingController rentangHarga2Controller = TextEditingController();
+  final TextEditingController rentangArea1Controller = TextEditingController();
+  final TextEditingController rentangArea2Controller = TextEditingController();
 
   String _addLeadingZero(int number) {
     return number < 10 ? '0$number' : '$number';
@@ -1757,23 +2086,19 @@ class _BeliTanahState extends State<BeliTanah> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          color: Color.fromARGB(255, 205, 166, 122),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FilterProperty()));
+          },
+        ),
+      ),
       body: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FilterProperty()));
-                },
-              ),
-            ],
-          ),
-
           Form(
             key: formField,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -1814,27 +2139,28 @@ class _BeliTanahState extends State<BeliTanah> {
             color: Color.fromARGB(255, 184, 184, 184),
             thickness: 1.0,
           ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              'Rentang Harga (Rp)',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          // const SizedBox(
+          //   height: 10,
+          // ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text(
-                  'Rentang Harga (Rp)',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
               Padding(
                 padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 205.0,
+                    width: 160.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: rentangHargaController,
+                      controller: rentangHarga1Controller,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
@@ -1855,45 +2181,34 @@ class _BeliTanahState extends State<BeliTanah> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 15.0),
+                            vertical: 5.0, horizontal: 10.0),
                         hintText: '',
                       ),
                     ),
                   ),
                 ]),
               ),
-            ],
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
-          ),
-          Row(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
                 child: Text(
-                  'Rentang Area (meter persegi)',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  'hingga',
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
               ),
               Padding(
                 padding:
-                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 18.0),
+                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
                 child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
                   SizedBox(
-                    width: 147.0,
+                    width: 160.0,
                     height: 35.0,
                     child: TextFormField(
-                      controller: rentangAreaController,
+                      controller: rentangArea1Controller,
                       // autovalidateMode:
                       //     AutovalidateMode.onUserInteraction,
                       // validator: (value) {
                       //   if (value == null || value.isEmpty) {
-                      //     return "Masukkan rentang area properti";
+                      //     return "Masukkan harga properti";
                       //   }
                       //   return null;
                       // },
@@ -1909,7 +2224,102 @@ class _BeliTanahState extends State<BeliTanah> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 15.0),
+                            vertical: 5.0, horizontal: 10.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+            ],
+          ),
+          const Divider(
+            color: Color.fromARGB(255, 184, 184, 184),
+            thickness: 1.0,
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              'Rentang Area (meter persegi)',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 20.0, left: 10.0, top: 15.0),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 160.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: rentangArea2Controller,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan harga properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                child: Text(
+                  'hingga',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 20.0, right: 10.0, top: 15.0),
+                child: Wrap(alignment: WrapAlignment.start, children: <Widget>[
+                  SizedBox(
+                    width: 160.0,
+                    height: 35.0,
+                    child: TextFormField(
+                      controller: rentangHarga2Controller,
+                      // autovalidateMode:
+                      //     AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return "Masukkan harga properti";
+                      //   }
+                      //   return null;
+                      // },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
                         hintText: '',
                       ),
                     ),
@@ -1971,10 +2381,6 @@ class _BeliTanahState extends State<BeliTanah> {
                 ]),
               ),
             ],
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
           ),
 
           const SizedBox(

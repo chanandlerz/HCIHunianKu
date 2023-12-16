@@ -3,8 +3,11 @@ import 'package:app_development/components/bottom_nav_bar.dart';
 import 'package:app_development/pages/compare.dart';
 import 'package:app_development/pages/create_post_page.dart';
 import 'package:app_development/pages/detail_property_page.dart';
+import 'package:app_development/pages/edit_profile_page.dart';
+import 'package:app_development/pages/favorites_page.dart';
 import 'package:app_development/pages/feeds_page.dart';
 import 'package:app_development/pages/filter_property_page.dart';
+import 'package:app_development/pages/list_post.dart';
 import 'package:app_development/pages/listing_saya_page.dart';
 import 'package:app_development/pages/pasang_iklan_page.dart';
 import 'package:app_development/pages/profile_page.dart';
@@ -91,7 +94,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: PropertyPage(),
+      home: FilterPasangIklan(),
     );
   }
 }

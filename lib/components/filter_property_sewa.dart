@@ -220,22 +220,19 @@ class _SewaRumahState extends State<SewaRumah> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          color: Color.fromARGB(255, 205, 166, 122),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FilterProperty()));
+          },
+        ),
+      ),
       body: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FilterProperty()));
-                },
-              ),
-            ],
-          ),
           Form(
             key: formField,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -743,13 +740,7 @@ class _SewaRumahState extends State<SewaRumah> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 15,
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
-          ),
+
           const SizedBox(
             height: 30,
           ),
@@ -986,22 +977,19 @@ class _SewaTanahState extends State<SewaTanah> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          color: Color.fromARGB(255, 205, 166, 122),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FilterProperty()));
+          },
+        ),
+      ),
       body: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FilterProperty()));
-                },
-              ),
-            ],
-          ),
           Form(
             key: formField,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -1467,13 +1455,7 @@ class _SewaTanahState extends State<SewaTanah> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 15,
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
-          ),
+
           const SizedBox(
             height: 30,
           ),
@@ -1772,22 +1754,19 @@ class _SewaKostState extends State<SewaKost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          color: Color.fromARGB(255, 205, 166, 122),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FilterProperty()));
+          },
+        ),
+      ),
       body: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FilterProperty()));
-                },
-              ),
-            ],
-          ),
           Form(
             key: formField,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -2440,13 +2419,7 @@ class _SewaKostState extends State<SewaKost> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 15,
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
-          ),
+
           const SizedBox(
             height: 30,
           ),
@@ -2680,22 +2653,19 @@ class _SewaApartementState extends State<SewaApartement> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          color: Color.fromARGB(255, 205, 166, 122),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FilterProperty()));
+          },
+        ),
+      ),
       body: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FilterProperty()));
-                },
-              ),
-            ],
-          ),
           Form(
             key: formField,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -3203,13 +3173,7 @@ class _SewaApartementState extends State<SewaApartement> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 15,
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
-          ),
+
           const SizedBox(
             height: 30,
           ),
@@ -3443,22 +3407,19 @@ class _SewaKomersilState extends State<SewaKomersil> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          color: Color.fromARGB(255, 205, 166, 122),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FilterProperty()));
+          },
+        ),
+      ),
       body: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FilterProperty()));
-                },
-              ),
-            ],
-          ),
           Form(
             key: formField,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -3966,13 +3927,7 @@ class _SewaKomersilState extends State<SewaKomersil> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 15,
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 184, 184, 184),
-            thickness: 1.0,
-          ),
+
           const SizedBox(
             height: 30,
           ),
