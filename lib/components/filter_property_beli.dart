@@ -1488,7 +1488,7 @@ class _BeliKostState extends State<BeliKost> {
         'harga2': rentangHarga2Controller.text,
         'area1': rentangArea1Controller.text,
         'area2': rentangArea2Controller.text,
-        'kMandikos': kMandiKos,
+        'kMandiKos': kMandiKos,
         'tipeKost': tipeKost,
         'kTidur': jumlahKamarTidurController.text,
         'kMandi': jumlahKamarMandiController.text,

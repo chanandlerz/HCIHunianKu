@@ -9,7 +9,7 @@ import 'package:flutter_udid/flutter_udid.dart';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter/cupertino.dart'; 
+import 'package:flutter/cupertino.dart';
 
 // Sewa Rumah
 class SewaRumah extends StatefulWidget {
@@ -1763,7 +1763,7 @@ class _SewaKostState extends State<SewaKost> {
         'harga2': rentangHarga2Controller.text,
         'area1': rentangArea1Controller.text,
         'area2': rentangArea2Controller.text,
-        'kMandikos': kMandiKos,
+        'kMandiKos': kMandiKos,
         'tipeKost': tipeKost,
         'kTidur': jumlahKamarTidurController.text,
         'kMandi': jumlahKamarMandiController.text,
