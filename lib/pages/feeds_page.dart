@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class Forum {
   String? username;
   String? caption;
@@ -99,7 +101,6 @@ class FeedsPage extends StatefulWidget {
 }
 
 class _FeedsPageState extends State<FeedsPage> {
-  // final formField = GlobalKey<FormState>();
   final searchbarController = TextEditingController();
   bool favorite = false;
   List<Post> posts = [];
@@ -114,6 +115,14 @@ class _FeedsPageState extends State<FeedsPage> {
     });
   }
 
+  bool imageCheck(var value) {
+    if (value == null || value == "") {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   // void performSearch(String query) {
   //   Navigator.pushNamed(context, '/result', arguments: query);
   // }
@@ -121,7 +130,20 @@ class _FeedsPageState extends State<FeedsPage> {
   @override
   void initState() {
     super.initState();
+    fetchDataFromLocal();
     fetchDataFromServer();
+  }
+
+  Future<void> fetchDataFromLocal() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? postsJson = prefs.getString('posts');
+
+    if (postsJson != null) {
+      List<dynamic> forumData = json.decode(postsJson);
+      setState(() {
+        posts = forumData.map((forum) => Post.fromForum(Forum.fromJson(forum))).toList();
+      });
+    }
   }
 
   Future<void> fetchDataFromServer() async {
@@ -130,6 +152,8 @@ class _FeedsPageState extends State<FeedsPage> {
       setState(() {
         posts = forumData.map((forum) => Post.fromForum(forum)).toList();
       });
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('posts', json.encode(forumData));
     } catch (e) {
       print('Error fetching data: $e');
     }
@@ -215,7 +239,7 @@ class _FeedsPageState extends State<FeedsPage> {
                       horizontal: 10.0, vertical: 5.0),
                   child: Container(
                     width: double.infinity,
-                    height: 420.0,
+                    // height: 420.0,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(25.0),
@@ -265,36 +289,67 @@ class _FeedsPageState extends State<FeedsPage> {
                                   onPressed: () {},
                                 ),
                               ),
+                              // Container(
+                              //   margin: const EdgeInsets.symmetric(
+                              //       horizontal: 10.0, vertical: 10.0),
+                              //   child: Column(
+                              //     crossAxisAlignment: CrossAxisAlignment.start,
+                              //     mainAxisAlignment: MainAxisAlignment.start,
+                              //     children: [
+                              //       Row(
+                              //         mainAxisAlignment:
+                              //             MainAxisAlignment.start,
+                              //         children: [
+                              //           Text(
+                              //             posts[i].caption ?? '',
+                              //             textAlign: TextAlign.start,
+                              //           ),
+                              //         ],
+                              //       )
+                              //     ],
+                              //   ),
+                              // ),
                               Container(
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 10.0, vertical: 10.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      posts[i].caption ?? '',
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 10.0, vertical: 10.0),
+                                  child: Wrap(
+                                    alignment: WrapAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            posts[i].caption ?? '',
+                                            textAlign: TextAlign.start,
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                              )),
+                               Container(
+                                  margin: const EdgeInsets.all(10.0),
+                                  width: double.infinity,
+                                  height: imageCheck(posts[i].image) && (posts[i].caption != null)
+                                      ? 200.0
+                                      : 0.0,
+                                  child: Visibility(
+                                    visible: imageCheck(posts[i].image) &&
+                                        (posts[i].caption != null),
+                                    child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(25.0),
+                                        image: imageCheck(posts[i].image)
+                                            ? DecorationImage(
+                                                image: MemoryImage(
+                                                    base64Decode(posts[i].image!)),
+                                                fit: BoxFit.fitWidth,
+                                              )
+                                            : null,
+                                      ),
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.all(10.0),
-                                width: double.infinity,
-                                height: 200.0,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25.0),
-                                  image: posts.isNotEmpty && i < posts.length && posts[i].image != null
-                                      ? DecorationImage(
-                                          image: MemoryImage(base64Decode(posts[i].image!)),
-                                          fit: BoxFit.fitWidth,
-                                        )
-                                      : const DecorationImage(
-                                          image: AssetImage('assets/placeholder_image.jpg'),
-                                          fit: BoxFit.fitWidth,
-                                        ),
-                                ),
-                              ),
                               Padding(
                                 padding: const EdgeInsets.only(),
                                 child: Row(

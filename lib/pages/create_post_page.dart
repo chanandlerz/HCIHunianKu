@@ -6,6 +6,7 @@ import 'package:app_development/components/bottom_nav_bar.dart';
 import 'package:app_development/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_udid/flutter_udid.dart';
@@ -212,7 +213,7 @@ class _CreatePostState extends State<CreatePost> {
                     SizedBox(
                       height: 500,
                       width: 300,
-                      child: TextField(
+                      child: TextFormField(
                         onTap: () {
                           setState(() {
                             hintVisible = false;
@@ -224,6 +225,9 @@ class _CreatePostState extends State<CreatePost> {
                         controller: captionController,
                         textAlignVertical: TextAlignVertical.top,
                         style: TextStyle(color: Colors.white, fontSize: 20),
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(300), // Set the maximum length to 10
+                        ],
                         // autovalidateMode:
                         //     AutovalidateMode.onUserInteraction,
                         // validator: (value) {
@@ -252,10 +256,15 @@ class _CreatePostState extends State<CreatePost> {
                           // hintStyle: TextStyle(height: 20)
                           // suffixIcon: Icon(Icons.search_rounded),
                         ),
+                         validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter some text.";
+                            }
+                            return null; 
+                          },
                       ),
                     ),
                   ]),
-
                   SizedBox(
                     width: 15.0,
                   )
