@@ -104,7 +104,7 @@ class _Pick2FromFavoritesWidgetState extends State<Pick2FromFavoritesWidget> {
                       MaterialPageRoute(
                         builder: (context) => ComparePage(
                           propertyId1: "",
-                          propertyId2: favoritesData[i][0],
+                          propertyId2: favoritesData[i][0].toString(),
                         ),
                       ),
                     );

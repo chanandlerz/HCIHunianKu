@@ -1,8 +1,14 @@
+import 'package:app_development/pages/favorites_page.dart';
 import 'package:app_development/pages/pick2_from_favorites.dart';
 import 'package:app_development/pages/pick1_from_favorites.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+class SelectedIds {
+  static int? savedId1;
+  static int? savedId2;
+}
 
 class ComparePage extends StatefulWidget {
   final String propertyId1;
@@ -20,87 +26,44 @@ class _ComparePageState extends State<ComparePage> {
 
   List<dynamic> comparePropertyData = [];
 
-  // List<dynamic> comparePropertyData = [
-  //   [
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null"
-  //   ],
-  //   [
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null",
-  //     "null"
-  //   ]
-  // ];
-
   @override
   void initState() {
     super.initState();
     comparePropertyData = [];
-    // comparePropertyData = [
-    //   [
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null"
-    //   ],
-    //   [
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null",
-    //     "null"
-    //   ]
-    // ];
 
-    if (widget.propertyId1.isNotEmpty) {
+    //id1 = savedId1;
+    ///id2 = savedId2;
+    print("======THIS IS BEFORE ASSIGNED===");
+    print("id1 : ${widget.propertyId1 ?? 'null'}");
+    print("id2 : ${widget.propertyId2 ?? 'null'}");
+    print("savedId1 : ${SelectedIds.savedId1 ?? 'null'}");
+    print("savedId2 : ${SelectedIds.savedId2 ?? 'null'}");
+
+    if (widget.propertyId1 != "") {
+      print("id1 is not empty");
       id1 = int.tryParse(widget.propertyId1);
+      SelectedIds.savedId1 = id1;
+      //id2 = savedId2;
+    } else {
+      print("id1 is empty");
+      id1 = SelectedIds.savedId1;
     }
 
-    if (widget.propertyId2.isNotEmpty) {
+    if (widget.propertyId2 != "") {
+      print("id2 is not empty");
       id2 = int.tryParse(widget.propertyId2);
+      SelectedIds.savedId2 = id2;
+      //id1 = savedId1;
+    } else {
+      print("id2 is empty");
+      id2 = SelectedIds.savedId2;
     }
+
+    print("======THIS IS AFTER ASSIGNED===");
+    print("id1 : ${id1 ?? 'null'}");
+    print("id2 : ${id2 ?? 'null'}");
+    print("savedId1 : ${SelectedIds.savedId1 ?? 'null'}");
+    print("savedId2 : ${SelectedIds.savedId2 ?? 'null'}");
 
     fetchCompareProperty();
   }
@@ -152,7 +115,8 @@ class _ComparePageState extends State<ComparePage> {
     if (value == null || value == "" || value == "null") {
       return "-";
     } else {
-      double number = double.parse(value);
+      String stringtValue = value.toString();
+      double number = double.parse(stringtValue);
       if (number >= 1000000000) {
         number = number / 1000000000;
         String number2 = number.toStringAsFixed(1);
@@ -194,7 +158,12 @@ class _ComparePageState extends State<ComparePage> {
                         IconButton(
                           icon: Icon(Icons.arrow_back_ios_new_rounded),
                           color: Color.fromARGB(255, 205, 166, 122),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FavoritesPage()));
+                          },
                         ),
                         Padding(
                           padding: EdgeInsets.only(top: 14),
@@ -222,7 +191,7 @@ class _ComparePageState extends State<ComparePage> {
                       padding: EdgeInsets.only(right: 20.0, left: 20.0),
                       child: Container(
                         width: screenWidth,
-                        height: MediaQuery.of(context).size.height / 2,
+                        height: MediaQuery.of(context).size.height,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10.0),
@@ -269,7 +238,7 @@ class _ComparePageState extends State<ComparePage> {
                                       ],
                                     ),
                                   ),
-                                  Text(nullCheck(comparePropertyData[0][5])),
+                                  Text(nullCheck(comparePropertyData[0][4])),
                                   Text(
                                     nullCheck(comparePropertyData[0][3]) +
                                         nullCheck(comparePropertyData[0][2]),
@@ -354,7 +323,7 @@ class _ComparePageState extends State<ComparePage> {
                                   ),
                                   Center(
                                     child: Container(
-                                      width: screenWidth,
+                                      width: screenWidth / 3,
                                       child: ElevatedButton(
                                         child: Text('Pilih Properti 1'),
                                         style: ButtonStyle(
@@ -364,6 +333,7 @@ class _ComparePageState extends State<ComparePage> {
                                           ),
                                         ),
                                         onPressed: () {
+                                          //savedId1 = id1;
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -500,7 +470,7 @@ class _ComparePageState extends State<ComparePage> {
                                   ),
                                   Center(
                                     child: Container(
-                                      width: screenWidth,
+                                      width: screenWidth / 3,
                                       child: ElevatedButton(
                                         child: Text('Pilih Properti 2'),
                                         style: ButtonStyle(
@@ -510,6 +480,7 @@ class _ComparePageState extends State<ComparePage> {
                                           ),
                                         ),
                                         onPressed: () {
+                                          //savedId2 = id2;
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
