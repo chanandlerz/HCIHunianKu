@@ -34,6 +34,7 @@ class _DetailPageState extends State<DetailPage> {
   Future<void> loadFavorites() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     favorites = prefs.getStringList('favorites') ?? [];
+
     setState(() {
       isPressedFavorite = favorites.contains(widget.id.toString());
     });
@@ -48,6 +49,7 @@ class _DetailPageState extends State<DetailPage> {
         isPressedFavorite = false;
         if (updatedFavorites.contains(widget.id.toString())) {
           updatedFavorites.remove(widget.id.toString());
+          //updatedFavorites.remove("46");
           print(widget.id.toString() + " removed from favorites");
         }
       } else {
@@ -60,6 +62,7 @@ class _DetailPageState extends State<DetailPage> {
       }
       prefs.setStringList('favorites', updatedFavorites);
       favorites = updatedFavorites;
+
       print(favorites);
     });
   }

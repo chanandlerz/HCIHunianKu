@@ -11,6 +11,16 @@ class DropDownLokasi extends StatefulWidget {
 
 class _DropDownLokasiState extends State<DropDownLokasi> {
   String selectedValue = "Kota Administrasi Jakarta Timur";
+  //widget.onSelected(value!);
+
+  @override
+  void initState() {
+    super.initState();
+    //widget.onSelected(selectedValue);
+    Future.delayed(Duration.zero, () {
+      _onChanged(selectedValue);
+    });
+  }
 
   void _onChanged(String? value) {
     setState(() {

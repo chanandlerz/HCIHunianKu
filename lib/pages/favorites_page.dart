@@ -30,6 +30,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   Future<void> loadFavorites() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String>? loadedFavorites = prefs.getStringList('favorites');
+
     if (loadedFavorites != null) {
       setState(() {
         favorites = loadedFavorites;
