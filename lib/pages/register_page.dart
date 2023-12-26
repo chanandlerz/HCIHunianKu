@@ -260,7 +260,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       // }
 
                       final Uri url2 = Uri.https(
-                          'hunianku.juanfredoalexiu.repl.co', 'pubkey');
+                          'hcihunianku--memories053.repl.co', 'pubkey');
 
                       String publicKeyString =
                           await _logicRegister.fetchPubKey(url2);
@@ -293,7 +293,7 @@ class _RegisterPageState extends State<RegisterPage> {
 //                       """;
 
                       final Uri url = Uri.https(
-                          'hunianku.juanfredoalexiu.repl.co', 'users');
+                          'hcihunianku--memories053.repl.co', 'users');
 
                       final response = await http.post(
                         url,

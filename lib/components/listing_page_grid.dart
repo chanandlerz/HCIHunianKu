@@ -62,7 +62,7 @@ class _ListingWidgetState extends State<ListingWidget> {
 
   Future updateStatusProperty(String id, String status) async {
     final Uri url =
-        Uri.https('hunianku.juanfredoalexiu.repl.co', 'updateStatusProperty');
+        Uri.https('hcihunianku--memories053.repl.co', 'updateStatusProperty');
     final response = await http.post(url,
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({

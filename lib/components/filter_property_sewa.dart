@@ -160,7 +160,7 @@ class _SewaRumahState extends State<SewaRumah> {
   }
 
   Future postFilterToServer() async {
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'filter');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'filter');
     String udid = await FlutterUdid.udid;
     String periode = "";
 
@@ -989,7 +989,7 @@ class _SewaTanahState extends State<SewaTanah> {
   }
 
   Future postFilterToServer() async {
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'filter');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'filter');
     String udid = await FlutterUdid.udid;
     String periode = "";
 
@@ -1874,7 +1874,7 @@ class _SewaKostState extends State<SewaKost> {
   }
 
   Future postFilterToServer() async {
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'filter');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'filter');
     String udid = await FlutterUdid.udid;
     String periode = "";
     String kMandiKos = "";
@@ -2886,7 +2886,7 @@ class _SewaApartementState extends State<SewaApartement> {
   }
 
   Future postFilterToServer() async {
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'filter');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'filter');
     String udid = await FlutterUdid.udid;
     String periode = "";
 
@@ -3707,7 +3707,7 @@ class _SewaKomersilState extends State<SewaKomersil> {
   }
 
   Future postFilterToServer() async {
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'filter');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'filter');
     String udid = await FlutterUdid.udid;
     String periode = "";
 

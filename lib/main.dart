@@ -96,7 +96,6 @@ void main() {
 // }
 
 class MyApp extends StatelessWidget {
-  
   const MyApp({super.key});
 
   @override
@@ -105,14 +104,16 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => SplashScreen(),
-      '/login': (context) => LoginPage(udid: '',),
-      '/feeds': (context) => BottomNavBar(),
-      '/profile':(context) => ProfilePage(),
-      '/register': (context) => RegisterPage(),
-      '/listingsaya': (context) => ListingPage(udid: ''),
-      '/editprofile':(context) => EditProfile(),
-      '/editusername':(context) => EditUsername(username: ''),
-      '/listpost':(context) => ListPost(udid: ''),
+        '/login': (context) => LoginPage(
+              udid: '',
+            ),
+        '/feeds': (context) => BottomNavBar(),
+        '/profile': (context) => ProfilePage(),
+        '/register': (context) => RegisterPage(),
+        '/listingsaya': (context) => ListingPage(udid: ''),
+        '/editprofile': (context) => EditProfile(),
+        '/editusername': (context) => EditUsername(username: ''),
+        '/listpost': (context) => ListPost(udid: ''),
       },
       debugShowCheckedModeBanner: false,
       // home: BottomNavBar(),

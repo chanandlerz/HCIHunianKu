@@ -203,7 +203,7 @@ class _SewakanRumahState extends State<SewakanRumah> {
 
   String udid = '';
   Future postPropertyToServer() async {
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'property');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'property');
     udid = await FlutterUdid.udid;
     String kMandiKos = "";
     String tipeKost = "";
@@ -1080,7 +1080,7 @@ class _SewakanTanahState extends State<SewakanTanah> {
 
   String udid = '';
   Future postPropertyToServer() async {
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'property');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'property');
     udid = await FlutterUdid.udid;
     String periode = "";
 
@@ -1958,7 +1958,7 @@ class _SewakanKostState extends State<SewakanKost> {
 
   String udid = '';
   Future postPropertyToServer() async {
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'property');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'property');
     udid = await FlutterUdid.udid;
     String kMandiKos = "";
     String tipeKost = "";
@@ -3014,7 +3014,7 @@ class _SewakanApartementState extends State<SewakanApartement> {
 
   String udid = '';
   Future postPropertyToServer() async {
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'property');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'property');
     udid = await FlutterUdid.udid;
     String kMandiKos = "";
     String tipeKost = "";
@@ -3890,7 +3890,7 @@ class _SewakanKomersilState extends State<SewakanKomersil> {
 
   String udid = '';
   Future postPropertyToServer() async {
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'property');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'property');
     udid = await FlutterUdid.udid;
     String periode = "";
 

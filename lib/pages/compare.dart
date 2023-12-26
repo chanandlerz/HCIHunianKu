@@ -70,7 +70,7 @@ class _ComparePageState extends State<ComparePage> {
 
   Future<void> fetchCompareProperty() async {
     final Uri url =
-        Uri.https('hunianku.juanfredoalexiu.repl.co', 'compareProperty');
+        Uri.https('hcihunianku--memories053.repl.co', 'compareProperty');
     try {
       final response = await http.post(
         url,

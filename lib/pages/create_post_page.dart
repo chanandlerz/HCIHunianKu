@@ -108,7 +108,7 @@ class _CreatePostState extends State<CreatePost> {
       'image': base64string,
     };
 
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'postForum');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'postForum');
 
     final response = await http.post(
       url,

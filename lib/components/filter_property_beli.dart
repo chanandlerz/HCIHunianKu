@@ -40,7 +40,7 @@ class _BeliKomersilState extends State<BeliKomersil> {
 
   Future postFilterToServer() async {
     //current work
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'filter');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'filter');
     String udid = await FlutterUdid.udid;
     String kMandiKos = "";
     String tipeKost = "";
@@ -588,7 +588,7 @@ class _BeliRumahState extends State<BeliRumah> {
 
   Future postFilterToServer() async {
     //current work
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'filter');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'filter');
     String udid = await FlutterUdid.udid;
 
     int timestamp = DateTime.now().millisecondsSinceEpoch;
@@ -1116,7 +1116,7 @@ class _BeliApartementState extends State<BeliApartement> {
 
   Future postFilterToServer() async {
     //current work
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'filter');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'filter');
     String udid = await FlutterUdid.udid;
     String kMandiKos = "";
     String tipeKost = "";
@@ -1713,7 +1713,7 @@ class _BeliKostState extends State<BeliKost> {
 
   Future postFilterToServer() async {
     //current work
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'filter');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'filter');
     String udid = await FlutterUdid.udid;
     String kMandiKos = "";
     String tipeKost = "";
@@ -2431,7 +2431,7 @@ class _BeliTanahState extends State<BeliTanah> {
 
   Future postFilterToServer() async {
     //current work
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'filter');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'filter');
     String udid = await FlutterUdid.udid;
 
     int timestamp = DateTime.now().millisecondsSinceEpoch;

@@ -69,7 +69,7 @@ class _DetailPageState extends State<DetailPage> {
 
   Future fetchDetailProperty() async {
     final Uri url =
-        Uri.https('hunianku.juanfredoalexiu.repl.co', 'detailProperty');
+        Uri.https('hcihunianku--memories053.repl.co', 'detailProperty');
     // String udid = await FlutterUdid.udid;
     final response = await http.post(
       url,

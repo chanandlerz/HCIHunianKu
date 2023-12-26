@@ -34,7 +34,7 @@ class _ListPostState extends State<ListPost> {
   }
 
   Future<void> fetchListingForumFromServer() async {
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'listForum');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'listForum');
     print(widget.udid);
     final response = await http.post(
       url,

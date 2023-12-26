@@ -57,7 +57,7 @@ class _EditProfileState extends State<EditProfile> {
   Future fetchProfileDataFromServer() async {
     //current work
     //getUdid();
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'profile');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'profile');
 
     udid = await FlutterUdid.udid;
 
@@ -83,7 +83,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Future postProfileToServer() async {
     final Uri url =
-        Uri.https('hunianku.juanfredoalexiu.repl.co', 'editProfileInfo');
+        Uri.https('hcihunianku--memories053.repl.co', 'editProfileInfo');
     String udid = await FlutterUdid.udid;
     print(udid);
     print(User.username);

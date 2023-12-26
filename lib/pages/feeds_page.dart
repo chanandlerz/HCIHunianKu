@@ -79,7 +79,7 @@ class Post {
 }
 
 Future<List<Forum>> fetchPostsFromServer() async {
-  final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'postForum');
+  final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'postForum');
   final response = await http.get(
     url,
     headers: {'Content-Type': 'application/json'},

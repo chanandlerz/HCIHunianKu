@@ -91,7 +91,7 @@ class _JualKomersilState extends State<JualKomersil> {
 
   String udid = '';
   Future postPropertyToServer() async {
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'property');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'property');
     udid = await FlutterUdid.udid;
 
     int timestamp = DateTime.now().millisecondsSinceEpoch;
@@ -675,7 +675,7 @@ class _JualRumahState extends State<JualRumah> {
 
   String udid = '';
   Future postPropertyToServer() async {
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'property');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'property');
     udid = await FlutterUdid.udid;
 
     int timestamp = DateTime.now().millisecondsSinceEpoch;
@@ -1265,7 +1265,7 @@ class _JualApartementState extends State<JualApartement> {
 
   String udid = '';
   Future postPropertyToServer() async {
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'property');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'property');
     udid = await FlutterUdid.udid;
 
     int timestamp = DateTime.now().millisecondsSinceEpoch;
@@ -1912,7 +1912,7 @@ class _JualKostState extends State<JualKost> {
 
   String udid = '';
   Future postPropertyToServer() async {
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'property');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'property');
     udid = await FlutterUdid.udid;
     String kMandiKos = "";
     String tipeKost = "";
@@ -2668,7 +2668,7 @@ class _JualTanahState extends State<JualTanah> {
 
   String udid = '';
   Future postPropertyToServer() async {
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'property');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'property');
     udid = await FlutterUdid.udid;
 
     int timestamp = DateTime.now().millisecondsSinceEpoch;

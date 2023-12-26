@@ -39,7 +39,7 @@ class _CommentPageState extends State<CommentPage> {
   Future<void> fetchComments() async {
     try {
       final Uri url =
-          Uri.https('hunianku.juanfredoalexiu.repl.co', 'fetchComment');
+          Uri.https('hcihunianku--memories053.repl.co', 'fetchComment');
       final response = await http.post(url,
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode({
@@ -276,7 +276,7 @@ class _CommentPageState extends State<CommentPage> {
                     onPressed: () async {
                       String udid = await FlutterUdid.udid;
                       final Uri url = Uri.https(
-                        'hunianku.juanfredoalexiu.repl.co',
+                        'hcihunianku--memories053.repl.co',
                         'postKomen',
                       );
 

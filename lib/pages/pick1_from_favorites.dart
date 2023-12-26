@@ -44,7 +44,7 @@ class _Pick1FromFavoritesPageState extends State<Pick1FromFavoritesPage> {
   Future<void> fetchFavoritesData() async {
     if (favorites.isNotEmpty) {
       final Uri url =
-          Uri.https('hunianku.juanfredoalexiu.repl.co', 'favoritesData');
+          Uri.https('hcihunianku--memories053.repl.co', 'favoritesData');
 
       final response = await http.post(
         url,

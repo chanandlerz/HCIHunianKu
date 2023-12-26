@@ -27,7 +27,7 @@ class _ListingPageState extends State<ListingPage> {
 
   Future fetchListingDataFromServer() async {
     //current work
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'myListing');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'myListing');
 
     final response = await http.post(
       url,

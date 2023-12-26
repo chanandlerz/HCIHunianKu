@@ -40,7 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
     //current work
     //getUdid();
     String udid = await FlutterUdid.udid;
-    final Uri url = Uri.https('hunianku.juanfredoalexiu.repl.co', 'profile');
+    final Uri url = Uri.https('hcihunianku--memories053.repl.co', 'profile');
 
     final response = await http.post(
       url,
