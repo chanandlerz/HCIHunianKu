@@ -1,6 +1,7 @@
 import 'package:app_development/pages/edit_profile_page.dart';
 import 'package:app_development/pages/favorites_page.dart';
 import 'package:app_development/pages/listing_saya_page.dart';
+import 'package:app_development/pages/list_post.dart';
 import 'package:app_development/pages/login_page.dart';
 import 'package:app_development/pages/pasang_iklan_page.dart';
 import 'package:flutter/material.dart';
@@ -207,12 +208,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: IconButton(
                                 icon: const Icon(Icons.settings),
                                 onPressed: () {
-                                  Navigator.pushReplacementNamed(
-                                      context, '/editprofile');
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) => EditProfile()));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => EditProfile()));
                                 },
                                 color: const Color.fromARGB(255, 205, 166, 122),
                               ),
@@ -230,7 +229,13 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: IconButton(
                                 icon:
                                     const Icon(Icons.my_library_books_rounded),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ListPost(udid: udid)));
+                                },
                                 color: const Color.fromARGB(255, 205, 166, 122),
                               ),
                             ),
@@ -239,14 +244,11 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: IconButton(
                                 icon: const Icon(Icons.home),
                                 onPressed: () {
-                                  Navigator.pushReplacementNamed(
-                                      context, '/listingsaya',
-                                      arguments: {'udid': udid});
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) =>
-                                  //             ListingPage(udid: udid)));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ListingPage(udid: udid)));
                                 },
                                 color: const Color.fromARGB(255, 205, 166, 122),
                               ),
@@ -523,14 +525,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           icon: const Icon(Icons.logout),
                           color: const Color.fromARGB(255, 205, 166, 122),
                           onPressed: () async {
-                            // String udid = await FlutterUdid.udid;
+                            String udid = await FlutterUdid.udid;
 
                             // Navigator.push(
                             //     context,
                             //     MaterialPageRoute(
-                            //         builder: (context) =>
-                            //             LoginPage(udid: udid)));
-                            saveLoginStatus(false);
+                            //         builder: (context) => LoginPage(udid: udid)));
 
                             Navigator.pushReplacementNamed(context, '/login',
                                 arguments: {'udid': ''});
@@ -565,11 +565,6 @@ class _ProfilePageState extends State<ProfilePage> {
       );
     }
   }
-
-  void saveLoginStatus(bool isLoggedIn) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('isLoggedIn', isLoggedIn);
-  }
   // Future<void> logout(BuildContext context) async {
   //   // Clear user credentials from shared preferences
   //   final prefs = await SharedPreferences.getInstance();
@@ -583,14 +578,14 @@ class _ProfilePageState extends State<ProfilePage> {
   //   );
   // }
 
-  // void _logout(BuildContext context) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setBool('isLoggedIn', false);
+  void _logout(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isLoggedIn', false);
 
-  //   Navigator.of(context).pushReplacement(MaterialPageRoute(
-  //     builder: (context) => const LoginPage(
-  //       udid: '',
-  //     ),
-  //   ));
-  // }
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (context) => const LoginPage(
+        udid: '',
+      ),
+    ));
+  }
 }

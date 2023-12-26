@@ -50,9 +50,16 @@ class Post {
   int? id;
   String? udid;
   String? image;
+  bool favorite;
 
   Post(
-      {this.username, this.caption, this.date, this.id, this.udid, this.image});
+      {this.username,
+      this.caption,
+      this.date,
+      this.id,
+      this.udid,
+      this.image,
+      this.favorite = false});
 
   factory Post.fromForum(Forum forum) {
     return Post(
@@ -67,7 +74,7 @@ class Post {
 
   @override
   String toString() {
-    return 'Post{username: $username, caption: $caption, date: $date, id: $id, udid: $udid, image: $image}';
+    return 'Post{username: $username, caption: $caption, date: $date, id: $id, udid: $udid, image: $image, favorite: $favorite}';
   }
 }
 
@@ -107,13 +114,9 @@ class _FeedsPageState extends State<FeedsPage> {
   bool favorite = false;
   List<Post> posts = [];
 
-  void activeFavorite() {
+  void activeFavorite(int index) {
     setState(() {
-      if (favorite) {
-        favorite = false;
-      } else {
-        favorite = true;
-      }
+      posts[index].favorite = !posts[index].favorite;
     });
   }
 
@@ -178,11 +181,11 @@ class _FeedsPageState extends State<FeedsPage> {
             padding: EdgeInsets.only(right: 5),
             child: Row(
               children: [
-                IconButton(
-                  icon: const Icon(Icons.notifications),
-                  onPressed: () {},
-                  color: const Color.fromARGB(255, 205, 166, 122),
-                ),
+                // IconButton(
+                //   icon: const Icon(Icons.notifications),
+                //   onPressed: () {},
+                //   color: const Color.fromARGB(255, 205, 166, 122),
+                // ),
                 IconButton(
                   icon: const Icon(Icons.search),
                   onPressed: () {
@@ -322,13 +325,18 @@ class _FeedsPageState extends State<FeedsPage> {
                                       MainAxisAlignment.spaceAround,
                                   children: <Widget>[
                                     IconButton(
-                                      icon: Icon(favorite
-                                          ? Icons.favorite_border
-                                          : Icons.favorite),
-                                      color:
-                                          favorite ? Colors.black : Colors.pink,
+                                      icon: Icon(
+                                        posts[i].favorite
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
+                                      ),
+                                      color: posts[i].favorite
+                                          ? Colors.pink
+                                          : Colors.black,
                                       iconSize: 35.0,
-                                      onPressed: activeFavorite,
+                                      onPressed: () {
+                                        activeFavorite(i);
+                                      },
                                     ),
                                     IconButton(
                                       icon: const Icon(Icons.chat),
@@ -338,7 +346,8 @@ class _FeedsPageState extends State<FeedsPage> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    CommentPage()));
+                                                    CommentPage(
+                                                        post: posts[i])));
                                       },
                                     )
                                   ],

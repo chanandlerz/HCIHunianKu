@@ -112,6 +112,7 @@ class MyApp extends StatelessWidget {
       '/listingsaya': (context) => ListingPage(udid: ''),
       '/editprofile':(context) => EditProfile(),
       '/editusername':(context) => EditUsername(username: ''),
+      '/listpost':(context) => ListPost(udid: ''),
       },
       debugShowCheckedModeBanner: false,
       // home: BottomNavBar(),

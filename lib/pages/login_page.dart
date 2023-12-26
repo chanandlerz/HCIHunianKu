@@ -453,9 +453,9 @@ class _LoginPageState extends State<LoginPage> {
   //   final password = prefs.getString('password') ?? '';
   //   return User(password: password);
   // }
-  void saveLoginStatus(bool isLoggedIn) async {
+  void saveLoginStatus(bool isUserLoggedIn) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('isLoggedIn', isLoggedIn);
+    prefs.setBool('isUserLoggedIn', isUserLoggedIn);
   }
 
   getPublicKey() async {
