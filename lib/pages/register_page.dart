@@ -1,12 +1,13 @@
 import 'dart:convert';
 
-import 'package:app_development/components/text_field_register.dart';
 import 'package:app_development/main.dart';
-import 'package:app_development/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_udid/flutter_udid.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:app_development/connection.dart';
+
+Connection connection = Connection();
 
 class User {
   final String password;
@@ -15,73 +16,257 @@ class User {
 }
 
 class RegisterPage extends StatefulWidget {
-  RegisterPage({super.key});
+  const RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final formField = GlobalKey<FormState>();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController numberController = TextEditingController();
+  bool passwordToggle = true;
+
+  final logicRegister _logicRegister = logicRegister();
   // late String publicKeyString;
 
-  Future<String> fetchPubKey(Uri url) async {
-    http.Response response = await http.get(url);
+  // Future<String> fetchPubKey(Uri url) async {
+  //   http.Response response = await http.get(url);
 
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = json.decode(response.body);
-      String publicKey = data['publicKey'];
-      return publicKey;
-    } else {
-      throw Exception('Failed to load public key');
-    }
-  }
+  //   if (response.statusCode == 200) {
+  //     Map<String, dynamic> data = json.decode(response.body);
+  //     String publicKey = data['publicKey'];
+  //     return publicKey;
+  //   } else {
+  //     throw Exception('Failed to load public key');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 58, 58, 58),
+      backgroundColor: const Color.fromARGB(255, 58, 58, 58),
       body: ListView(
         children: <Widget>[
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 200,
               ),
-              RegisterTextField(
-                controller: usernameController,
-                hintText: 'Username',
-                obscureText: false,
-              ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              RegisterTextField(
-                controller: passwordController,
-                hintText: 'Password',
-                obscureText: false,
+              Form(
+                key: formField,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // --- username ---
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
+                      child: TextFormField(
+                        controller: usernameController,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        obscureText: false,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter username";
+                          }
+                          if (usernameController.text.length < 6) {
+                            return "Username Length should not be less than 6 character";
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 205, 166, 122)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey.shade400),
+                          ),
+                          fillColor: Colors.grey.shade200,
+                          filled: true,
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10.0),
+                          hintText: 'Username',
+                        ),
+                      ),
+                    ),
+
+                    // --- email ---
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
+                      child: TextFormField(
+                        controller: emailController,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        obscureText: false,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter email";
+                          }
+                          if (!value.contains('@gmail.com')) {
+                            return "use @gmail.com format";
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 205, 166, 122)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey.shade400),
+                          ),
+                          fillColor: Colors.grey.shade200,
+                          filled: true,
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10.0),
+                          hintText: 'Email',
+                        ),
+                        // contentPadding:
+                        //     EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                        // hintText: widget.hintText,
+                      ),
+                    ),
+
+                    // --- password ---
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
+                      child: TextFormField(
+                        controller: passwordController,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        obscureText: false,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter password";
+                          }
+
+                          bool emailValid =
+                              RegExp(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{1,}$")
+                                  .hasMatch(value);
+                          if (emailValid == false) {
+                            return "Password must have combination of number and letter";
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 205, 166, 122)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey.shade400),
+                          ),
+                          fillColor: Colors.grey.shade200,
+                          filled: true,
+                          // prefix: Icon(Icons.lock, color: Colors.black),
+                          suffix: InkWell(
+                            onTap: () {
+                              setState(() {
+                                passwordToggle = !passwordToggle;
+                              });
+                            },
+                            child: Icon(passwordToggle
+                                ? Icons.visibility
+                                : Icons.visibility_off),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10.0),
+                          hintText: 'Password',
+                        ),
+                        // contentPadding:
+                        //     EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                        // hintText: widget.hintText,
+                      ),
+                    ),
+
+                    // --- phone number ---
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
+                      child: TextFormField(
+                        controller: numberController,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        obscureText: false,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter phone number";
+                          }
+
+                          bool numberValid =
+                              RegExp(r"^[0-9]*$").hasMatch(value);
+                          if (numberValid == false) {
+                            return "Phone number must a numeric";
+                          }
+
+                          if (numberController.text.length < 11) {
+                            return "Phone number should not be less than 10 number";
+                          }
+
+                          if (numberController.text.length > 13) {
+                            return "Phone number should not be more than 13 number";
+                          }
+
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 205, 166, 122)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey.shade400),
+                          ),
+                          fillColor: Colors.grey.shade200,
+                          filled: true,
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10.0),
+                          hintText: 'Whatsapp Number',
+                        ),
+
+                        // contentPadding:
+                        //     EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                        // hintText: widget.hintText,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
-              Container(
+              SizedBox(
                 height: 50,
                 width: 340,
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 205, 166, 122),
+                      backgroundColor: const Color.fromARGB(255, 205, 166, 122),
                     ),
                     onPressed: () async {
-                      final Uri url2 =
-                          Uri.https('debug.lubisputri16.repl.co', 'pubkey');
+                      // if (formField.currentState!.validate()) {
+                      //   print('Register Success, congrats!');
+                      //   Routes('Login', context);
+                      // } else {
+                      //   print('Register Failed, please check your data');
+                      // }
 
-                      String publicKeyString = await fetchPubKey(url2);
-                      await savePubKey(publicKeyString);
+                      final Uri url2 = Uri.http(connection.url, 'pubkey');
+
+                      String publicKeyString =
+                          await _logicRegister.fetchPubKey(url2);
+                      await _logicRegister.savePubKey(publicKeyString);
                       print(publicKeyString);
                       // String storedPublicKey = await getPublicKey();
 
@@ -109,8 +294,7 @@ class _RegisterPageState extends State<RegisterPage> {
 // -----END PUBLIC KEY-----
 //                       """;
 
-                      final Uri url =
-                          Uri.https('debug.lubisputri16.repl.co', 'users');
+                      final Uri url = Uri.http(connection.url, 'users');
 
                       final response = await http.post(
                         url,
@@ -119,6 +303,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           'udid': udid,
                           'username': usernameController.text,
                           'password': passwordController.text,
+                          'email': emailController.text,
+                          'phone': numberController.text
                         }),
                       );
 
@@ -130,44 +316,53 @@ class _RegisterPageState extends State<RegisterPage> {
                         print('Error Response: ${response.body}');
                       }
 
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginPage(udid: udid,)));
+                      // Navigator.pushReplacement(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => LoginPage(
+                      //               udid: udid,
+                      //             )));
+
+                      Navigator.pushReplacementNamed(context, '/login',
+                          arguments: {'udid': udid});
+
                       // Navigator.push(
                       //     context,
                       //     MaterialPageRoute(
                       //         builder: (context) => LoginPage(udid: udid)));
                     },
-                    child: Text(
+                    child: const Text(
                       "Sign Up",
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     )),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Already have an account?",
                     style: TextStyle(color: Colors.white),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 4,
                   ),
 
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => LoginPage(
-                                    udid: '',
-                                  )));
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (_) => LoginPage(
+                      //               udid: '',
+                      //             )));
+
+                      Navigator.pushReplacementNamed(context, '/login',
+                          arguments: {'udid': ''});
                     },
-                    child: new Text(
+                    child: const Text(
                       "Login now",
                       style:
                           TextStyle(color: Color.fromARGB(255, 205, 166, 122)),
@@ -193,10 +388,10 @@ class _RegisterPageState extends State<RegisterPage> {
     await prefs.setString('password', user.password);
   }
 
-  savePubKey(String publicKeyString) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('publicKeyString', publicKeyString);
-  }
+  // savePubKey(String publicKeyString) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   prefs.setString('publicKeyString', publicKeyString);
+  // }
 
   // Future<String> getPublicKey() async {
   //   final prefs = await SharedPreferences.getInstance();
@@ -204,3 +399,35 @@ class _RegisterPageState extends State<RegisterPage> {
   //   return storedPublicKey ?? '';
   // }
 }
+
+class logicRegister {
+  Future<String> fetchPubKey(Uri url) async {
+    http.Response response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+      String publicKey = data['publicKey'];
+      return publicKey;
+    } else {
+      throw Exception('Failed to load public key');
+    }
+  }
+
+  savePubKey(String publicKeyString) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('publicKeyString', publicKeyString);
+  }
+}
+
+// class Routes {
+//   static void toLogin(BuildContext context) {
+//     Route route = MaterialPageRoute(builder: (context) => LoginPage(udid: udid));
+//     Navigator.pushReplacement(context, route);
+//   }
+
+//   Routes(String routeName, BuildContext context) {
+//     if (routeName == 'Login') {
+//       toLogin(context);
+//     }
+//   }
+// }

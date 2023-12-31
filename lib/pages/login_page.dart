@@ -1,50 +1,24 @@
 //flutter
+import 'package:app_development/components/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 //backend
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:crypto/crypto.dart' as crypto;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:pointycastle/api.dart' as pointy;
-import 'package:http/http.dart' as http;
 import 'package:pointycastle/asymmetric/api.dart';
 import 'package:pointycastle/asymmetric/oaep.dart';
 import 'package:pointycastle/asymmetric/rsa.dart';
-import 'package:pointycastle/key_generators/rsa_key_generator.dart';
-import 'package:pointycastle/random/fortuna_random.dart';
+import 'package:app_development/connection.dart';
+
+Connection connection = Connection();
 
 //page & components
-import 'package:app_development/components/bottom_nav_bar.dart';
-import 'package:app_development/components/text_field_login.dart';
-import 'package:app_development/main.dart';
-import 'package:app_development/pages/feeds_page.dart';
-import 'package:app_development/pages/register_page.dart';
 
-class User {
-  final String password;
-
-  User({required this.password});
-}
-
-class LoginPage extends StatefulWidget {
-  // final String deviceId;
-  final String udid;
-  // final String publicKeyString;
-  LoginPage({Key? key, required this.udid});
-
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
+class logicLogin {
   String publicKeyString = '';
 
   String encryptMessage(String message, RSAPublicKey publicKey) {
@@ -68,6 +42,61 @@ class _LoginPageState extends State<LoginPage> {
 
     return plaintext;
   }
+
+  getUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    final password = prefs.getString('password') ?? '';
+    return User(password: password);
+  }
+}
+
+class User {
+  final String password;
+
+  User({required this.password});
+}
+
+class LoginPage extends StatefulWidget {
+  // final String deviceId;
+  final String udid;
+  // final String publicKeyString;
+  const LoginPage({super.key, required this.udid});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final formFieldUsername = GlobalKey<FormState>();
+  final formFieldPassword = GlobalKey<FormState>();
+
+  final logicLogin _logicLogin = logicLogin();
+
+  // String publicKeyString = '';
+
+  // String encryptMessage(String message, RSAPublicKey publicKey) {
+  //   final encryptor = OAEPEncoding.withSHA256(RSAEngine())
+  //     ..init(true, pointy.PublicKeyParameter<RSAPublicKey>(publicKey));
+
+  //   final Uint8List encryptedBytes =
+  //       encryptor.process(Uint8List.fromList(utf8.encode(message)));
+  //   final String ciphertext = base64.encode(encryptedBytes);
+
+  //   return ciphertext;
+  // }
+
+  // String decryptMessage(String ciphertext, RSAPrivateKey privateKey) {
+  //   final decryptor = OAEPEncoding(RSAEngine())
+  //     ..init(false, pointy.PrivateKeyParameter<RSAPrivateKey>(privateKey));
+
+  //   final Uint8List decryptedBytes =
+  //       decryptor.process(base64.decode(ciphertext));
+  //   final String plaintext = utf8.decode(decryptedBytes);
+
+  //   return plaintext;
+  // }
 
   @override
   void initState() {
@@ -94,13 +123,13 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 58, 58, 58),
+      backgroundColor: const Color.fromARGB(255, 58, 58, 58),
       body: ListView(children: <Widget>[
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // username text field
-            SizedBox(
+            const SizedBox(
               height: 150,
             ),
 
@@ -111,11 +140,11 @@ class _LoginPageState extends State<LoginPage> {
             //   child: Text("Pubkey"),
             // ),
 
-            Text('Udid: ${widget.udid}'),
-            Text('Pubkey: $publicKeyString'),
+            // Text('Udid: ${widget.udid}'),
+            // Text('Pubkey: $publicKeyString'),
 
             const Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              padding: EdgeInsets.symmetric(horizontal: 25.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -127,12 +156,12 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
 
             const Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              padding: EdgeInsets.symmetric(horizontal: 25.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -144,23 +173,118 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
 
-            LoginTextField(
-              controller: passwordController,
-              hintText: 'Password',
-              obscureText: false,
-              icon: Icons.remove_red_eye,
+            // LoginTextField(
+            //   controller: passwordController,
+            //   hintText: 'Password',
+            //   obscureText: false,
+            //   icon: Icons.remove_red_eye,
+            // ),
+
+            Form(
+              key: formFieldUsername,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // --- username ---
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 20.0),
+                    child: TextFormField(
+                      controller: usernameController,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      obscureText: false,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter username";
+                        }
+                        if (usernameController.text.length < 6) {
+                          return "Username Length should not be less than 6 character";
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 10.0),
+                        hintText: 'Username',
+                      ),
+                    ),
+                  ),
+
+                  // --- password ---
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 20.0),
+                    child: TextFormField(
+                      controller: passwordController,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      obscureText: false,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter password";
+                        }
+
+                        bool emailValid =
+                            RegExp(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{1,}$")
+                                .hasMatch(value);
+                        if (emailValid == false) {
+                          return "Password must have combination of number and letter";
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 205, 166, 122)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        // prefix: Icon(Icons.lock, color: Colors.black),
+                        // suffix: InkWell(
+                        //   onTap: () {
+                        //     setState(() {
+                        //       passwordToggle = !passwordToggle;
+                        //     });
+                        //   },
+                        //   child: Icon(passwordToggle
+                        //       ? Icons.visibility
+                        //       : Icons.visibility_off),
+                        // ),
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 10.0),
+                        hintText: 'Password',
+                      ),
+                      // contentPadding:
+                      //     EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                      // hintText: widget.hintText,
+                    ),
+                  ),
+                ],
+              ),
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
 
             const Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              padding: EdgeInsets.symmetric(horizontal: 25.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -172,7 +296,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
 
@@ -184,12 +308,12 @@ class _LoginPageState extends State<LoginPage> {
             //   child: Text("Log In"),
             // ),
 
-            Container(
+            SizedBox(
               height: 50,
               width: 335,
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 205, 166, 122),
+                    backgroundColor: const Color.fromARGB(255, 205, 166, 122),
                   ),
                   onPressed: () async {
                     // final File publicKeyFile = File('./public_key.pem');
@@ -198,19 +322,22 @@ class _LoginPageState extends State<LoginPage> {
                     //     publicKeyFile.readAsStringSync();
 
                     final encrypt.RSAKeyParser parser = encrypt.RSAKeyParser();
-                    final RSAPublicKey publicKey =
-                        parser.parse(publicKeyString) as RSAPublicKey;
+                    final RSAPublicKey publicKey = parser
+                        .parse(_logicLogin.publicKeyString) as RSAPublicKey;
 
-                    final String encryptedPassword =
-                        encryptMessage(passwordController.text, publicKey);
+                    final String encryptedPassword = _logicLogin.encryptMessage(
+                        passwordController.text, publicKey);
+
+                    final String encryptedUsername = _logicLogin.encryptMessage(
+                        usernameController.text, publicKey);
 
                     Map<String, dynamic> requestData = {
-                      'encryptedData': encryptedPassword,
+                      'encryptedPassword': encryptedPassword,
+                      'encryptedUsername': encryptedUsername,
                       'udid': widget.udid,
                     };
 
-                    final Uri url =
-                        Uri.https('debug.lubisputri16.repl.co', 'verify');
+                    final Uri url = Uri.http(connection.url, 'verify');
                     var response = await http.post(
                       url,
                       headers: {'Content-Type': 'application/json'},
@@ -223,10 +350,19 @@ class _LoginPageState extends State<LoginPage> {
 
                       if (responseBody['status'] == 'success') {
                         print('Login Successful');
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => BottomNavBar()),
-                        );
+                        // Navigator.pushReplacement(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) => BottomNavBar()),
+                        // );
+
+                        // Navigator.pushReplacementNamed(context, '/dashboard');
+                        saveLoginStatus(true);
+                        Navigator.pushReplacementNamed(context, '/feeds');
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => BottomNavBar()));
                       } else {
                         print('Login Failed');
                         //@moris nanti disini bikin buat reload page kalau login failed
@@ -235,18 +371,18 @@ class _LoginPageState extends State<LoginPage> {
                       print('Error: ${response.statusCode}');
                     }
                   },
-                  child: Text(
+                  child: const Text(
                     "Log in",
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   )),
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
 
             const Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              padding: EdgeInsets.symmetric(horizontal: 25.0),
               child: Row(
                 children: [
                   Expanded(
@@ -256,7 +392,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
                       "Or continue with",
                       style: TextStyle(color: Colors.white),
@@ -272,11 +408,11 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
 
@@ -290,12 +426,14 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   width: 4,
                 ),
-                new GestureDetector(
+                GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => RegisterPage()));
+                    // Navigator.push(context,
+                    //     MaterialPageRoute(builder: (_) => RegisterPage()));
+
+                    Navigator.pushReplacementNamed(context, '/register');
                   },
-                  child: new Text(
+                  child: const Text(
                     "Register now",
                     style: TextStyle(color: Color.fromARGB(255, 205, 166, 122)),
                   ),
@@ -303,7 +441,7 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 50,
             )
           ],
@@ -312,16 +450,20 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  getUser() async {
-    final prefs = await SharedPreferences.getInstance();
-    final password = prefs.getString('password') ?? '';
-    return User(password: password);
+  // getUser() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final password = prefs.getString('password') ?? '';
+  //   return User(password: password);
+  // }
+  void saveLoginStatus(bool isUserLoggedIn) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isUserLoggedIn', isUserLoggedIn);
   }
 
   getPublicKey() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      publicKeyString = prefs.getString('publicKeyString') ?? '';
+      _logicLogin.publicKeyString = prefs.getString('publicKeyString') ?? '';
     });
   }
 }

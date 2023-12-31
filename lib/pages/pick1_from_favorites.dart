@@ -1,5 +1,5 @@
 import 'package:app_development/components/bottom_nav_bar.dart';
-import 'package:app_development/components/favorites_page_grid.dart';
+import 'package:app_development/components/pick1_favorites_grid.dart';
 import 'package:app_development/pages/compare.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,14 +9,14 @@ import 'package:app_development/connection.dart';
 
 Connection connection = Connection();
 
-class FavoritesPage extends StatefulWidget {
-  FavoritesPage({super.key});
+class Pick1FromFavoritesPage extends StatefulWidget {
+  Pick1FromFavoritesPage({super.key});
 
   @override
-  State<FavoritesPage> createState() => _FavoritesPageState();
+  State<Pick1FromFavoritesPage> createState() => _Pick1FromFavoritesPageState();
 }
 
-class _FavoritesPageState extends State<FavoritesPage> {
+class _Pick1FromFavoritesPageState extends State<Pick1FromFavoritesPage> {
   final searchbarController = TextEditingController();
 
   //final SharedPreferences prefs = SharedPreferences.getInstance();
@@ -33,7 +33,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
   Future<void> loadFavorites() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String>? loadedFavorites = prefs.getStringList('favorites');
-
     if (loadedFavorites != null) {
       setState(() {
         favorites = loadedFavorites;
@@ -74,41 +73,51 @@ class _FavoritesPageState extends State<FavoritesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 58, 58, 58),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded),
-          color: Color.fromARGB(255, 205, 166, 122),
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => BottomNavBar()));
-          },
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(top: 10, bottom: 10, right: 10),
-            child: SizedBox(
-              // width: 100,
-              height: 50,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      Color.fromARGB(255, 205, 166, 122)),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ComparePage(
-                                propertyId1: "",
-                                propertyId2: "",
-                              )));
-                },
-                child: Text("Compare Properties"),
-              ),
+          backgroundColor: Color.fromARGB(255, 58, 58, 58),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new_rounded),
+            color: Color.fromARGB(255, 205, 166, 122),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => BottomNavBar()));
+            },
+          ),
+          title: SizedBox(
+            width: 335,
+            height: 50,
+            child: ElevatedButton(
+              // autovalidateMode: AutovalidateMode.onUserInteraction,
+              // validator: (value) {
+              //   if (value == null || value.isEmpty) {
+              //     return "Masukkan lokasi properti";
+              //   }
+              //   return null;
+              // },
+              //ini moris
+              // decoration: InputDecoration(
+              //     enabledBorder: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(15),
+              //       borderSide: const BorderSide(
+              //           color: Color.fromARGB(255, 205, 166, 122)),
+              //     ),
+              //     focusedBorder: OutlineInputBorder(
+              //       borderSide: BorderSide(color: Colors.grey.shade400),
+              //     ),
+              //     fillColor: Colors.grey.shade200,
+              //     filled: true,
+              //     contentPadding: const EdgeInsets.symmetric(
+              //         vertical: 10.0, horizontal: 15.0),
+              //     hintText: 'Find Favorites',
+              //     prefixIcon: const Icon(
+              //       Icons.search,
+              //       color: Color.fromARGB(255, 205, 166, 122),
+              //     )
+              //     // suffixIcon: Icon(Icons.search_rounded),
+              //     ),
+              onPressed: () {},
+              child: Text("Choose Property 1"),
             ),
-          )
-        ],
-      ),
+          )),
       backgroundColor: const Color.fromARGB(255, 58, 58, 58),
       body: ListView(
         children: <Widget>[
@@ -117,7 +126,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
               const SizedBox(
                 height: 10,
               ),
-              FavoritesWidget(favoritesData: favoritesData),
+              Pick1FromFavoritesWidget(favoritesData: favoritesData),
             ],
           ),
         ],

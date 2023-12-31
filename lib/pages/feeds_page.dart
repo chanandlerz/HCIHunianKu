@@ -1,8 +1,112 @@
-import 'package:app_development/components/text_field_searchbar_feeds.dart';
+import 'package:app_development/components/filter_property_beli.dart';
+import 'package:app_development/components/filter_property_sewa.dart';
+import 'package:app_development/pages/comment_page.dart';
+import 'package:app_development/pages/create_post_page.dart';
+import 'package:app_development/pages/favorites_page.dart';
+import 'package:app_development/pages/filter_property_page.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:insta_image_viewer/insta_image_viewer.dart';
+import 'dart:convert';
+
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:app_development/connection.dart';
+
+Connection connection = Connection();
+
+class Forum {
+  String? username;
+  String? caption;
+  String? date;
+  int? id;
+  String? udid;
+  String? image;
+
+  Forum(
+      {this.username, this.caption, this.date, this.id, this.udid, this.image});
+
+  Forum.fromJson(Map<String, dynamic> json) {
+    username = json['username'];
+    caption = json['caption'];
+    date = json['date'];
+    id = json['id'];
+    udid = json['udid'];
+    image = json['image'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['username'] = this.username;
+    data['caption'] = this.caption;
+    data['date'] = this.date;
+    data['id'] = this.id;
+    data['udid'] = this.udid;
+    data['image'] = this.image;
+    return data;
+  }
+}
+
+class Post {
+  String? username;
+  String? caption;
+  String? date;
+  int? id;
+  String? udid;
+  String? image;
+  bool favorite;
+
+  Post(
+      {this.username,
+      this.caption,
+      this.date,
+      this.id,
+      this.udid,
+      this.image,
+      this.favorite = false});
+
+  factory Post.fromForum(Forum forum) {
+    return Post(
+      username: forum.username,
+      caption: forum.caption,
+      date: forum.date,
+      id: forum.id,
+      udid: forum.udid,
+      image: forum.image,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'Post{username: $username, caption: $caption, date: $date, id: $id, udid: $udid, image: $image, favorite: $favorite}';
+  }
+}
+
+Future<List<Forum>> fetchPostsFromServer() async {
+  final Uri url = Uri.http(connection.url, 'postForum');
+  final response = await http.get(
+    url,
+    headers: {'Content-Type': 'application/json'},
+  );
+
+  if (response.statusCode == 200) {
+    final Map<String, dynamic> responseData = json.decode(response.body);
+
+    if (responseData.containsKey('Forum')) {
+      List<dynamic> forumData = responseData['Forum'];
+      List<Forum> posts =
+          forumData.map((data) => Forum.fromJson(data)).toList();
+      return posts;
+    } else {
+      throw Exception('Malformed response: Missing key "Forum"');
+    }
+  } else {
+    throw Exception(
+        'Failed to load posts. Status code: ${response.statusCode}');
+  }
+}
 
 class FeedsPage extends StatefulWidget {
-  FeedsPage({super.key});
+  const FeedsPage({super.key});
 
   @override
   State<FeedsPage> createState() => _FeedsPageState();
@@ -10,41 +114,112 @@ class FeedsPage extends StatefulWidget {
 
 class _FeedsPageState extends State<FeedsPage> {
   final searchbarController = TextEditingController();
+  bool favorite = false;
+  List<Post> posts = [];
+
+  void activeFavorite(int index) {
+    setState(() {
+      posts[index].favorite = !posts[index].favorite;
+    });
+  }
+
+  bool imageCheck(var value) {
+    if (value == null || value == "") {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   // void performSearch(String query) {
   //   Navigator.pushNamed(context, '/result', arguments: query);
   // }
 
   @override
+  void initState() {
+    super.initState();
+    fetchDataFromLocal();
+    fetchDataFromServer();
+  }
+
+  Future<void> fetchDataFromLocal() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? postsJson = prefs.getString('posts');
+
+    if (postsJson != null) {
+      List<dynamic> forumData = json.decode(postsJson);
+      setState(() {
+        posts = forumData
+            .map((forum) => Post.fromForum(Forum.fromJson(forum)))
+            .toList();
+      });
+    }
+  }
+
+  Future<void> fetchDataFromServer() async {
+    try {
+      List<Forum> forumData = await fetchPostsFromServer();
+      setState(() {
+        posts = forumData.map((forum) => Post.fromForum(forum)).toList();
+      });
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('posts', json.encode(forumData));
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 58, 58, 58),
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 58, 58, 58),
+        automaticallyImplyLeading: false,
+        title: Text(
+          'HunianKu',
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 30, color: Colors.white),
+        ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 5),
+            child: Row(
+              children: [
+                // IconButton(
+                //   icon: const Icon(Icons.notifications),
+                //   onPressed: () {},
+                //   color: const Color.fromARGB(255, 205, 166, 122),
+                // ),
+                IconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FilterProperty()));
+                  },
+                  color: Color.fromARGB(255, 205, 166, 122),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+      backgroundColor: const Color.fromARGB(255, 58, 58, 58),
       body: ListView(
-        physics: AlwaysScrollableScrollPhysics(),
+        physics: const AlwaysScrollableScrollPhysics(),
         children: <Widget>[
           Column(
             children: [
-              SizedBox(
-                height: 20,
-              ),
-              SearchTextFieldFeedsPage(
-                controller: searchbarController,
-                hintText: 'Find Property, Land, and more...',
-                obscureText: false,
-              ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              SizedBox(
-                height: 20,
-              ),
-              for (int i = 1; i < 5; i++)
+              for (int i = 0; i < posts.length; i++)
                 Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0, vertical: 5.0),
                   child: Container(
                     width: double.infinity,
-                    height: 430.0,
+                    // height: 420.0,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(25.0),
@@ -52,16 +227,18 @@ class _FeedsPageState extends State<FeedsPage> {
                     child: Column(
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                             vertical: 10.0,
                           ),
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               ListTile(
                                 leading: Container(
                                   width: 60.0,
                                   height: 60.0,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                     boxShadow: [
                                       BoxShadow(
@@ -82,66 +259,99 @@ class _FeedsPageState extends State<FeedsPage> {
                                   ),
                                 ),
                                 title: Text(
-                                  'Bambang',
+                                  posts[i].username ?? '',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                subtitle: Text('10 jam yang lalu'),
+                                subtitle: Text(posts[i].date ?? ''),
                                 trailing: IconButton(
-                                  icon: Icon(Icons.more_horiz),
+                                  icon: const Icon(Icons.more_horiz),
                                   color: Colors.black,
                                   onPressed: () {},
                                 ),
                               ),
-                              Container(
-                                margin: EdgeInsets.symmetric(
-                                    horizontal: 10.0, vertical: 10.0),
-                                child: Text(
-                                    'Dicari rumah seperti dibawah ini (ga terlalu mirip gapapa) wilayah JABODETABEK.'),
-                              ),
-                              Container(
-                                margin: EdgeInsets.all(10.0),
-                                width: double.infinity,
-                                height: 200.0,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25.0),
-                                    image: DecorationImage(
-                                      image:
-                                          AssetImage('assets/property 1.png'),
-                                      fit: BoxFit.fitWidth,
-                                    )),
-                              ),
+                              // Wrap(
+                              //   alignment: WrapAlignment.start,
+                              //   children: [
+                              //     Text(
+                              //       posts[i].caption ?? '',
+                              //       textAlign: TextAlign.start,
+                              //     )
+                              //   ],
+                              // ),
                               Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 55.0),
+                                padding: EdgeInsets.only(
+                                    left: 20, right: 20, top: 10, bottom: 10),
+                                child: Wrap(
+                                  alignment: WrapAlignment.start,
+                                  children: [
+                                    Text(
+                                      posts[i].caption ?? '',
+                                      textAlign: TextAlign.start,
+                                    )
+                                  ],
+                                ),
+                              ),
+                              InstaImageViewer(
+                                child: Container(
+                                  margin: const EdgeInsets.all(10.0),
+                                  width: double.infinity,
+                                  height: imageCheck(posts[i].image) &&
+                                          (posts[i].caption != null)
+                                      ? 200.0
+                                      : 0.0,
+                                  child: Visibility(
+                                    visible: imageCheck(posts[i].image) &&
+                                        (posts[i].caption != null),
+                                    child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        image: imageCheck(posts[i].image)
+                                            ? DecorationImage(
+                                                image: MemoryImage(base64Decode(
+                                                    posts[i].image!)),
+                                                fit: BoxFit.fitWidth,
+                                              )
+                                            : null,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              Padding(
+                                padding: const EdgeInsets.only(),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceAround,
                                   children: <Widget>[
-                                    Row(
-                                      children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            IconButton(
-                                              icon: Icon(Icons.favorite_border),
-                                              iconSize: 35.0,
-                                              onPressed: () {},
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          width: 150,
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            IconButton(
-                                              icon: Icon(Icons.chat),
-                                              iconSize: 35.0,
-                                              onPressed: () {},
-                                            )
-                                          ],
-                                        )
-                                      ],
+                                    IconButton(
+                                      icon: Icon(
+                                        posts[i].favorite
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
+                                      ),
+                                      color: posts[i].favorite
+                                          ? Colors.pink
+                                          : Colors.black,
+                                      iconSize: 35.0,
+                                      onPressed: () {
+                                        activeFavorite(i);
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.chat),
+                                      iconSize: 35.0,
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    CommentPage(
+                                                        post: posts[i])));
+                                      },
                                     )
                                   ],
                                 ),

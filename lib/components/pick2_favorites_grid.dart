@@ -1,18 +1,20 @@
+import 'package:app_development/pages/compare.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:app_development/pages/detail_property_page.dart';
+//import 'package:app_development/pages/pick_favorites_page.dart';
 
-class FavoritesWidget extends StatefulWidget {
+class Pick2FromFavoritesWidget extends StatefulWidget {
   final List<dynamic> favoritesData;
-  const FavoritesWidget({Key? key, required this.favoritesData})
+  const Pick2FromFavoritesWidget({Key? key, required this.favoritesData})
       : super(key: key);
 
   @override
-  State<FavoritesWidget> createState() => _FavoritesWidgetState();
+  State<Pick2FromFavoritesWidget> createState() =>
+      _Pick2FromFavoritesWidgetState();
 }
 
-class _FavoritesWidgetState extends State<FavoritesWidget> {
+class _Pick2FromFavoritesWidgetState extends State<Pick2FromFavoritesWidget> {
   //favoritesData = widget.favorites;
   late List<dynamic> favoritesData;
 
@@ -100,8 +102,10 @@ class _FavoritesWidgetState extends State<FavoritesWidget> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            DetailPage(id: favoritesData[i][0]),
+                        builder: (context) => ComparePage(
+                          propertyId1: "",
+                          propertyId2: favoritesData[i][0].toString(),
+                        ),
                       ),
                     );
                   },
@@ -145,7 +149,7 @@ class _FavoritesWidgetState extends State<FavoritesWidget> {
                       ),
 
                       Container(
-                        padding: const EdgeInsets.only(bottom: 8, top: 10),
+                        padding: const EdgeInsets.only(bottom: 8),
                         alignment: Alignment.centerLeft,
                         child: Text(
                           // "3 hari yang lalu",
@@ -197,12 +201,33 @@ class _FavoritesWidgetState extends State<FavoritesWidget> {
                             color: Colors.black,
                             size: 15,
                           ),
-                          // Icon(
-                          //   Icons.favorite,
-                          //   color: Colors.pink,
-                          // )
+                          Icon(
+                            Icons.favorite,
+                            color: Colors.pink,
+                          )
                         ],
                       ),
+
+                      const SizedBox(
+                        height: 10,
+                      ),
+
+                      SizedBox(
+                        height: 30,
+                        width: 150,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                const Color.fromARGB(255, 205, 166, 122),
+                          ),
+                          //onPressed: _launchURL,
+                          onPressed: () {},
+                          child: const Text(
+                            "Hubungi Penjual",
+                            style: TextStyle(color: Colors.white, fontSize: 10),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ))
